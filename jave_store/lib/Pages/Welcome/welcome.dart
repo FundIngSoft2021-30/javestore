@@ -2,17 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:jave_store/Pages/Login%20Screen/Login.dart';
-import 'package:aws_dynamodb_api/dynamodb-2012-08-10.dart';
-
-void main() {
-  final service = DynamoDB(
-      region: 'eu-west-1', client: 'jsebastianherrera', credentials: '');
-  service.query(
-    tableName: 'Person',
-  );
-
-  // See documentation on how to use DynamoDB
-}
 
 void main() {
   runApp(MaterialApp(
