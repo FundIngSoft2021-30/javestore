@@ -1,6 +1,7 @@
 //@dart=2.9
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:jave_store/Pages/Catalogo/catalogo.dart';
 
 class LoginForm extends StatefulWidget {
   @override
@@ -105,7 +106,7 @@ class _LoginFormState extends State<LoginForm> {
           },
         ),
         Center(
-          child: roundedButton(size),
+          child: roundedButton(size, context),
           heightFactor: 4.5,
         ),
       ],
@@ -113,7 +114,7 @@ class _LoginFormState extends State<LoginForm> {
   }
 }
 
-Widget roundedButton(Size size) {
+Widget roundedButton(Size size, BuildContext context) {
   return Container(
       width: 250,
       height: 50,
@@ -123,7 +124,10 @@ Widget roundedButton(Size size) {
           color: Colors.blue,
           child: FlatButton(
             onPressed: () {
-              print("Hola");
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => catalogo()),
+              );
             },
             child: Text(
               "Login",
