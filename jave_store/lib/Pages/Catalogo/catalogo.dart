@@ -2,7 +2,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:jave_store/Pages/Catalogo/background.dart';
+import 'package:jave_store/Pages/Catalogo/Background.dart';
 
 void main() => runApp(catalogo());
 

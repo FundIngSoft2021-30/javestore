@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:jave_store/Pages/Catalogo/body.dart';
+import 'package:jave_store/Pages/Catalogo/Body.dart';
 
 class background extends StatelessWidget {
   @override
