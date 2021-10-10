@@ -1,6 +1,7 @@
 //@dart=2.9
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:jave_store/Pages/Pago/Pago.dart';
 
 class AppBarBottom extends StatefulWidget {
   @override
@@ -27,7 +28,12 @@ class _AppBarBottom extends State<AppBarBottom> {
             title: Text('Inicio'),
             icon: FloatingActionButton(
               child: Icon(Icons.home_sharp),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => pago()),
+                );
+              },
               tooltip: "Volver a Inicio",
             ),
           ),
