@@ -1,4 +1,5 @@
 //@dart=2.9
+import 'package:cupertino_radio_choice/cupertino_radio_choice.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -12,36 +13,36 @@ class ButtonOption extends StatefulWidget implements PreferredSizeWidget {
 class _ButtonOption extends State<ButtonOption> {
   @override
   Widget build(BuildContext context) {
-    final isSelected = <bool>[false, false];
     return Center(
-        child: Container(
-      child: ToggleButtons(
-        color: Colors.black.withOpacity(0.60),
-        selectedColor: Colors.blue,
-        selectedBorderColor: Colors.blueAccent,
-        fillColor: Colors.blueAccent.withOpacity(0.08),
-        splashColor: Colors.blueAccent.withOpacity(0.12),
-        hoverColor: Colors.blueAccent.withOpacity(0.04),
-        borderRadius: BorderRadius.circular(4.0),
-        constraints: BoxConstraints(minHeight: 36.0),
-        isSelected: isSelected,
-        onPressed: (index) {
-          // Respond to button selection
-          setState(() {
-            isSelected[index] = !isSelected[index];
-          });
-        },
-        children: [
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.0),
-            child: Text('Recoger en la U'),
+      child: Container(
+        child: Material(
+          color: Colors.transparent,
+          child: new Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              const Padding(
+                padding: EdgeInsets.only(bottom: 5.0),
+              ),
+              CupertinoRadioChoice(
+                  choices: metodoMap,
+                  onChange: onGenderSelected,
+                  initialKeyValue: _selectedGender)
+            ],
           ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.0),
-            child: Text('A domicilio'),
-          ),
-        ],
+        ),
       ),
-    ));
+    );
+  }
+
+  static final Map<String, String> metodoMap = {
+    'U': 'Recoger en la U',
+    'domicilio': 'A domicilio',
+  };
+
+  String _selectedGender = metodoMap.keys.first;
+  void onGenderSelected(String metodo) {
+    setState(() {
+      _selectedGender = metodo;
+    });
   }
 }

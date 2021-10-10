@@ -11,7 +11,7 @@ class background extends StatelessWidget {
       width: size.width,
       height: size.height,
       color: Colors.white,
-      child: body(),
+      child: body(total: 20.225),
     );
   }
 }

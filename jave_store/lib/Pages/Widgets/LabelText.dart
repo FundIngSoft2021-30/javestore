@@ -10,16 +10,17 @@ class LabelText extends StatefulWidget {
 class _LabelText extends State<LabelText> {
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Center(
       child: Container(
-        width: 220,
-        height: 150,
+        width: size.width / 1.8,
+        height: size.height / 10,
         child: TextFormField(
           cursorColor: Theme.of(context).cursorColor,
 //        initialValue: 'Input text',
           maxLength: 250,
           decoration: InputDecoration(
-            labelText: 'Label text',
+            labelText: 'Comentarios',
             labelStyle: TextStyle(
               color: Colors.blue,
             ),

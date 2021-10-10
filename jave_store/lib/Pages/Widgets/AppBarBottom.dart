@@ -15,13 +15,14 @@ class AppBarBottom extends StatefulWidget {
 }
 
 class _AppBarBottom extends State<AppBarBottom> {
-  List<bool> _show=[false,true,true,true];
-  List<String> _bar = ["", "Ofertas", "Carrito de compras", "Perfil"];
+  List<bool> _show = [false, true, true, true, true];
+  List<String> _bar = ["", "Ofertas", "Carrito de compras", "Perfil", "Ayuda"];
   List<Widget> _paginas = [
     LoginForm(),
     Oferta(),
     Carrito(),
     Perfil(),
+    pago(),
   ];
   int _selectedIndex = 0;
   void _onItemTapped(int index) {
@@ -35,7 +36,9 @@ class _AppBarBottom extends State<AppBarBottom> {
     Color color = Colors.blue;
     return MaterialApp(
       home: Scaffold(
-        appBar: _show[_selectedIndex] ?AppBar(title: Center(child: Text(_bar[_selectedIndex]))):null,
+        appBar: _show[_selectedIndex]
+            ? AppBar(title: Center(child: Text(_bar[_selectedIndex])))
+            : null,
         body: _paginas[_selectedIndex],
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,

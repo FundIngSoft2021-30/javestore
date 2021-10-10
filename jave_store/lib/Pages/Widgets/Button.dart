@@ -6,7 +6,10 @@ class Button extends StatefulWidget implements PreferredSizeWidget {
   @override
   Size get preferredSize => const Size.fromHeight(60);
   final String textoBoton;
-  Button({Key key, this.textoBoton}) : super(key: key);
+  final double divWidth;
+  final double divHeight;
+  Button({Key key, this.textoBoton, this.divHeight, this.divWidth})
+      : super(key: key);
 
   @override
   _Button createState() => new _Button();
@@ -15,11 +18,16 @@ class Button extends StatefulWidget implements PreferredSizeWidget {
 class _Button extends State<Button> {
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: () {
-        // Respond to button press
-      },
-      child: Text(widget.textoBoton),
+    Size size = MediaQuery.of(context).size;
+    return Container(
+      width: size.width / widget.divWidth,
+      height: size.height / widget.divHeight,
+      child: ElevatedButton(
+        onPressed: () {
+          // Respond to button press
+        },
+        child: Text(widget.textoBoton),
+      ),
     );
   }
 }
