@@ -1,6 +1,7 @@
 //@dart=2.9
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:jave_store/Pages/Perfil/InformacionPerfil.dart';
 
 class AppBarBottom extends StatefulWidget {
   @override
@@ -43,8 +44,16 @@ class _AppBarBottom extends State<AppBarBottom> {
           ),
           BottomNavigationBarItem(
             title: Text('Perfil'),
-            icon: Icon(Icons.person_outline),
-            tooltip: "Ver perfil de usuario",
+            icon: FloatingActionButton(
+              child: Icon(Icons.person_outline),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => InformacionPerfil()),
+                );
+              },
+              tooltip: "Ver perfil de usuario",
+            ),
           ),
           BottomNavigationBarItem(
             title: Text('Ayuda'),

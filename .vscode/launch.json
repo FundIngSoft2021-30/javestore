@@ -9,7 +9,7 @@
             "cwd": "jave_store",
             "request": "launch",
             "type": "dart",
-            "program": "C:\\Users\\jamar\\Documents\\Proyectos\\JaveStore\\javestore\\jave_store\\lib\\Pages\\Welcome\\welcome.dart"
+            "program": "C:\\Users\\kamio\\Documents\\GitHub\\javestore\\jave_store\\lib\\Pages\\Welcome\\welcome.dart"
         },
         {
             "name": "jave_store (profile mode)",
