@@ -12,7 +12,7 @@ import 'package:jave_store/Pages/Widgets/Button.dart';
 class body extends StatefulWidget {
   @override
   _BodyState createState() => _BodyState();
-  double total;
+  String total;
 
   body({Key key, this.total}) : super(key: key);
 }
