@@ -18,29 +18,25 @@ class ItemCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-  
-             Container(
-              padding: EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                color: Colors.yellow,
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: Hero(
-                tag: product.codigo,
-                child: Container(
+          Container(
+            padding: EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: Colors.yellow,
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: Hero(
+              tag: product.codigo,
+              child: Container(
                 width: 100,
                 height: 80,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   image: DecorationImage(
-                      image: NetworkImage(
-                          "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Frockcontent.com%2Fes%2Fwp-content%2Fuploads%2Fsites%2F3%2F2019%2F02%2Fo-que-e-produto-no-mix-de-marketing.png&f=1&nofb=1"),
-                      fit: BoxFit.cover),
+                      image: NetworkImage(product.imagen), fit: BoxFit.cover),
                 ),
               ),
-              ),
             ),
-          
+          ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 20 / 4),
             child: Text(
@@ -51,7 +47,9 @@ class ItemCard extends StatelessWidget {
           ),
           Text(
             product.precio,
-            style: TextStyle(fontWeight: FontWeight.bold),
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
           )
         ],
       ),

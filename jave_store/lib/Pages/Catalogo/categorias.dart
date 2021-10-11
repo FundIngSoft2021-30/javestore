@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:jave_store/Entidades/Categoria.dart';
-import 'package:jave_store/Pages/Catalogo/pages/screenLibro.dart';
 
 class Categories extends StatefulWidget {
   @override
@@ -10,7 +9,7 @@ class Categories extends StatefulWidget {
 }
 
 class _CategoriesState extends State<Categories> {
-  final url = "http://10.0.2.2/jave/queryDB.php";
+  final url = "https://javestore.000webhostapp.com/jave/queryDB.php";
   Future<List<Categoria>> getData() async {
     final response = await http
         .post(Uri.parse(url), body: {"query": "select nombre from Categoria;"});

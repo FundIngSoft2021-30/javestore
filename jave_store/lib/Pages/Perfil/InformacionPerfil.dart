@@ -6,7 +6,7 @@ import 'package:jave_store/Pages/Perfil/Historial/HistorialScreen.dart';
 import 'package:jave_store/Pages/Perfil/Info.dart';
 
 class InformacionPerfil extends StatelessWidget {
-  final url = "http://10.0.2.2/jave/queryDB.php";
+  final url = "https://javestore.000webhostapp.com/jave/queryDB.php";
   Future<Usuario> getData() async {
     final response = await http.post(Uri.parse(url),
         body: {"query": "select * from Usuario where id=2;"});
