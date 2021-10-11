@@ -2,6 +2,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:jave_store/Pages/Catalogo/Catalogo.dart';
+import 'package:jave_store/Pages/Widgets/AppBarBottom.dart';
 
 class LoginForm extends StatefulWidget {
   @override
@@ -126,7 +127,7 @@ Widget roundedButton(Size size, BuildContext context) {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => catalogo()),
+                MaterialPageRoute(builder: (context) => AppBarBottom()),
               );
             },
             child: Text(

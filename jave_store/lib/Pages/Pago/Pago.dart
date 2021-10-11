@@ -1,12 +1,11 @@
 //@dart=2.9
-/*
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:jave_store/Pages/Catalogo/Background.dart';
+import 'package:jave_store/Pages/Pago/Background.dart';
 
-void main() => runApp(catalogo());
+void main() => runApp(pago());
 
-class catalogo extends StatelessWidget {
+class pago extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -17,4 +16,4 @@ class catalogo extends StatelessWidget {
       ),
     );
   }
-}*/
+}
