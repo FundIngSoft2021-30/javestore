@@ -9,7 +9,8 @@ where p.id = c.Productoid
     and c.Carritoid = k.id and k.estado='0';
 
 
-select * from Carrito_Productos;
+select producto,sum(cantidad) as cantidad ,precio from Carrito_Productos
+group by id_producto;
 select sum(total_producto) from 
 (select c.carritoID as idcar,p.nombre as producto,SUM(c.cantidad)*c.precio as total_producto,SUM(c.cantidad) cantidad, i.porcentaje as impuestos
 from Carrito_Productos c, Producto p,Carrito_Impuesto ci,Impuesto i,Carrito as ca
