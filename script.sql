@@ -129,3 +129,6 @@ values('Iva',19);
 
 insert into Carrito_Impuesto(Carritoid,Impuestoid)
 values(1,1);    
+
+
+describe Pedido;

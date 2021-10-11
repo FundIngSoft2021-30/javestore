@@ -16,3 +16,4 @@ from Carrito_Productos c, Producto p
 where c.id_producto =p.id
 group by c.carritoID,c.id_producto;
 
+select * from Impuesto
