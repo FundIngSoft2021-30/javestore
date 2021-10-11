@@ -6,9 +6,16 @@ class Titulo extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return Stack(children: <Widget>[
       Row(children: <Widget>[
-        Container(color: Colors.blue, height: size.height, width: 50.0)
+        Container(color: Colors.blue, height: 50.0, width: size.width)
       ]),
-      Row(children: <Widget>[Text('Perfil', style: TextStyle(fontSize: 32))])
+      Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
+        Text(
+          'Perfil',
+          style: TextStyle(fontSize: 32, color: Colors.white),
+          textAlign: TextAlign.center,
+        ),
+        SizedBox(height: 50.0),
+      ])
     ]);
   }
 }
