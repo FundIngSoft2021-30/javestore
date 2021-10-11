@@ -5,14 +5,14 @@ import 'package:jave_store/Pages/Carrito/carrito.dart';
 
 class CardProducto extends StatefulWidget {
   final ProductoxCarrito item;
-  CardProducto({@required this.item});
+  CardProducto({this.item});
   @override
   _CardProductoState createState() => _CardProductoState(item: this.item);
 }
 
 class _CardProductoState extends State<CardProducto> {
   ProductoxCarrito item;
-  _CardProductoState({@required this.item});
+  _CardProductoState({this.item});
   void _update(String value) {
     setState(() {
       item.cantidad = value;

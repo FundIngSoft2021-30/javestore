@@ -1,5 +1,4 @@
 //@dart=2.9
-import 'package:cupertino_radio_choice/cupertino_radio_choice.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -23,10 +22,7 @@ class _ButtonOption extends State<ButtonOption> {
               const Padding(
                 padding: EdgeInsets.only(bottom: 5.0),
               ),
-              CupertinoRadioChoice(
-                  choices: metodoMap,
-                  onChange: onGenderSelected,
-                  initialKeyValue: _selectedGender)
+             
             ],
           ),
         ),

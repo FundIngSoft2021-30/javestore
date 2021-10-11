@@ -3,9 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Background extends StatelessWidget {
-  @required
   final Widget child;
-  Background({@required this.child});
+  Background({this.child});
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;

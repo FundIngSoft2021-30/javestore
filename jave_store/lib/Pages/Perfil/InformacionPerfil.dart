@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:jave_store/Entidades/Usuario.dart';
 import 'package:http/http.dart' as http;
+import 'package:jave_store/Pages/Perfil/Historial/HistorialScreen.dart';
 import 'package:jave_store/Pages/Perfil/Info.dart';
 
 class InformacionPerfil extends StatelessWidget {
@@ -70,10 +71,10 @@ Widget BotonHistorialCompras(Size size, BuildContext context) {
           color: Colors.blue,
           child: FlatButton(
             onPressed: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => Catalogo()),
-              // );
+              Navigator.push(
+                 context,
+                 MaterialPageRoute(builder: (context) => HistorialScreen()),
+               );
             },
             child: Text(
               "Historial Compras",
@@ -84,6 +85,6 @@ Widget BotonHistorialCompras(Size size, BuildContext context) {
             ),
           ),
         ),
-      ) // This
+      ) // Thisf
       );
 }
