@@ -3,8 +3,6 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:jave_store/Pages/Widgets/AppBarBottom.dart';
-import 'package:jave_store/Pages/Widgets/AppBarTop.dart';
 import 'package:jave_store/Pages/Widgets/ButtonOption.dart';
 import 'package:jave_store/Pages/Widgets/LabelText.dart';
 import 'package:jave_store/Pages/Widgets/Button.dart';
@@ -12,13 +10,12 @@ import 'package:jave_store/Pages/Widgets/Button.dart';
 class body extends StatefulWidget {
   @override
   _BodyState createState() => _BodyState();
-  String total;
+  final String total;
 
   body({Key key, this.total}) : super(key: key);
 }
 
 class _BodyState extends State<body> {
-  bool _pass = false;
   String passCamp = "";
   var _controller = TextEditingController();
   @override

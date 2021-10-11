@@ -19,4 +19,8 @@ group by c.carritoID,c.id_producto,i.id
 ) as Cart;
 
 
+select * 
+from Producto p
+where p.Categoriaid=3 and p.estado='A';
 
+SELECT * from Producto
