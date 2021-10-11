@@ -19,8 +19,8 @@ class _AppBarBottom extends State<AppBarBottom> {
   List<String> _bar = ["", "Ofertas", "Carrito de compras", "Perfil", "Ayuda"];
   List<Widget> _paginas = [
     Catalogo(),
-    Carrito(),
     Perfil(),
+    Carrito(),
     InformacionPerfil(),
     pago(),
   ];
