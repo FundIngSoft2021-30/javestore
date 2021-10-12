@@ -31,7 +31,7 @@ class _CategoriesState extends State<Categories> {
                       buildCategory(index, snapshot.data[index].nombre),
                 )
               : new Center(
-                  child: new CircularProgressIndicator(),
+                 
                 );
         },
     

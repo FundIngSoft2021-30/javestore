@@ -20,29 +20,47 @@ class ScreenLibro extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
-      child: FutureBuilder<List<Producto>>(
-          future: getData(),
-          builder: (context, AsyncSnapshot<List<Producto>> snapshot) {
-            if (snapshot.hasError) print(snapshot.error);
-            return snapshot.hasData
-                ? GridView.builder(
-                    itemCount: snapshot.data.length,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      mainAxisSpacing: 20,
-                      crossAxisSpacing: 20,
-                      childAspectRatio: 0.75,
-                    ),
-                    itemBuilder: (context, index) => ItemCard(
-                        product: snapshot.data[index],
-                        press: () => {print(snapshot.data[index].codigo)}),
-                  )
-                : new Center(
-                    child: new CircularProgressIndicator(),
-                  );
-          }),
+    return Align(
+      alignment: Alignment.bottomCenter,
+      child: Container(
+        alignment: Alignment.bottomCenter,
+        height: size.height / 1.2,
+        width: size.width,
+        child: FutureBuilder<List<Producto>>(
+            future: getData(),
+            builder: (context, AsyncSnapshot<List<Producto>> snapshot) {
+              if (snapshot.hasError) print(snapshot.error);
+              return snapshot.hasData
+                  ? Column(
+                      children: [
+                        Expanded(
+                          child: Center(
+                            child: Container(
+                              child: GridView.builder(
+                                padding: EdgeInsets.only(left: 30),
+                                shrinkWrap: true,
+                                itemCount: snapshot.data.length,
+                                gridDelegate:
+                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
+                                  mainAxisSpacing: 10,
+                                  crossAxisSpacing: 10,
+                                ),
+                                itemBuilder: (context, index) => ItemCard(
+                                    product: snapshot.data[index],
+                                    press: () =>
+                                        {print(snapshot.data[index].codigo)}),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
+                  : new Center(
+                      child: new CircularProgressIndicator(),
+                    );
+            }),
+      ),
     );
   }
 }
