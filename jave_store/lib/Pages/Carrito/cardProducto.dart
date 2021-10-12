@@ -34,9 +34,7 @@ class _CardProductoState extends State<CardProducto> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   image: DecorationImage(
-                      image: NetworkImage(
-                          "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Frockcontent.com%2Fes%2Fwp-content%2Fuploads%2Fsites%2F3%2F2019%2F02%2Fo-que-e-produto-no-mix-de-marketing.png&f=1&nofb=1"),
-                      fit: BoxFit.cover),
+                      image: NetworkImage(item.imagen), fit: BoxFit.cover),
                 ),
               ),
               SizedBox(

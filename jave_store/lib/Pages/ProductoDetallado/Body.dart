@@ -5,6 +5,7 @@ import 'package:jave_store/Pages/ProductoDetallado/ProductoDetallado.dart';
 import 'package:jave_store/Pages/Widgets/AppBarBottom.dart';
 import 'package:jave_store/Pages/Widgets/SearchBar.dart';
 import 'package:jave_store/Pages/Widgets/GridViewProductos.dart';
+import 'package:jave_store/Pages/Catalogo/ventanaProducto.dart';
 
 class body extends StatefulWidget {
   @override
@@ -12,13 +13,9 @@ class body extends StatefulWidget {
 }
 
 class _BodyState extends State<body> {
-  bool _pass = false;
   String passCamp = "";
-  var _controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: productoDetallado(),
-    );
+    return Container(child: ventanaProducto());
   }
 }

@@ -3,8 +3,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class AppBarTop extends StatefulWidget implements PreferredSizeWidget {
+  final String textoProducto;
+
   @override
   Size get preferredSize => const Size.fromHeight(60);
+
+  AppBarTop({
+    Key key,
+    this.textoProducto,
+  }) : super(key: key);
+
   @override
   _AppBarTop createState() => _AppBarTop();
 }
@@ -19,7 +27,7 @@ class _AppBarTop extends State<AppBarTop> {
         onPressed: () {},
       ),
       centerTitle: true,
-      title: Text(''),
+      title: Text(widget.textoProducto),
       backgroundColor: Colors.blue,
     ));
   }

@@ -14,10 +14,12 @@ class ProductoxCarrito {
   String nombre;
   String cantidad;
   String precio;
+  String imagen;
   ProductoxCarrito({
     this.nombre,
     this.precio,
     this.cantidad,
+    this.imagen,
   });
   @override
   String toString() {
@@ -33,7 +35,8 @@ class ProductoxCarrito {
       ProductoxCarrito(
           cantidad: json["cantidad"],
           nombre: json["producto"],
-          precio: json["precio"]);
+          precio: json["precio"],
+          imagen: json["imagen"]);
 }
 
 class Carrito extends StatefulWidget {
@@ -42,15 +45,15 @@ class Carrito extends StatefulWidget {
 }
 
 class _CarritoState extends State<Carrito> {
-  final url = "http://10.0.2.2/jave/queryDB.php";
+  final url = "https://javestore.000webhostapp.com/jave/queryDB.php";
   Future<List<ProductoxCarrito>> getData() async {
     http.post(Uri.parse(url), body: {
       "query":
-          "CREATE OR REPLACE VIEW Carrito_Productos as SELECT k.id as carritoID, p.id as id_producto,p.nombre as producto,c.cantidad as cantidad,p.precio as precio from Producto p,Compra c,Carrito k where p.id = c.Productoid and c.Carritoid = k.id and k.estado='0';"
+          "CREATE OR REPLACE VIEW Carrito_Productos as SELECT k.id as carritoID, p.id as id_producto,p.nombre as producto,p.imagen as imagen,c.cantidad as cantidad,p.precio as precio  from Producto p,Compra c,Carrito k where p.id = c.Productoid and c.Carritoid = k.id and k.estado='0';"
     });
     final response = await http.post(Uri.parse(url), body: {
       "query":
-          "select producto,sum(cantidad) as cantidad,precio from Carrito_Productos group by id_producto;"
+          "select producto,imagen,sum(cantidad) as cantidad,precio from Carrito_Productos group by id_producto;"
     });
     List<ProductoxCarrito> rt = ProductoxCarritoFromJson(response.body);
     return rt;

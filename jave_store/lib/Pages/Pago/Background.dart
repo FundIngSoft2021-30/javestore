@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:jave_store/Pages/Pago/Body.dart';
 
 class background extends StatelessWidget {
-  final url = "http://10.0.2.2/jave/queryDB.php";
+  final url = "https://javestore.000webhostapp.com/jave/queryDB.php";
   Future getData() async {
     final response = await http.post(Uri.parse(url), body: {
       "query":

@@ -23,7 +23,7 @@ class _AppBarBottom extends State<AppBarBottom> {
     Perfil(),
     Carrito(),
     InformacionPerfil(),
-    productoDetallado(),
+    Perfil(),
   ];
   int _selectedIndex = 0;
   void _onItemTapped(int index) {

@@ -10,6 +10,7 @@ class Producto {
   String activo;
   String codigo;
   String precio;
+  String imagen;
   String calificacion;
   String cantidad;
 
@@ -19,6 +20,7 @@ class Producto {
     this.nombre,
     this.activo,
     this.precio,
+    this.imagen,
     this.calificacion,
     this.cantidad,
   });
@@ -27,12 +29,12 @@ class Producto {
     return "id:" + this.codigo + "  name:" + this.nombre;
   }
 
-// Connected[{"id":,"cantidad":,"nombre":,"descripcion":","Precio":"estado":,"Categoriaid":,"Usuarioid":"1","imagen":null}
   factory Producto.fromJson(Map<String, dynamic> json) => Producto(
       codigo: json["id"],
       cantidad: json["cantidad"],
+      imagen: json["imagen"],
       nombre: json["nombre"],
       descripcion: json["descripcion"],
-      precio: json["Precio"],
+      precio: json["precio"],
       activo: json["estado"]);
 }
