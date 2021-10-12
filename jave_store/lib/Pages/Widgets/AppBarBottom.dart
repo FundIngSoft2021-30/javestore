@@ -6,6 +6,7 @@ import 'package:jave_store/Pages/Catalogo/catalogo.dart';
 import 'package:jave_store/Pages/Pago/Pago.dart';
 import 'package:jave_store/Pages/Perfil/InformacionPerfil.dart';
 import 'package:jave_store/Pages/Perfil/perfil.dart';
+import 'package:jave_store/Pages/ProductoDetallado/ProductoDetallado.dart';
 
 void main() => runApp(AppBarBottom());
 
@@ -22,7 +23,7 @@ class _AppBarBottom extends State<AppBarBottom> {
     Perfil(),
     Carrito(),
     InformacionPerfil(),
-    pago(),
+    Perfil(),
   ];
   int _selectedIndex = 0;
   void _onItemTapped(int index) {

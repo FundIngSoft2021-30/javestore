@@ -2,20 +2,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class AppBarBottom extends StatefulWidget {
+class AppTop extends StatefulWidget {
   @override
-  _AppBarBottom createState() => _AppBarBottom();
+  _AppTop createState() => _AppTop();
 }
 
-class _AppBarBottom extends State<AppBarBottom> {
+class _AppTop extends State<AppTop> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: AppBar(
+    return AppBar(
       leading: Icon(Icons.align_vertical_top_sharp),
       title: Text('Page title'),
       foregroundColor: Colors.white,
       backgroundColor: Colors.blue,
-    ));
+    );
   }
 }

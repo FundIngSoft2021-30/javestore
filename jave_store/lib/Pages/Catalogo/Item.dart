@@ -1,6 +1,7 @@
 //@dart=2.9
 import 'package:flutter/material.dart';
 import 'package:jave_store/Entidades/Producto.dart';
+import 'package:jave_store/Pages/Catalogo/ventanaProducto.dart';
 
 class ItemCard extends StatelessWidget {
   final Producto product;
@@ -14,7 +15,12 @@ class ItemCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: press,
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => ventanaProducto(product: product)));
+      },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[

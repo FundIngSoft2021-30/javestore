@@ -109,6 +109,15 @@ coverage/
 # Symbols
 app.*.symbols
 
+<<<<<<< HEAD
+# Android Studio will place build artifacts here
+/android/app/debug
+/android/app/profile
+/android/app/release
+
+.vscode/launch.json
+
+=======
 # Exceptions to above rules.
 !**/ios/**/default.mode1v3
 !**/ios/**/default.mode2v3
@@ -116,3 +125,4 @@ app.*.symbols
 !**/ios/**/default.perspectivev3
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
 !/dev/ci/**/Gemfile.lock
+>>>>>>> 114713b110022fa474172e8abd6f5181ca1197d1
