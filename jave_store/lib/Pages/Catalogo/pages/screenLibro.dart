@@ -10,7 +10,7 @@ class ScreenLibro extends StatelessWidget {
   Future<List<Producto>> getData() async {
     final response = await http.post(Uri.parse(url), body: {
       "query":
-          "select * from Producto p where p.Categoriaid=2 and p.estado='A';"
+          "select * from Producto;"
     });
 
     List<Producto> rt = ProductoFromJson(response.body);

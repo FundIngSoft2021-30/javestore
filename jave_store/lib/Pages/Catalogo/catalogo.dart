@@ -7,16 +7,6 @@ import 'package:http/http.dart' as http;
 import 'package:jave_store/Pages/Catalogo/pages/screenLibro.dart';
 
 class Catalogo extends StatelessWidget {
-  final url = "https://javestore.000webhostapp.com/jave/queryDB.php";
-  Future<List<Producto>> getData() async {
-    final response = await http.post(Uri.parse(url), body: {
-      "query":
-          "select * from Producto p where p.Categoriaid=2 and p.estado='A';"
-    });
-
-    List<Producto> rt = ProductoFromJson(response.body);
-    return rt;
-  }
 
   @override
   Widget build(BuildContext context) {

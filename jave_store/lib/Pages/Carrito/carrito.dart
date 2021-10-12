@@ -129,7 +129,7 @@ class _CarritoState extends State<Carrito> {
                                           fontWeight: FontWeight.bold),
                                       text: "Total: ",
                                       children: [
-                                        TextSpan(text: "245000"),
+                                        TextSpan(text: "555000"),
                                       ],
                                     ),
                                   ),
