@@ -13,6 +13,7 @@ class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    String nombre, apellido, email;
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -42,19 +43,25 @@ class _BodyState extends State<Body> {
                     TextFormField(
                       style: TextStyle(color: Colors.black),
                       decoration: InputDecoration(
-                          labelText: "First Name",
+                          labelText: "Nombre",
                           labelStyle: TextStyle(fontWeight: FontWeight.bold)),
+                      onSaved: (value) {
+                        nombre = value;
+                      },
                     ),
                     TextFormField(
                       style: TextStyle(color: Colors.black),
                       decoration: InputDecoration(
-                          labelText: "Last Name",
+                          labelText: "Apellido",
                           labelStyle: TextStyle(fontWeight: FontWeight.bold)),
+                      onSaved: (value) {
+                        apellido = value;
+                      },
                     ),
                     TextFormField(
                       style: TextStyle(color: Colors.black),
                       decoration: InputDecoration(
-                          labelText: "Enter email",
+                          labelText: "Email",
                           labelStyle: TextStyle(fontWeight: FontWeight.bold)),
                     ),
                     TextFormField(
@@ -64,7 +71,7 @@ class _BodyState extends State<Body> {
                         passCamp = val;
                       },
                       decoration: InputDecoration(
-                        labelText: "Password",
+                        labelText: "Contraseña",
                         labelStyle: TextStyle(
                           fontWeight: FontWeight.bold,
                         ),
@@ -80,7 +87,7 @@ class _BodyState extends State<Body> {
                           this._pass = false;
                       },
                       decoration: InputDecoration(
-                        labelText: "Confirm your password",
+                        labelText: "Confirmar contraseña",
                         labelStyle: TextStyle(
                           fontWeight: FontWeight.bold,
                         ),
@@ -90,7 +97,7 @@ class _BodyState extends State<Body> {
                       ),
                     ),
                     SizedBox(height: 70),
-                    roundedButton(size),
+                    roundedButton(size,nombre),
                   ],
                 ),
               ),
@@ -102,7 +109,7 @@ class _BodyState extends State<Body> {
   }
 }
 
-Widget roundedButton(Size size) {
+Widget roundedButton(Size size,String ss) {
   return Container(
       width: 250,
       height: 50,
@@ -112,10 +119,10 @@ Widget roundedButton(Size size) {
           color: Colors.blue,
           child: FlatButton(
             onPressed: () {
-              print("Hola");
+              print(ss);
             },
             child: Text(
-              "Create account",
+              "Crear cuenta",
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 15,

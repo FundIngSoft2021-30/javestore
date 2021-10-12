@@ -3,24 +3,10 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:jave_store/Pages/Login%20Screen/api/ApiService.dart';
+import 'package:jave_store/Pages/Login%20Screen/model/login_model.dart';
+import 'package:jave_store/Pages/SingUp/SingUp.dart';
 import 'package:jave_store/Pages/Widgets/AppBarBottom.dart';
-
-List<Login> LoginFromJson(String str) =>
-    List<Login>.from(json.decode(str).map((x) => Login.fromJson(x)));
-
-class Login {
-  String user;
-  String pass;
-
-  Login({
-    this.user,
-    this.pass,
-  });
-  factory Login.fromJson(Map<String, dynamic> json) => Login(
-        user: json["user"],
-        pass: json["pass"],
-      );
-}
 
 class LoginForm extends StatefulWidget {
   @override
@@ -28,159 +14,147 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
-  bool _showPassword = true;
-  bool _obscureText = true;
-  final url = "http://10.0.2.2/jave/queryDB.php";
-  Future checkLogin(String mail, String pass) async {
-    print(mail + pass);
-    final response = await http.post(Uri.parse(url), body: {
-      "query":
-          "select email as user,password as user from Cuenta where email=${mail} and password=${pass};"
-    });
-
-    try {
-      Login l = LoginFromJson(response.body)[0];
-      if (l.pass == pass && l.user == mail) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => AppBarBottom()),
-        );
-      }
-    } catch (e) {
-      return;
-    }
-  }
+  GlobalKey<FormState> globalFormKey = GlobalKey<FormState>();
+  LoginRequestModel loginRequestModel =
+      LoginRequestModel(email: "tomatoe@gmail.com", password: "tomatoe123");
+  final scaffoldKey = GlobalKey<ScaffoldState>();
+  bool hidePassword = true;
+  bool isApiCallProcess = false;
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    String pass, val;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        Padding(
-          padding: EdgeInsets.only(left: 15, right: 15, bottom: 15),
-          child: TextField(
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 15,
-            ),
-            decoration: InputDecoration(
-              suffixIcon: Icon(
-                Icons.email_outlined,
-                color: Colors.black,
-              ),
-              enabledBorder: UnderlineInputBorder(
-                borderRadius: BorderRadius.zero,
-                borderSide: BorderSide(color: Colors.black),
-              ),
-              focusColor: Colors.amber,
-              labelText: "Email",
-              labelStyle: TextStyle(
-                  fontSize: 15,
-                  color: Colors.black,
-                  fontStyle: FontStyle.italic,
-                  fontWeight: FontWeight.normal),
-              hintText: "Email",
-              hintStyle: TextStyle(
-                fontSize: 12,
-              ),
-            ),
-            onChanged: (value) {
-              val = value;
-            },
-          ),
-        ),
-        Padding(
-          padding: EdgeInsets.only(left: 15, right: 15, bottom: 4),
-          child: TextField(
-            obscureText: _obscureText,
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 15,
-            ),
-            decoration: InputDecoration(
-              suffixIcon: GestureDetector(
-                onTap: () {
-                  setState(
-                    () {
-                      this._showPassword = !this._showPassword;
-                      this._obscureText = _showPassword;
-                    },
-                  );
-                },
-                child: Icon(
-                  _showPassword ? Icons.visibility_off : Icons.visibility,
-                  size: 25,
-                  color: Colors.black,
+    return Column(children: [
+      SizedBox(
+        height: size.height / 8,
+      ),
+      Padding(
+        padding: EdgeInsets.only(left: 15, right: 15, bottom: 10),
+        child: Form(
+          key: globalFormKey,
+          child: Column(
+            children: <Widget>[
+              TextFormField(
+                keyboardType: TextInputType.emailAddress,
+                //onSaved: (input) => loginRequestModel.email = input,
+                validator: (input) => !input.contains('@') ? "" : null,
+                decoration: new InputDecoration(
+                  hintText: "Correo electrónico",
+                  enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                          color:
+                              Theme.of(context).accentColor.withOpacity(0.2))),
+                  focusedBorder: UnderlineInputBorder(
+                      borderSide:
+                          BorderSide(color: Theme.of(context).accentColor)),
+                  prefixIcon: Icon(
+                    Icons.email,
+                    color: Theme.of(context).accentColor,
+                  ),
                 ),
               ),
-              enabledBorder: UnderlineInputBorder(
-                borderRadius: BorderRadius.zero,
-                borderSide: BorderSide(color: Colors.black),
+              SizedBox(height: 20),
+              new TextFormField(
+                style: TextStyle(color: Theme.of(context).accentColor),
+                keyboardType: TextInputType.text,
+                //onSaved: (input) => loginRequestModel.password = input,
+                validator: (input) =>
+                    input.length < 3 ? "Debe tener 3 caracteres" : null,
+                obscureText: hidePassword,
+                decoration: new InputDecoration(
+                  hintText: "Contraseña",
+                  enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                          color:
+                              Theme.of(context).accentColor.withOpacity(0.2))),
+                  focusedBorder: UnderlineInputBorder(
+                      borderSide:
+                          BorderSide(color: Theme.of(context).accentColor)),
+                  prefixIcon: Icon(
+                    Icons.lock,
+                    color: Theme.of(context).accentColor,
+                  ),
+                  suffixIcon: IconButton(
+                    onPressed: () {
+                      setState(() {
+                        hidePassword = !hidePassword;
+                      });
+                    },
+                    color: Theme.of(context).accentColor.withOpacity(0.4),
+                    icon: Icon(
+                        hidePassword ? Icons.visibility_off : Icons.visibility),
+                  ),
+                ),
               ),
-              focusColor: Colors.amber,
-              labelText: "Password",
-              labelStyle: TextStyle(
-                  fontSize: 15,
-                  color: Colors.black,
-                  fontStyle: FontStyle.italic,
-                  fontWeight: FontWeight.normal),
-              hintText: "Password",
-              hintStyle: TextStyle(
-                fontSize: 12,
-              ),
-            ),
-            onChanged: (value) {
-              pass = value;
-            },
-          ),
-        ),
-        InkWell(
-          child: Text(
-            "Forgot password?",
-            style: TextStyle(
-              color: Colors.black,
-              fontStyle: FontStyle.italic,
-              fontSize: 12,
-              decoration: TextDecoration.underline,
-            ),
-          ),
-          onTap: () {
-            print("value of your text");
-          },
-        ),
-        Center(
-          child: roundedButton(size, context),
-          heightFactor: 4.5,
-        ),
-      ],
-    );
-  }
-}
+              SizedBox(height: 30),
+              FlatButton(
+                padding: EdgeInsets.symmetric(vertical: 12, horizontal: 80),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => AppBarBottom()),
+                  );
+                  if (validateAndSave()) {
+                    setState(() {
+                      isApiCallProcess = true;
+                    });
 
-Widget roundedButton(Size size, BuildContext context) {
-  return Container(
-      width: 250,
-      height: 50,
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(20),
-        child: Container(
-          color: Colors.blue,
-          child: FlatButton(
-            onPressed:(){
-              
-            },
-            child: Text(
-              "Login",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 15,
+                    APIService apiService = new APIService();
+                    apiService.login(loginRequestModel).then((value) {
+                      if (value != null) {
+                        setState(() {
+                          isApiCallProcess = false;
+                        });
+
+                        if (value.token.isNotEmpty) {
+                          final snackBar =
+                              SnackBar(content: Text("Login Successful"));
+                          scaffoldKey.currentState.showSnackBar(snackBar);
+                        } else {
+                          final snackBar = SnackBar(content: Text("Error"));
+                          scaffoldKey.currentState.showSnackBar(snackBar);
+                        }
+                      }
+                    });
+                  }
+                },
+                child: Text(
+                  " Login ",
+                  style: TextStyle(color: Colors.white),
+                ),
+                color: Theme.of(context).accentColor,
+                shape: StadiumBorder(),
               ),
-            ),
+              SizedBox(height: 15),
+              FlatButton(
+                padding: EdgeInsets.symmetric(vertical: 12, horizontal: 80),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => 
+                    SingUp()),
+                  );
+                },
+                child: Text(
+                  "Crear cuenta",
+                  style: TextStyle(color: Colors.white),
+                ),
+                color: Theme.of(context).accentColor,
+                shape: StadiumBorder(),
+              ),
+            ],
           ),
         ),
-      ) // This
-      );
+      ),
+    ]);
+  }
+
+  bool validateAndSave() {
+    final form = globalFormKey.currentState;
+    if (form.validate()) {
+      form.save();
+      return true;
+    }
+    return false;
+  }
 }
