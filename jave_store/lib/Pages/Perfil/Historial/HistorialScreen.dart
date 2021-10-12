@@ -18,7 +18,7 @@ class HistorialScreen extends StatelessWidget {
         title: Text("Historial de Compra"),
         centerTitle: true,
       ),
-      body: Container(),
+  
     );
   }
  }

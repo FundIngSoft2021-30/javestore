@@ -10,7 +10,7 @@ class background extends StatelessWidget {
   Future getData() async {
     final response = await http.post(Uri.parse(url), body: {
       "query":
-          "select sum(total_producto) from (select c.carritoID as idcar,p.nombre as producto,SUM(c.cantidad)*c.precio as total_producto,SUM(c.cantidad) cantidad, i.porcentaje as impuestos from Carrito_Productos c, Producto p,Carrito_Impuesto ci,Impuesto i,Carrito as ca where c.id_producto =p.id and i.id=ci.Impuestoid and ci.Carritoid=ca.id and ca.estado='0' group by c.carritoID,c.id_producto,i.id) as Cart;"
+          "SELECT SUM(total_producto) FROM ( SELECT c.carritoID AS idcar, p.nombre AS producto, SUM(c.cantidad) * c.precio AS total_producto, SUM(c.cantidad) cantidad FROM Carrito_Productos c, Producto p, ItemsxCarrito AS ca WHERE c.id_producto = p.id GROUP BY c.carritoID, c.id_producto ) AS Cart"
     });
     return json.decode(response.body);
   }

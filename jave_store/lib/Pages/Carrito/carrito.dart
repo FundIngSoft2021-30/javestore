@@ -49,7 +49,7 @@ class _CarritoState extends State<Carrito> {
   Future<List<ProductoxCarrito>> getData() async {
     http.post(Uri.parse(url), body: {
       "query":
-          "CREATE OR REPLACE VIEW Carrito_Productos as SELECT k.id as carritoID, p.id as id_producto,p.nombre as producto,p.imagen as imagen,c.cantidad as cantidad,p.precio as precio  from Producto p,Compra c,Carrito k where p.id = c.Productoid and c.Carritoid = k.id and k.estado='0';"
+          "CREATE OR REPLACE VIEW Carrito_Productos as SELECT k.id as carritoID, p.id as id_producto,p.nombre as producto,p.imagen as imagen,c.cantidad as cantidad,p.precio as precio from Producto p,ItemsxCarrito c,Carrito k where p.id = c.Productoid and c.Carritoid = k.id and k.estado='0'"
     });
     final response = await http.post(Uri.parse(url), body: {
       "query":
@@ -129,7 +129,7 @@ class _CarritoState extends State<Carrito> {
                                           fontWeight: FontWeight.bold),
                                       text: "Total: ",
                                       children: [
-                                        TextSpan(text: "2000"),
+                                        TextSpan(text: "245000"),
                                       ],
                                     ),
                                   ),
