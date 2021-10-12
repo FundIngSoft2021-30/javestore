@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:jave_store/Entidades/Categoria.dart';
-import 'package:jave_store/Pages/Catalogo/pages/screenLibro.dart';
 
 class Categories extends StatefulWidget {
   @override
@@ -17,25 +16,25 @@ class _CategoriesState extends State<Categories> {
     List<Categoria> rt = CategoriaFromJson(response.body);
     return rt;
   }
+
   int selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
-    return  FutureBuilder<List<Categoria>>(
-        future: getData(),
-        builder: (context, AsyncSnapshot<List<Categoria>> snapshot) {
-          if (snapshot.hasError) print(snapshot.error);
-          return snapshot.hasData
-              ? ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: snapshot.data.length,
-                  itemBuilder: (context, index) =>
-                      buildCategory(index, snapshot.data[index].nombre),
-                )
-              : new Center(
-                  child: new CircularProgressIndicator(),
-                );
-        },
-    
+    return FutureBuilder<List<Categoria>>(
+      future: getData(),
+      builder: (context, AsyncSnapshot<List<Categoria>> snapshot) {
+        if (snapshot.hasError) print(snapshot.error);
+        return snapshot.hasData
+            ? ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: snapshot.data.length,
+                itemBuilder: (context, index) =>
+                    buildCategory(index, snapshot.data[index].nombre),
+              )
+            : new Center(
+                child: new CircularProgressIndicator(),
+              );
+      },
     );
   }
 
@@ -67,9 +66,7 @@ class _CategoriesState extends State<Categories> {
               height: 2,
               width: 30,
               color: selectedIndex == index ? Colors.black : Colors.transparent,
-            
             ),
-           
           ],
         ),
       ),

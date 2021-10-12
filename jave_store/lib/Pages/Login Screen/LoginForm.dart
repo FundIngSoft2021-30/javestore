@@ -1,7 +1,26 @@
 //@dart=2.9
+import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:jave_store/Pages/Widgets/AppBarBottom.dart';
+
+List<Login> LoginFromJson(String str) =>
+    List<Login>.from(json.decode(str).map((x) => Login.fromJson(x)));
+
+class Login {
+  String user;
+  String pass;
+
+  Login({
+    this.user,
+    this.pass,
+  });
+  factory Login.fromJson(Map<String, dynamic> json) => Login(
+        user: json["user"],
+        pass: json["pass"],
+      );
+}
 
 class LoginForm extends StatefulWidget {
   @override
@@ -11,10 +30,31 @@ class LoginForm extends StatefulWidget {
 class _LoginFormState extends State<LoginForm> {
   bool _showPassword = true;
   bool _obscureText = true;
+  final url = "http://10.0.2.2/jave/queryDB.php";
+  Future checkLogin(String mail, String pass) async {
+    print(mail + pass);
+    final response = await http.post(Uri.parse(url), body: {
+      "query":
+          "select email as user,password as user from Cuenta where email=${mail} and password=${pass};"
+    });
+
+    try {
+      Login l = LoginFromJson(response.body)[0];
+      if (l.pass == pass && l.user == mail) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => AppBarBottom()),
+        );
+      }
+    } catch (e) {
+      return;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    String pass, val;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
       mainAxisAlignment: MainAxisAlignment.end,
@@ -47,6 +87,9 @@ class _LoginFormState extends State<LoginForm> {
                 fontSize: 12,
               ),
             ),
+            onChanged: (value) {
+              val = value;
+            },
           ),
         ),
         Padding(
@@ -89,6 +132,9 @@ class _LoginFormState extends State<LoginForm> {
                 fontSize: 12,
               ),
             ),
+            onChanged: (value) {
+              pass = value;
+            },
           ),
         ),
         InkWell(
@@ -123,11 +169,8 @@ Widget roundedButton(Size size, BuildContext context) {
         child: Container(
           color: Colors.blue,
           child: FlatButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => AppBarBottom()),
-              );
+            onPressed:(){
+              
             },
             child: Text(
               "Login",

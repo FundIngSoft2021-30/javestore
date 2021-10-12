@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class Info extends StatelessWidget {
   final String numero;
   final String name;
-  Info({@required this.name, @required this.numero});
+  Info({this.name, this.numero});
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Container(
