@@ -125,23 +125,23 @@ class _LoginFormState extends State<LoginForm> {
                 color: Theme.of(context).accentColor,
                 shape: StadiumBorder(),
               ),
-              SizedBox(height: 15),
-              FlatButton(
-                padding: EdgeInsets.symmetric(vertical: 12, horizontal: 80),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => 
-                    SingUp()),
-                  );
-                },
-                child: Text(
-                  "Crear cuenta",
-                  style: TextStyle(color: Colors.white),
-                ),
-                color: Theme.of(context).accentColor,
-                shape: StadiumBorder(),
-              ),
+              // SizedBox(height: 15),
+              // FlatButton(
+              //   padding: EdgeInsets.symmetric(vertical: 12, horizontal: 80),
+              //   onPressed: () {
+              //     Navigator.push(
+              //       context,
+              //       MaterialPageRoute(builder: (context) => 
+              //       SingUp()),
+              //     );
+              //   },
+              //   child: Text(
+              //     "Crear cuenta",
+              //     style: TextStyle(color: Colors.white),
+              //   ),
+              //   color: Theme.of(context).accentColor,
+              //   shape: StadiumBorder(),
+              // ),
             ],
           ),
         ),

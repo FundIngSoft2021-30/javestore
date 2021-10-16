@@ -47,7 +47,7 @@ class InformacionPerfil extends StatelessWidget {
                             numero: snapshot.data.numero,
                             name: "Número Telefónico",
                           ),
-                          SizedBox(height:size.height/4,),
+                          SizedBox(height:size.height/8,),
                           BotonHistorialCompras(size, context),
                         ],
                       )

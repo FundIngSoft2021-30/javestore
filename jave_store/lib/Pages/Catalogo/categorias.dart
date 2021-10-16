@@ -12,7 +12,7 @@ class _CategoriesState extends State<Categories> {
   final url = "https://javestore.000webhostapp.com/jave/queryDB.php";
   Future<List<Categoria>> getData() async {
     final response = await http
-        .post(Uri.parse(url), body: {"query": "select nombre from Categoria;"});
+        .post(Uri.parse(url), body: {"query": "select * from Categoria;"});
     List<Categoria> rt = CategoriaFromJson(response.body);
     return rt;
   }
@@ -32,7 +32,7 @@ class _CategoriesState extends State<Categories> {
                     buildCategory(index, snapshot.data[index].nombre),
               )
             : new Center(
-                child: new CircularProgressIndicator(),
+                
               );
       },
     );

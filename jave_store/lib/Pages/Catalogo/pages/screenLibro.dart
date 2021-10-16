@@ -37,14 +37,12 @@ class ScreenLibro extends StatelessWidget {
                           child: Center(
                             child: Container(
                               child: GridView.builder(
-                                padding: EdgeInsets.only(left: 30),
+                                padding: EdgeInsets.only(top:20,bottom: 20,left:25 ),
                                 shrinkWrap: true,
                                 itemCount: snapshot.data.length,
                                 gridDelegate:
                                     SliverGridDelegateWithFixedCrossAxisCount(
                                   crossAxisCount: 2,
-                                  mainAxisSpacing: 10,
-                                  crossAxisSpacing: 10,
                                 ),
                                 itemBuilder: (context, index) => ItemCard(
                                     product: snapshot.data[index],

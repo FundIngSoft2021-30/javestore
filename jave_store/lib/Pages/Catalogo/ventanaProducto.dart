@@ -59,7 +59,7 @@ class _ventanaProducto extends State<ventanaProducto> {
                       )),
                 ),
                 Container(
-                  margin: const EdgeInsets.all(15.0),
+                  margin: const EdgeInsets.all(10.0),
                   padding: const EdgeInsets.all(3.0),
                   height: size.height / 5,
                   width: size.width / 1.6,
@@ -80,7 +80,7 @@ class _ventanaProducto extends State<ventanaProducto> {
                   ), //Textstyle
                 ),
                 SizedBox(
-                  height: 10,
+                  height: 15,
                 ),
                 RatingBar.builder(
                   initialRating: 3,
@@ -99,7 +99,7 @@ class _ventanaProducto extends State<ventanaProducto> {
                   },
                 ), //Text
                 SizedBox(
-                  height: 10,
+                  height: 5,
                 ), //SizedBox
                 Text(
                   widget.product.descripcion,
@@ -135,7 +135,7 @@ class _ventanaProducto extends State<ventanaProducto> {
                     onPressed: () => getData('1'),
                     color: Colors.blue,
                     child: Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(2.0),
                       child: Row(
                         children: [
                           Icon(Icons.add_shopping_cart_sharp),
