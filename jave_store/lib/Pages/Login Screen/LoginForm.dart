@@ -1,10 +1,8 @@
 //@dart=2.9
-import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:jave_store/Pages/Login%20Screen/api/ApiService.dart';
-import 'package:jave_store/Pages/Login%20Screen/model/login_model.dart';
+import 'package:jave_store/Entidades/Cuenta.dart';
 import 'package:jave_store/Pages/SingUp/SingUp.dart';
 import 'package:jave_store/Pages/Widgets/AppBarBottom.dart';
 
@@ -14,10 +12,23 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
+  TextEditingController user = new TextEditingController();
+  TextEditingController pass = new TextEditingController();
+  final url = "https://javestore.000webhostapp.com/jave/cuenta.php";
+
+  Future<Cuenta> getData() async {
+    final response = await http.post(Uri.parse(url),
+        body: {"email": user.text, "password": pass.text});
+    List<Cuenta> c = CuentaFromJson(response.body);
+    if (c.length == 0) {
+      print("Email isn't in our system");
+    } else {
+      return c[0];
+    }
+    return null;
+  }
+
   GlobalKey<FormState> globalFormKey = GlobalKey<FormState>();
-  LoginRequestModel loginRequestModel =
-      LoginRequestModel(email: "tomatoe@gmail.com", password: "tomatoe123");
-  final scaffoldKey = GlobalKey<ScaffoldState>();
   bool hidePassword = true;
   bool isApiCallProcess = false;
 
@@ -35,6 +46,7 @@ class _LoginFormState extends State<LoginForm> {
           child: Column(
             children: <Widget>[
               TextFormField(
+                controller: user,
                 keyboardType: TextInputType.emailAddress,
                 //onSaved: (input) => loginRequestModel.email = input,
                 validator: (input) => !input.contains('@') ? "" : null,
@@ -55,6 +67,7 @@ class _LoginFormState extends State<LoginForm> {
               ),
               SizedBox(height: 20),
               new TextFormField(
+                controller: pass,
                 style: TextStyle(color: Theme.of(context).accentColor),
                 keyboardType: TextInputType.text,
                 //onSaved: (input) => loginRequestModel.password = input,
@@ -86,75 +99,44 @@ class _LoginFormState extends State<LoginForm> {
                   ),
                 ),
               ),
-              SizedBox(height: 30),
+              SizedBox(height: size.height / 15),
               FlatButton(
-                padding: EdgeInsets.symmetric(vertical: 12, horizontal: 80),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => AppBarBottom()),
-                  );
-                  if (validateAndSave()) {
-                    setState(() {
-                      isApiCallProcess = true;
-                    });
-
-                    APIService apiService = new APIService();
-                    apiService.login(loginRequestModel).then((value) {
-                      if (value != null) {
-                        setState(() {
-                          isApiCallProcess = false;
-                        });
-
-                        if (value.token.isNotEmpty) {
-                          final snackBar =
-                              SnackBar(content: Text("Login Successful"));
-                          scaffoldKey.currentState.showSnackBar(snackBar);
-                        } else {
-                          final snackBar = SnackBar(content: Text("Error"));
-                          scaffoldKey.currentState.showSnackBar(snackBar);
-                        }
-                      }
-                    });
+                padding: EdgeInsets.symmetric(vertical: 12, horizontal: 50),
+                onPressed: () async {
+                  Cuenta c = await getData();
+                  if (c.rol == "S") {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => AppBarBottom()),
+                    );
                   }
                 },
                 child: Text(
-                  " Login ",
+                  "Iniciar sesión",
                   style: TextStyle(color: Colors.white),
                 ),
                 color: Theme.of(context).accentColor,
                 shape: StadiumBorder(),
               ),
-              // SizedBox(height: 15),
-              // FlatButton(
-              //   padding: EdgeInsets.symmetric(vertical: 12, horizontal: 80),
-              //   onPressed: () {
-              //     Navigator.push(
-              //       context,
-              //       MaterialPageRoute(builder: (context) => 
-              //       SingUp()),
-              //     );
-              //   },
-              //   child: Text(
-              //     "Crear cuenta",
-              //     style: TextStyle(color: Colors.white),
-              //   ),
-              //   color: Theme.of(context).accentColor,
-              //   shape: StadiumBorder(),
-              // ),
+              FlatButton(
+                padding: EdgeInsets.symmetric(vertical: 12, horizontal: 50),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SingUp()),
+                  );
+                },
+                child: Text(
+                  "Crear cuenta",
+                  style: TextStyle(color: Colors.white),
+                ),
+                color: Theme.of(context).accentColor,
+                shape: StadiumBorder(),
+              ),
             ],
           ),
         ),
       ),
     ]);
-  }
-
-  bool validateAndSave() {
-    final form = globalFormKey.currentState;
-    if (form.validate()) {
-      form.save();
-      return true;
-    }
-    return false;
   }
 }

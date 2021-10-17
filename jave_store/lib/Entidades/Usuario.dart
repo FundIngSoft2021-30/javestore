@@ -1,10 +1,12 @@
 //@dart=2.9
 import 'dart:convert';
 
+import 'package:jave_store/Entidades/Cuenta.dart';
+
 List<Usuario> UsuarioFromJson(String str) =>
     List<Usuario>.from(json.decode(str).map((x) => Usuario.fromJson(x)));
 
-class Usuario {
+class Usuario extends Cuenta {
   String nombre;
   String apellido;
   String direccion;

@@ -2,8 +2,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:jave_store/Entidades/Producto.dart';
-import 'package:jave_store/Pages/Widgets/AppBarTop.dart';
-import 'package:jave_store/Pages/Widgets/Button.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:http/http.dart' as http;
 

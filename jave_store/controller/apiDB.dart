@@ -3,6 +3,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:jave_store/Entidades/Categoria.dart';
+import 'package:jave_store/Entidades/Cuenta.dart';
 
 List<ProductoxCarrito> ProductoxCarritoFromJson(String str) =>
     List<ProductoxCarrito>.from(
@@ -35,14 +36,18 @@ class ProductoxCarrito {
 }
 
 void main() {
-  var url = "http://localhost/jave/queryDB.php";
-  Future getData() async {
-    final response = await http.post(Uri.parse(url), body: {
-      "query":
-          "select producto,sum(cantidad) as cantidad,precio from Carrito_Productos group by id_producto;"
-    });
-    var rt = await CategoriaFromJson(response.body);
-    print(rt);
+  final url = "https://javestore.000webhostapp.com/jave/cuenta.php";
+  Future<Cuenta> getData() async {
+    final response = await http.post(Uri.parse(url),
+        body: {"email": "tomae@gmail.com", "password": "tomatoe123"});
+    List<Cuenta> c = CuentaFromJson(response.body);
+    if (c.length == 0)
+      print("Error");
+    else {
+      print(c);
+      return c[0];
+    }
+    return null;
   }
 
   getData();
