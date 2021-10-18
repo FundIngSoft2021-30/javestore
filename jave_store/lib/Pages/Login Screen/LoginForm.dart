@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:jave_store/Entidades/Cuenta.dart';
+import 'package:localstorage/localstorage.dart';
 import 'package:jave_store/Pages/SingUp/SingUp.dart';
 import 'package:jave_store/Pages/Widgets/AppBarBottom.dart';
 
@@ -14,6 +15,7 @@ class LoginForm extends StatefulWidget {
 class _LoginFormState extends State<LoginForm> {
   TextEditingController user = new TextEditingController();
   TextEditingController pass = new TextEditingController();
+  final LocalStorage storage = new LocalStorage('localstorage_app');
   final url = "https://javestore.000webhostapp.com/jave/cuenta.php";
 
   Future<Cuenta> getData() async {
@@ -105,6 +107,7 @@ class _LoginFormState extends State<LoginForm> {
                 onPressed: () async {
                   Cuenta c = await getData();
                   if (c.rol == "S") {
+                    storage.setItem("email", c.email);
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => AppBarBottom()),

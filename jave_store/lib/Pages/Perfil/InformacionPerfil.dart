@@ -4,12 +4,17 @@ import 'package:jave_store/Entidades/Usuario.dart';
 import 'package:http/http.dart' as http;
 import 'package:jave_store/Pages/Perfil/Historial/HistorialScreen.dart';
 import 'package:jave_store/Pages/Perfil/Info.dart';
+import 'package:localstorage/localstorage.dart';
 
 class InformacionPerfil extends StatelessWidget {
-  final url = "https://javestore.000webhostapp.com/jave/queryDB.php";
+  final LocalStorage storage = new LocalStorage('localstorage_app');
+
   Future<Usuario> getData() async {
-    final response = await http.post(Uri.parse(url),
-        body: {"query": "select * from Usuario where id=2;"});
+    final url = "https://javestore.000webhostapp.com/jave/queryDB.php";
+    final response = await http.post(Uri.parse(url), body: {
+      "query":
+          "select * from Usuario u,Cuenta c where u.id=c.Usuarioid and  c.email='${storage.getItem("email")}';"
+    });
 
     Usuario rt = UsuarioFromJson(response.body)[0];
     return rt;
@@ -40,14 +45,16 @@ class InformacionPerfil extends StatelessWidget {
                 return snapshot.hasData
                     ? Column(
                         children: [
-                        
                           Info(name: "Nombre", numero: snapshot.data.nombre),
-                          Info(name: "Apellido", numero: snapshot.data.apellido),
+                          Info(
+                              name: "Apellido", numero: snapshot.data.apellido),
                           Info(
                             numero: snapshot.data.numero,
                             name: "Número Telefónico",
                           ),
-                          SizedBox(height:size.height/8,),
+                          SizedBox(
+                            height: size.height / 8,
+                          ),
                           BotonHistorialCompras(size, context),
                         ],
                       )
@@ -72,9 +79,9 @@ Widget BotonHistorialCompras(Size size, BuildContext context) {
           child: FlatButton(
             onPressed: () {
               Navigator.push(
-                 context,
-                 MaterialPageRoute(builder: (context) => HistorialScreen()),
-               );
+                context,
+                MaterialPageRoute(builder: (context) => HistorialScreen()),
+              );
             },
             child: Text(
               "Historial Compras",
