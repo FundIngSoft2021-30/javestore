@@ -28,16 +28,18 @@ class ScreenLibro extends StatelessWidget {
           builder: (context, AsyncSnapshot<List<Producto>> snapshot) {
             if (snapshot.hasError) print(snapshot.error);
             return snapshot.hasData
-                ? GridView.builder(
-                    padding: EdgeInsets.only(top: 20, bottom: 20, left: 25),
-                    shrinkWrap: true,
-                    itemCount: snapshot.data.length,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
+                ? Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                    child: GridView.builder(
+                      padding: EdgeInsets.only(top: 20, bottom: 20, left: 25),
+                      shrinkWrap: true,
+                      itemCount: snapshot.data.length,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2, childAspectRatio: 0.75),
+                      itemBuilder: (context, index) => ItemCard(
+                          product: snapshot.data[index],
+                          press: () => {print(snapshot.data[index].codigo)}),
                     ),
-                    itemBuilder: (context, index) => ItemCard(
-                        product: snapshot.data[index],
-                        press: () => {print(snapshot.data[index].codigo)}),
                   )
                 : new Center(
                     child: new CircularProgressIndicator(),

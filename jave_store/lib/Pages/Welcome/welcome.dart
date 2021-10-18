@@ -44,7 +44,7 @@ class _HomePageState extends State<HomePage> {
             padding: EdgeInsets.only(right: 20, top: 20),
             child: InkWell(
               child: Text(
-                'Skip',
+                'Saltar',
                 style: TextStyle(
                   color: Colors.blue,
                   fontSize: 18,
@@ -74,17 +74,18 @@ class _HomePageState extends State<HomePage> {
             children: [
               makePage(
                   image: 'images/pag.png',
-                  title: "Books",
-                  content: "All the books, digital or physical in one app"),
+                  title: "Libros",
+                  content:
+                      "Todos los libros,digitales o físicos en una solo app"),
               makePage(
                   reverse: true,
                   image: 'images/page2.png',
-                  title: "Products",
-                  content: "Our products can be yours"),
+                  title: "Productos",
+                  content: "Nuestros productos pueden ser tuyos"),
               makePage(
                   image: 'images/logo.png',
-                  title: "Welcome",
-                  content: "Xaverian Community"),
+                  title: "Bienvenidos",
+                  content: "Comunidad Javeriana"),
             ],
           ),
           Container(

@@ -37,18 +37,16 @@ class ProductoxCarrito {
 
 void main() {
   final url = "https://javestore.000webhostapp.com/jave/cuenta.php";
-  Future<Cuenta> getData() async {
-    final response = await http.post(Uri.parse(url),
-        body: {"email": "tomae@gmail.com", "password": "tomatoe123"});
-    List<Cuenta> c = CuentaFromJson(response.body);
-    if (c.length == 0)
-      print("Error");
-    else {
-      print(c);
-      return c[0];
-    }
-    return null;
+  Future<List<String>> suggestions() async {
+    final url = "https://javestore.000webhostapp.com/jave/queryDB.php";
+    final response = await http
+        .post(Uri.parse(url), body: {"query": "select nombre from Producto"});
+    print(response.body);
+    List<String> rt = json.decode(response.body).map((x) => x);
+    print("*************************");
+    print(rt.toString());
+    return rt;
   }
 
-  getData();
+  suggestions();
 }

@@ -25,7 +25,9 @@ class ItemCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Container(
-            padding: EdgeInsets.all(20),
+            height: 160,
+            width: 140,
+            padding: EdgeInsets.all(10),
             decoration: BoxDecoration(
               color: Colors.yellow,
               borderRadius: BorderRadius.circular(16),
