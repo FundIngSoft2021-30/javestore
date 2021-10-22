@@ -108,6 +108,7 @@ class _LoginFormState extends State<LoginForm> {
                   Cuenta c = await getData();
                   if (c.rol == "S") {
                     storage.setItem("email", c.email);
+
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => AppBarBottom()),

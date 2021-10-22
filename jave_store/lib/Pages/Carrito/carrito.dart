@@ -3,41 +3,14 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:jave_store/Entidades/ProductoXcarrito.dart';
 import 'package:jave_store/Pages/Carrito/cardProducto.dart';
 import 'package:jave_store/Pages/Pago/Pago.dart';
+import 'package:localstorage/localstorage.dart';
 
 List<ProductoxCarrito> ProductoxCarritoFromJson(String str) =>
     List<ProductoxCarrito>.from(
         json.decode(str).map((x) => ProductoxCarrito.fromJson(x)));
-
-class ProductoxCarrito {
-  String nombre;
-  String cantidad;
-  String precio;
-  String imagen;
-  ProductoxCarrito({
-    this.nombre,
-    this.precio,
-    this.cantidad,
-    this.imagen,
-  });
-  @override
-  String toString() {
-    return "nombre:" +
-        this.nombre +
-        "precio:" +
-        this.precio +
-        "cantidad:" +
-        this.cantidad;
-  }
-
-  factory ProductoxCarrito.fromJson(Map<String, dynamic> json) =>
-      ProductoxCarrito(
-          cantidad: json["cantidad"],
-          nombre: json["producto"],
-          precio: json["precio"],
-          imagen: json["imagen"]);
-}
 
 class Carrito extends StatefulWidget {
   @override
@@ -45,17 +18,24 @@ class Carrito extends StatefulWidget {
 }
 
 class _CarritoState extends State<Carrito> {
+  final LocalStorage storage = new LocalStorage('localstorage_app');
   final url = "https://javestore.000webhostapp.com/jave/queryDB.php";
   Future<List<ProductoxCarrito>> getData() async {
     http.post(Uri.parse(url), body: {
       "query":
-          "CREATE OR REPLACE VIEW Carrito_Productos as SELECT k.id as carritoID, p.id as id_producto,p.nombre as producto,p.imagen as imagen,c.cantidad as cantidad,p.precio as precio from Producto p,ItemsxCarrito c,Carrito k where p.id = c.Productoid and c.Carritoid = k.id and k.estado='0'"
+          "CREATE OR REPLACE VIEW UserxCarrito AS SELECT u.id as UserID,c.email as email,ca.id as carritoID FROM Usuario u,Cuenta c,Carrito ca WHERE u.id=c.Usuarioid AND u.id=ca.Usuarioid AND ca.estado='0';"
     });
+    http.post(Uri.parse(url), body: {
+      "query":
+          "CREATE OR REPLACE VIEW Carrito_Productos AS SELECT uc.carritoID AS carritoID,p.id AS idProducto,p.nombre AS producto,p.imagen AS imagen,i.cantidad AS cantidad,p.precio AS precio FROM UserxCarrito  uc,Carrito c,Producto p,ItemsxCarrito i WHERE p.id = i.Productoid AND c.id =uc.carritoID AND c.estado = '0' AND uc.email='${storage.getItem('email')}';"
+    });
+
     final response = await http.post(Uri.parse(url), body: {
       "query":
-          "select producto,imagen,sum(cantidad) as cantidad,precio from Carrito_Productos group by id_producto;"
+          "select carritoID,producto,imagen,idProducto,sum(cantidad) as cantidad,precio from Carrito_Productos group by idProducto;"
     });
     List<ProductoxCarrito> rt = ProductoxCarritoFromJson(response.body);
+
     return rt;
   }
 
@@ -76,6 +56,9 @@ class _CarritoState extends State<Carrito> {
                         padding: EdgeInsets.symmetric(vertical: 5),
                         child: Dismissible(
                           key: Key(snapshot.data[index].nombre),
+                          onDismissed: (direction) {
+                            dismissedItem(context, index, snapshot.data[index]);
+                          },
                           direction: DismissDirection.endToStart,
                           background: Container(
                             padding: EdgeInsets.symmetric(horizontal: 20),
@@ -168,5 +151,12 @@ class _CarritoState extends State<Carrito> {
         },
       ),
     );
+  }
+
+  void dismissedItem(
+      BuildContext context, int index, ProductoxCarrito item) async {
+    http.post(Uri.parse(url), body: {
+      "query": "DELETE FROM ItemsxCarrito where Productoid='${item.idProducto}'"
+    });
   }
 }

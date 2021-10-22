@@ -8,7 +8,6 @@ class Cuenta {
   String email;
   String pass;
   String rol;
-
   Cuenta({this.pass, this.email, this.rol});
 
   @override

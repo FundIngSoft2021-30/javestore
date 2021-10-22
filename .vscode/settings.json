@@ -13,5 +13,33 @@
             "username": "javestore",
             "password": "javestore2021"
         }
-    ]
+    ],
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true,
+        "web": true,
+        "jave_store/web": true,
+        "jave_store/.dart_tool": true,
+        "jave_store/.vscode": true,
+        "jave_store/android": true,
+        "jave_store/build": true,
+        "jave_store/images": true,
+        "jave_store/ios": true,
+        "jave_store\\lib/generated_plugin_registrant.dart": true,
+        "**/.flutter-plugins": true,
+        "jave_store/pubspec.lock": true,
+        "jave_store/.flutter-plugins-dependencies": true,
+        "jave_store/.gitignore": true,
+        "jave_store/.metadata": true,
+        "jave_store/.packages": true,
+        "jave_store/pubspec.yaml": true,
+        "jave_store/README.md": true,
+        "**/jave_store.vpp": true,
+        "**/README.md": true
+    },
+    "explorerExclude.backup": null
 }

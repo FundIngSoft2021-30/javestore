@@ -5,7 +5,6 @@ import 'package:jave_store/Pages/Carrito/carrito.dart';
 import 'package:jave_store/Pages/Catalogo/categorias.dart';
 import 'package:jave_store/Pages/Perfil/InformacionPerfil.dart';
 import 'package:jave_store/Pages/Perfil/perfil.dart';
-import 'package:localstorage/localstorage.dart';
 
 void main() => runApp(AppBarBottom());
 

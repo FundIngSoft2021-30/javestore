@@ -29,7 +29,7 @@ class ScreenLibro extends StatelessWidget {
             if (snapshot.hasError) print(snapshot.error);
             return snapshot.hasData
                 ? Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                    padding: EdgeInsets.symmetric(horizontal: 5),
                     child: GridView.builder(
                       padding: EdgeInsets.only(top: 20, bottom: 20, left: 25),
                       shrinkWrap: true,

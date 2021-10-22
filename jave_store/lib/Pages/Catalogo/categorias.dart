@@ -9,6 +9,7 @@ import 'package:jave_store/Entidades/Producto.dart';
 import 'package:jave_store/Pages/Catalogo/pages/screenLibro.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:jave_store/Pages/Catalogo/ventanaProducto.dart';
+import 'package:jave_store/controller/apiDB.dart';
 
 class Categories extends StatefulWidget {
   @override
@@ -19,32 +20,9 @@ class _CategoriesState extends State<Categories>
     with SingleTickerProviderStateMixin {
   int _selectedIndex = 0;
   TabController _tabController;
+  ApiDB controllerApiDB = new ApiDB();
   final _formKey = GlobalKey<FormState>();
   var _controller = TextEditingController();
-  Future<List<Categoria>> getData() async {
-    final url = "https://javestore.000webhostapp.com/jave/queryDB.php";
-    final response = await http.post(Uri.parse(url),
-        body: {"query": "select * from Categoria order by id;"});
-    List<Categoria> rt = CategoriaFromJson(response.body);
-    return rt;
-  }
-
-  Future<List<Producto>> getProducto(String val) async {
-    final url = "https://javestore.000webhostapp.com/jave/queryDB.php";
-    final response = await http.post(Uri.parse(url), body: {"query": val});
-    List<Producto> rt = ProductoFromJson(response.body);
-    return rt;
-  }
-
-  Future<List<String>> suggestions() async {
-    final url = "https://javestore.000webhostapp.com/jave/queryDB.php";
-    final response = await http
-        .post(Uri.parse(url), body: {"query": "select nombre from Producto"});
-    List<Producto> tmp = ProductoFromJson(response.body);
-    List<String> rt = new List<String>();
-    for (Producto x in tmp) rt.add(x.nombre);
-    return rt;
-  }
 
   void _tapselect(int index) {
     setState(() {
@@ -78,13 +56,15 @@ class _CategoriesState extends State<Categories>
                 key: _formKey,
                 child: Container(
                   child: TypeAheadFormField(
-                    suggestionsCallback: (pattern) => suggestions().then(
-                        (value) => value.where((item) => item
+                    suggestionsCallback: (pattern) => controllerApiDB
+                        .suggestions()
+                        .then((value) => value.where((item) => item
                             .toLowerCase()
                             .contains(pattern.toLowerCase()))),
                     onSuggestionSelected: (String val) async {
                       this._controller.text = val;
-                      Producto product = await getProducto(
+                      Producto product = await controllerApiDB
+                          .getProduct(
                               "Select * from Producto where nombre='${val}'")
                           .then((value) => value[0]);
                       Navigator.push(
@@ -122,7 +102,7 @@ class _CategoriesState extends State<Categories>
           ),
         ),
         FutureBuilder<List<Categoria>>(
-          future: getData(),
+          future: controllerApiDB.getCategory(),
           builder: (context, AsyncSnapshot<List<Categoria>> snapshot) {
             if (snapshot.hasError) print(snapshot.error);
             return snapshot.hasData

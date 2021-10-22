@@ -2,14 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:jave_store/Pages/Login%20Screen/Login.dart';
-import 'package:jave_store/Pages/ProductoDetallado/ProductoDetallado.dart';
-
-void main() {
-  runApp(MaterialApp(
-    debugShowCheckedModeBanner: false,
-    home: HomePage(),
-  ));
-}
 
 class HomePage extends StatefulWidget {
   @override
