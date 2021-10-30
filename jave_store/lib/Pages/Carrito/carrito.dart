@@ -1,16 +1,12 @@
 //@dart=2.9
 
 import 'package:flutter/material.dart';
-import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:jave_store/Entidades/ProductoXcarrito.dart';
+import 'package:jave_store/Entidades/Producto.dart';
 import 'package:jave_store/Pages/Carrito/cardProducto.dart';
 import 'package:jave_store/Pages/Pago/Pago.dart';
+import 'package:jave_store/controller/apiFB.dart';
 import 'package:localstorage/localstorage.dart';
-
-List<ProductoxCarrito> ProductoxCarritoFromJson(String str) =>
-    List<ProductoxCarrito>.from(
-        json.decode(str).map((x) => ProductoxCarrito.fromJson(x)));
 
 class Carrito extends StatefulWidget {
   @override
@@ -19,33 +15,14 @@ class Carrito extends StatefulWidget {
 
 class _CarritoState extends State<Carrito> {
   final LocalStorage storage = new LocalStorage('localstorage_app');
-  final url = "https://javestore.000webhostapp.com/jave/queryDB.php";
-  Future<List<ProductoxCarrito>> getData() async {
-    http.post(Uri.parse(url), body: {
-      "query":
-          "CREATE OR REPLACE VIEW UserxCarrito AS SELECT u.id as UserID,c.email as email,ca.id as carritoID FROM Usuario u,Cuenta c,Carrito ca WHERE u.id=c.Usuarioid AND u.id=ca.Usuarioid AND ca.estado='0';"
-    });
-    http.post(Uri.parse(url), body: {
-      "query":
-          "CREATE OR REPLACE VIEW Carrito_Productos AS SELECT uc.carritoID AS carritoID,p.id AS idProducto,p.nombre AS producto,p.imagen AS imagen,i.cantidad AS cantidad,p.precio AS precio FROM UserxCarrito  uc,Carrito c,Producto p,ItemsxCarrito i WHERE p.id = i.Productoid AND c.id =uc.carritoID AND c.estado = '0' AND uc.email='${storage.getItem('email')}';"
-    });
-
-    final response = await http.post(Uri.parse(url), body: {
-      "query":
-          "select carritoID,producto,imagen,idProducto,sum(cantidad) as cantidad,precio from Carrito_Productos group by idProducto;"
-    });
-    List<ProductoxCarrito> rt = ProductoxCarritoFromJson(response.body);
-
-    return rt;
-  }
-
+  final ApiFB api = ApiFB();
   @override
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
-      child: FutureBuilder<List<ProductoxCarrito>>(
-        future: getData(),
-        builder: (context, AsyncSnapshot<List<ProductoxCarrito>> snapshot) {
+      child: FutureBuilder<List<Producto>>(
+        future: api.get_cart(storage.getItem('id')),
+        builder: (context, AsyncSnapshot<List<Producto>> snapshot) {
           if (snapshot.hasError) print(snapshot.error);
           return snapshot.hasData
               ? Stack(
@@ -153,10 +130,9 @@ class _CarritoState extends State<Carrito> {
     );
   }
 
-  void dismissedItem(
-      BuildContext context, int index, ProductoxCarrito item) async {
-    http.post(Uri.parse(url), body: {
-      "query": "DELETE FROM ItemsxCarrito where Productoid='${item.idProducto}'"
-    });
+  void dismissedItem(BuildContext context, int index, Producto item) async {
+    // http.post(Uri.parse(url), body: {
+    //   "query": "DELETE FROM ItemsxCarrito where Productoid='${item.idProducto}'"
+    // });
   }
 }

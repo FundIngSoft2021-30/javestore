@@ -19,6 +19,7 @@ class AuthService with ChangeNotifier {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
       _status = AuthStatus.Authenticated;
       _currentUser = _auth.currentUser;
+
       notifyListeners();
       return "${_auth.currentUser.uid}";
     } catch (e) {

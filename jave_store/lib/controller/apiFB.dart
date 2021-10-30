@@ -11,8 +11,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   ApiFB api = ApiFB();
-  var x = await api.getInfoUser("Jkes9lQxd3fLqFwg5kbwefZ08rz2");
-  print(x);
+  await api.get_cart("zDPg5UAyVCbc0qgLQqekBWhUk4N2");
 }
 
 class ApiFB extends ChangeNotifier {
@@ -58,6 +57,19 @@ class ApiFB extends ChangeNotifier {
     return p;
   }
 
+  Future<Producto> get_product(String key) async {
+    var doc = await this._firestore.collection('Producto').doc(key).get();
+    return (Producto(
+        activo: doc['available'],
+        nombre: doc.id,
+        precio: doc['price'],
+        descripcion: doc['description'],
+        calificacion: doc['rate'],
+        cantidad: doc['quantity'],
+        categoria: doc['category'],
+        imagen: doc['image']));
+  }
+
   Future<List<Producto>> getProductsByCategory(int index) async {
     String categoria =
         await this.getCategories().then((value) => value[index].nombre);
@@ -86,6 +98,21 @@ class ApiFB extends ChangeNotifier {
     List<String> rt = [];
     for (var doc in documents) {
       rt.add(doc.id);
+    }
+    return rt;
+  }
+
+  Future<List<Producto>> get_cart(String id) async {
+    List<Producto> rt = [];
+    var docs = await _firestore.collection('Cart').doc(id).get();
+    String x = docs['productsID'].toString();
+    RegExp regExp = new RegExp("\{(.*)\}");
+    var tmp = regExp.allMatches(x).first.group(1).split(",");
+    for (var i in tmp) {
+      var z = i.split(':');
+      Producto p = await this.get_product(z[0].trim());
+      p.cantidad = int.parse(z[1].trim());
+      rt.add(p);
     }
     return rt;
   }

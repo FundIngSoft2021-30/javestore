@@ -1,21 +1,21 @@
 //@dart=2.9
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:jave_store/Entidades/ProductoXcarrito.dart';
+import 'package:jave_store/Entidades/Producto.dart';
 
 class CardProducto extends StatefulWidget {
-  final ProductoxCarrito item;
+  final Producto item;
   CardProducto({this.item});
   @override
   _CardProductoState createState() => _CardProductoState(item: this.item);
 }
 
 class _CardProductoState extends State<CardProducto> {
-  ProductoxCarrito item;
+  Producto item;
   _CardProductoState({this.item});
   void _update(String value) {
     setState(() {
-      item.cantidad = value;
+      // item.cantidad = value;
     });
   }
 
@@ -48,7 +48,7 @@ class _CardProductoState extends State<CardProducto> {
               ),
               IconButton(
                 onPressed: () {
-                  int i = int.parse(item.cantidad);
+                  int i = item.cantidad;
                   if (i > 0) {
                     i--;
                     _update(i.toString());
@@ -56,10 +56,10 @@ class _CardProductoState extends State<CardProducto> {
                 },
                 icon: Icon(Icons.remove_circle),
               ),
-              Text(item.cantidad),
+              Text('${item.cantidad}'),
               IconButton(
                 onPressed: () {
-                  int i = int.parse(item.cantidad);
+                  int i = item.cantidad;
                   i++;
                   _update(i.toString());
                 },

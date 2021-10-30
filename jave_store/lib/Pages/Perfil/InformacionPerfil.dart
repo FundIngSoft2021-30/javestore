@@ -19,6 +19,7 @@ class InformacionPerfil extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('${storage.getItem('id')}');
     Size size = MediaQuery.of(context).size;
     return Container(
       padding: EdgeInsets.only(left: 20, right: 20, top: 30),

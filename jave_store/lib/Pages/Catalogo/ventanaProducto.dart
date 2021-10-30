@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:jave_store/Entidades/Producto.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:http/http.dart' as http;
-import 'package:jave_store/controller/apiDB.dart';
 
 class ventanaProducto extends StatefulWidget {
   final Producto product;
@@ -20,8 +19,6 @@ class ventanaProducto extends StatefulWidget {
 }
 
 class _ventanaProducto extends State<ventanaProducto> {
-  ApiDB controllerDB = new ApiDB();
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -122,7 +119,7 @@ class _ventanaProducto extends State<ventanaProducto> {
                 SizedBox(
                   width: size.width / 3,
                   child: RaisedButton(
-                    onPressed: () => controllerDB.insertItem('1', '1'),
+                    // onPressed: (){} => controllerDB.insertItem('1', '1'),
                     color: Colors.blue,
                     child: Padding(
                       padding: const EdgeInsets.all(2.0),

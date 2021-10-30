@@ -5,7 +5,6 @@ import 'package:jave_store/Entidades/Producto.dart';
 import 'package:jave_store/Pages/Catalogo/pages/screenLibro.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:jave_store/Pages/Catalogo/ventanaProducto.dart';
-import 'package:jave_store/controller/apiDB.dart';
 import 'package:jave_store/controller/apiFB.dart';
 
 class Categories extends StatefulWidget {
@@ -17,7 +16,6 @@ class _CategoriesState extends State<Categories>
     with SingleTickerProviderStateMixin {
   int _selectedIndex = 0;
   TabController _tabController;
-  ApiDB controllerApiDB = new ApiDB();
   ApiFB apiFB = new ApiFB();
   final _formKey = GlobalKey<FormState>();
   var _controller = TextEditingController();
@@ -61,15 +59,13 @@ class _CategoriesState extends State<Categories>
                             .contains(pattern.toLowerCase()))),
                     onSuggestionSelected: (String val) async {
                       this._controller.text = val;
-                      Producto product = await controllerApiDB
-                          .getProduct(
-                              "Select * from Producto where nombre='${val}'")
-                          .then((value) => value[0]);
+
+                      Producto p = await apiFB.get_product(val);
                       Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
-                                  ventanaProducto(product: product)));
+                                  ventanaProducto(product: p)));
                     },
                     itemBuilder: (context, String item) => ListTile(
                       title: Text(item),
