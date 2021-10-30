@@ -2,20 +2,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:jave_store/Entidades/Producto.dart';
-import 'package:http/http.dart' as http;
 import 'package:jave_store/Pages/Catalogo/Item.dart';
+import 'package:jave_store/controller/apiFB.dart';
 
 class ScreenLibro extends StatelessWidget {
-  String query;
-  ScreenLibro({this.query});
-  Future<List<Producto>> getData() async {
-    final url = "https://javestore.000webhostapp.com/jave/queryDB.php";
-    final response = await http.post(Uri.parse(url), body: {"query": query});
-
-    List<Producto> rt = ProductoFromJson(response.body);
-    return rt;
-  }
-
+  final ApiFB api = new ApiFB();
+  final int data;
+  ScreenLibro({this.data});
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -24,7 +17,7 @@ class ScreenLibro extends StatelessWidget {
       height: size.height / 1.2,
       width: size.width,
       child: FutureBuilder<List<Producto>>(
-          future: getData(),
+          future: api.getProductsByCategory(data),
           builder: (context, AsyncSnapshot<List<Producto>> snapshot) {
             if (snapshot.hasError) print(snapshot.error);
             return snapshot.hasData
@@ -37,8 +30,8 @@ class ScreenLibro extends StatelessWidget {
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2, childAspectRatio: 0.75),
                       itemBuilder: (context, index) => ItemCard(
-                          product: snapshot.data[index],
-                          press: () => {print(snapshot.data[index].codigo)}),
+                        product: snapshot.data[index],
+                      ),
                     ),
                   )
                 : new Center(

@@ -108,7 +108,7 @@ class _ventanaProducto extends State<ventanaProducto> {
                   height: size.height / 40,
                 ),
                 Text(
-                  '\$ ' + widget.product.precio,
+                  '\$ ' + "${widget.product.precio}",
                   textAlign: TextAlign.left,
                   style: TextStyle(
                     fontSize: 20,

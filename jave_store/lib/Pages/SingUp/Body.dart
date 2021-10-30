@@ -1,4 +1,6 @@
 //@dart=2.9
+// ignore_for_file: deprecated_member_use
+
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
@@ -42,17 +44,12 @@ class _BodyState extends State<Body> {
         u.nombre = nombre.text;
         u.apellido = apellido.text;
         u.email = email.text;
-        u.pass = pass.text;
-        u.rol = "S";
-        u.numero = number.text;
-        print(u.nombre + u.apellido + u.numero);
+        u.numero = int.parse(number.text);
         final url = "https://javestore.000webhostapp.com/jave/crearCuenta.php";
         final response = await http.post(Uri.parse(url), body: {
           "name": u.nombre,
           "surname": u.apellido,
           "email": u.email,
-          "password": u.pass,
-          "rol": u.rol,
           "number": u.numero,
         });
       }

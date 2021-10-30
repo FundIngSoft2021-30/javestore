@@ -33,7 +33,7 @@ class ItemCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(16),
             ),
             child: Hero(
-              tag: product.codigo,
+              tag: product.nombre,
               child: Container(
                 width: 100,
                 height: 80,
@@ -54,7 +54,7 @@ class ItemCard extends StatelessWidget {
             ),
           ),
           Text(
-            product.precio,
+            "${product.precio}",
             style: TextStyle(
               fontWeight: FontWeight.bold,
             ),

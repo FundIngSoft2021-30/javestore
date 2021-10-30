@@ -1,24 +1,21 @@
 //@dart=2.9
+// ignore_for_file: deprecated_member_use
+
+import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:jave_store/Entidades/Usuario.dart';
-import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
 import 'package:jave_store/Pages/Perfil/Historial/HistorialScreen.dart';
 import 'package:jave_store/Pages/Perfil/Info.dart';
+import 'package:jave_store/Pages/Perfil/avatar.dart';
+import 'package:jave_store/controller/apiFB.dart';
+import 'package:jave_store/controller/services/auth.dart';
 import 'package:localstorage/localstorage.dart';
+import 'package:provider/provider.dart';
 
 class InformacionPerfil extends StatelessWidget {
+  final ApiFB api = new ApiFB();
   final LocalStorage storage = new LocalStorage('localstorage_app');
-
-  Future<Usuario> getData() async {
-    final url = "https://javestore.000webhostapp.com/jave/queryDB.php";
-    final response = await http.post(Uri.parse(url), body: {
-      "query":
-          "select * from Usuario u,Cuenta c where u.id=c.Usuarioid and  c.email='${storage.getItem("email")}';"
-    });
-
-    Usuario rt = UsuarioFromJson(response.body)[0];
-    return rt;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,17 +26,18 @@ class InformacionPerfil extends StatelessWidget {
         children: [
           Align(
             alignment: Alignment.topCenter,
-            child: CircleAvatar(
-              radius: size.width / 4.6,
-              backgroundImage: NetworkImage(
-                  "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.UvWpsuNa0vidHjqXG7Lp1QHaLH%26pid%3DApi&f=1"),
+            child: Avatar(
+              onTap: () async {
+                var state = await Permission.photos.request();
+                print(state.isDenied);
+              },
             ),
           ),
           SizedBox(
             height: 25,
           ),
           FutureBuilder<Usuario>(
-              future: getData(),
+              future: api.getInfoUser(storage.getItem('id')),
               builder: (context, AsyncSnapshot<Usuario> snapshot) {
                 if (snapshot.hasError) print(snapshot.error);
                 return snapshot.hasData
@@ -47,15 +45,64 @@ class InformacionPerfil extends StatelessWidget {
                         children: [
                           Info(name: "Nombre", numero: snapshot.data.nombre),
                           Info(
-                              name: "Apellido", numero: snapshot.data.apellido),
-                          Info(
-                            numero: snapshot.data.numero,
-                            name: "Número Telefónico",
+                            numero: "${snapshot.data.numero}",
+                            name: "Número",
                           ),
                           SizedBox(
-                            height: size.height / 8,
+                            height: size.height / 14,
                           ),
-                          BotonHistorialCompras(size, context),
+                          Container(
+                            width: 250,
+                            height: 50,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(20),
+                              child: Container(
+                                color: Colors.blue,
+                                child: FlatButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              HistorialScreen()),
+                                    );
+                                  },
+                                  child: Text(
+                                    "Historial de compras",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 15,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: size.height / 60,
+                          ),
+                          Container(
+                            width: 250,
+                            height: 50,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(20),
+                              child: Container(
+                                color: Colors.blue,
+                                child: FlatButton(
+                                  onPressed: () {
+                                    context.read<AuthService>().signOut();
+                                  },
+                                  child: Text(
+                                    "Cerrar sesión",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 15,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
                         ],
                       )
                     : new Center(
@@ -66,32 +113,4 @@ class InformacionPerfil extends StatelessWidget {
       ),
     );
   }
-}
-
-Widget BotonHistorialCompras(Size size, BuildContext context) {
-  return Container(
-      width: 250,
-      height: 50,
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(20),
-        child: Container(
-          color: Colors.blue,
-          child: FlatButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => HistorialScreen()),
-              );
-            },
-            child: Text(
-              "Historial Compras",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 15,
-              ),
-            ),
-          ),
-        ),
-      ) // Thisf
-      );
 }

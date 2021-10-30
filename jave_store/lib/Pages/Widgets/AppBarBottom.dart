@@ -1,4 +1,5 @@
 //@dart=2.9
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:jave_store/Pages/Carrito/carrito.dart';
@@ -6,7 +7,11 @@ import 'package:jave_store/Pages/Catalogo/categorias.dart';
 import 'package:jave_store/Pages/Perfil/InformacionPerfil.dart';
 import 'package:jave_store/Pages/Perfil/perfil.dart';
 
-void main() => runApp(AppBarBottom());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(AppBarBottom());
+}
 
 class AppBarBottom extends StatefulWidget {
   @override

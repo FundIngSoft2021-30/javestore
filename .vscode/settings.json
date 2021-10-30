@@ -25,7 +25,7 @@
         "jave_store/web": true,
         "jave_store/.dart_tool": true,
         "jave_store/.vscode": true,
-        "jave_store/android": true,
+        "jave_store/android": false,
         "jave_store/build": true,
         "jave_store/images": true,
         "jave_store/ios": true,
@@ -39,7 +39,8 @@
         "jave_store/pubspec.yaml": true,
         "jave_store/README.md": true,
         "**/jave_store.vpp": true,
-        "**/README.md": true
+        "**/README.md": true,
+        ".vscode": true
     },
     "explorerExclude.backup": null
 }

@@ -1,15 +1,12 @@
 //@dart=2.9
-import 'dart:async';
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:jave_store/Entidades/Categoria.dart';
 import 'package:jave_store/Entidades/Producto.dart';
 import 'package:jave_store/Pages/Catalogo/pages/screenLibro.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:jave_store/Pages/Catalogo/ventanaProducto.dart';
 import 'package:jave_store/controller/apiDB.dart';
+import 'package:jave_store/controller/apiFB.dart';
 
 class Categories extends StatefulWidget {
   @override
@@ -21,6 +18,7 @@ class _CategoriesState extends State<Categories>
   int _selectedIndex = 0;
   TabController _tabController;
   ApiDB controllerApiDB = new ApiDB();
+  ApiFB apiFB = new ApiFB();
   final _formKey = GlobalKey<FormState>();
   var _controller = TextEditingController();
 
@@ -56,8 +54,8 @@ class _CategoriesState extends State<Categories>
                 key: _formKey,
                 child: Container(
                   child: TypeAheadFormField(
-                    suggestionsCallback: (pattern) => controllerApiDB
-                        .suggestions()
+                    suggestionsCallback: (pattern) => apiFB
+                        .getSuggestions()
                         .then((value) => value.where((item) => item
                             .toLowerCase()
                             .contains(pattern.toLowerCase()))),
@@ -102,7 +100,7 @@ class _CategoriesState extends State<Categories>
           ),
         ),
         FutureBuilder<List<Categoria>>(
-          future: controllerApiDB.getCategory(),
+          future: apiFB.getCategories(),
           builder: (context, AsyncSnapshot<List<Categoria>> snapshot) {
             if (snapshot.hasError) print(snapshot.error);
             return snapshot.hasData
@@ -115,7 +113,9 @@ class _CategoriesState extends State<Categories>
                       controller: _tabController,
                       tabs: List.generate(
                         snapshot.data.length,
-                        (index) => category(snapshot.data[index].nombre),
+                        (index) {
+                          return category(snapshot.data[index].nombre);
+                        },
                       ),
                     ),
                   )
@@ -124,8 +124,7 @@ class _CategoriesState extends State<Categories>
         ),
         Expanded(
           child: ScreenLibro(
-            query:
-                "select * from Producto where Categoriaid=${_selectedIndex + 1};",
+            data: _selectedIndex,
           ),
         ),
       ],
