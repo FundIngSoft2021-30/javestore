@@ -22,6 +22,7 @@ environment:
 
 dependencies:
   cupertino_radio_choice: ^1.0.0+1
+  comment_box: ^0.0.16
   carousel_slider: ^4.0.0
   flutter_rating_bar: ^4.0.0
   http: ^0.13.3

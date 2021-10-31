@@ -1,7 +1,7 @@
 //@dart=2.9
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:jave_store/Pages/Promociones/Body.dart';
+import 'package:jave_store/Pages/resenas/Body.dart';
 
 void main() => runApp(resenas());
 
@@ -21,6 +21,7 @@ class resenas extends StatelessWidget {
           title: Text('Reseñas'),
           backgroundColor: Colors.blue,
         ),
+        body: body(),
       ),
     );
   }

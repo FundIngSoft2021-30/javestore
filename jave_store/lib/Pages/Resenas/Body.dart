@@ -1,57 +1,105 @@
-//@dart=2.9
-import 'dart:ui';
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:comment_box/comment/comment.dart';
 import 'package:flutter/material.dart';
 
 class body extends StatefulWidget {
   @override
-  _BodyState createState() => _BodyState();
+  _bodyState createState() => _bodyState();
 }
 
-class _BodyState extends State<body> {
-  String passCamp = "";
-  var _controller = TextEditingController();
+class _bodyState extends State<body> {
+  final formKey = GlobalKey<FormState>();
+  final TextEditingController commentController = TextEditingController();
+  List filedata = [
+    {
+      'name': 'Raul',
+      'pic': 'https://picsum.photos/300/30',
+      'message': 'Buen producto'
+    },
+    {
+      'name': 'Joaquin',
+      'pic': 'https://picsum.photos/300/30',
+      'message': 'cumplió todas mis expectativas'
+    },
+    {
+      'name': 'Saul',
+      'pic': 'https://picsum.photos/300/30',
+      'message': 'buen produto'
+    },
+    {
+      'name': 'Pablo',
+      'pic': 'https://picsum.photos/300/30',
+      'message': 'regular'
+    },
+  ];
+
+  Widget commentChild(data) {
+    return ListView(
+      children: [
+        for (var i = 0; i < data.length; i++)
+          Padding(
+            padding: const EdgeInsets.fromLTRB(2.0, 8.0, 2.0, 0.0),
+            child: ListTile(
+              leading: GestureDetector(
+                onTap: () async {
+                  // Display the image in large form.
+                  print("Comentario selecctionado");
+                },
+                child: Container(
+                  height: 50.0,
+                  width: 50.0,
+                  decoration: new BoxDecoration(
+                      color: Colors.blue,
+                      borderRadius: new BorderRadius.all(Radius.circular(50))),
+                  child: CircleAvatar(
+                      radius: 50,
+                      backgroundImage: NetworkImage(data[i]['pic'] + "$i")),
+                ),
+              ),
+              title: Text(
+                data[i]['name'],
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              subtitle: Text(data[i]['message']),
+            ),
+          )
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-
     return Container(
-        alignment: Alignment.center,
-        child: CarouselSlider(
-          options: CarouselOptions(
-            height: 400.0,
-            aspectRatio: 16 / 9,
-            viewportFraction: 0.8,
-            initialPage: 0,
-            enableInfiniteScroll: true,
-            reverse: false,
-            autoPlay: true,
-            autoPlayInterval: Duration(seconds: 3),
-            autoPlayAnimationDuration: Duration(milliseconds: 800),
-            autoPlayCurve: Curves.fastOutSlowIn,
-            enlargeCenterPage: true,
-            scrollDirection: Axis.horizontal,
-          ),
-          items: [
-            'https://images.unsplash.com/photo-1547721064-da6cfb341d50',
-            'https://unsplash.com/photos/JKjBsuKpatU/download?ixid=MnwxMjA3fDB8MXxzZWFyY2h8MTd8fHNhbGVzfHwwfHx8fDE2MzU2Mjc4NDU&force=true&w=640',
-            'https://unsplash.com/photos/pPzQP35zh4o/download?ixid=MnwxMjA3fDB8MXxhbGx8fHx8fHx8fHwxNjM1NjQ4MTYw&force=true&w=640',
-            'https://images.unsplash.com/photo-1547721064-da6cfb341d50',
-            'https://images.unsplash.com/photo-1547721064-da6cfb341d50'
-          ].map((i) {
-            return Builder(
-              builder: (BuildContext context) {
-                return Container(
-                    width: MediaQuery.of(context).size.width,
-                    margin: EdgeInsets.symmetric(horizontal: 5.0),
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: NetworkImage(i), fit: BoxFit.cover),
-                    ));
-              },
-            );
-          }).toList(),
-        ));
+      child: CommentBox(
+        userImage:
+            "https://unsplash.com/photos/MTZTGvDsHFY/download?ixid=MnwxMjA3fDB8MXxhbGx8fHx8fHx8fHwxNjM1NjU3MjE2&force=true&w=640",
+        child: commentChild(filedata),
+        labelText: 'Escriba una reseña...',
+        withBorder: false,
+        errorText: 'Commentario no puede estar en blanco',
+        sendButtonMethod: () {
+          if (formKey.currentState!.validate()) {
+            print(commentController.text);
+            setState(() {
+              var value = {
+                'name': 'Juan',
+                'pic':
+                    'https://unsplash.com/photos/MTZTGvDsHFY/download?ixid=MnwxMjA3fDB8MXxhbGx8fHx8fHx8fHwxNjM1NjU3MjE2&force=true&w=640',
+                'message': commentController.text
+              };
+              filedata.insert(0, value);
+            });
+            commentController.clear();
+            FocusScope.of(context).unfocus();
+          } else {
+            print("No validado");
+          }
+        },
+        formKey: formKey,
+        commentController: commentController,
+        backgroundColor: Colors.black38,
+        textColor: Colors.white,
+        sendWidget: Icon(Icons.send_sharp, size: 30, color: Colors.white),
+      ),
+    );
   }
 }
