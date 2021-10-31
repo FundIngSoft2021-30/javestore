@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:jave_store/Entidades/Producto.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:http/http.dart' as http;
+import 'package:jave_store/Pages/Resenas/resenas.dart';
 
 class ventanaProducto extends StatefulWidget {
   final Producto product;
@@ -79,7 +80,27 @@ class _ventanaProducto extends State<ventanaProducto> {
                                 fit: BoxFit.cover),
                           ),
                         ),
-
+                        Text(
+                          "Descripción:",
+                          style: TextStyle(
+                            fontSize: 15,
+                            color: Colors.black,
+                            fontWeight: FontWeight.w400,
+                          ), //Textstyle
+                        ),
+                        Text(
+                          widget.product.descripcion,
+                          style: TextStyle(
+                            fontSize: 15,
+                            color: Colors.black,
+                          ),
+                          textAlign: TextAlign.center,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 5, //Textstyle
+                        ),
+                        SizedBox(
+                          height: size.height / 80,
+                        ),
                         Text(
                           "Calificación promedio",
                           style: TextStyle(
@@ -108,52 +129,28 @@ class _ventanaProducto extends State<ventanaProducto> {
                           },
                         ),
                         SizedBox(
-                          height: size.height / 40,
+                          height: size.height / 80,
+                        ),
+                        OutlinedButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => resenas()),
+                            );
+                          },
+                          child: Text("Ver reseñas"),
+                        ),
+
+                        SizedBox(
+                          height: size.height / 160,
                         ),
                       ]),
                 ), //Siz
                 SizedBox(
-                  height: size.height / 80,
+                  height: size.height / 60,
                 ),
-                Text(
-                  "Descripción",
-                  style: TextStyle(
-                    fontSize: 15,
-                    color: Colors.black,
-                    fontWeight: FontWeight.w400,
-                  ), //Textstyle
-                ),
-                SizedBox(
-                  height: size.height / 120,
-                ),
-                //SizedBox
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(16),
-                    color: Colors.blue[100],
-                  ),
-                  height: size.height / 15,
-                  width: size.width / 2,
-                  alignment: Alignment.center,
-                  child: Column(children: [
-                    SizedBox(
-                      height: size.height / 80,
-                    ),
-                    Text(
-                      widget.product.descripcion,
-                      style: TextStyle(
-                        fontSize: 15,
-                        color: Colors.black,
-                      ),
-                      textAlign: TextAlign.center,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 5, //Textstyle
-                    ),
-                  ]),
-                ),
-                SizedBox(
-                  height: size.height / 80,
-                ),
+
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,

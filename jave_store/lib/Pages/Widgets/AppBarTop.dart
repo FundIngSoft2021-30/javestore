@@ -20,8 +20,7 @@ class AppBarTop extends StatefulWidget implements PreferredSizeWidget {
 class _AppBarTop extends State<AppBarTop> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: AppBar(
+    return AppBar(
       leading: IconButton(
         icon: Icon(Icons.arrow_back),
         onPressed: () {},
@@ -29,6 +28,6 @@ class _AppBarTop extends State<AppBarTop> {
       centerTitle: true,
       title: Text(widget.textoProducto),
       backgroundColor: Colors.blue,
-    ));
+    );
   }
 }
