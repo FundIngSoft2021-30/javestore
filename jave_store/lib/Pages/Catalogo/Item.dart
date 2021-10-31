@@ -16,10 +16,9 @@ class ItemCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => ventanaProducto(product: product)));
+        showDialog(
+            context: context,
+            builder: (context) => ventanaProducto(product: product));
       },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

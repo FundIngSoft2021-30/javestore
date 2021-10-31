@@ -25,116 +25,178 @@ class _ventanaProducto extends State<ventanaProducto> {
     return Center(
       /** Card Widget **/
       child: Card(
-        elevation: 600,
-        color: Colors.grey[70],
-        shadowColor: Colors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+        elevation: 0,
         child: SizedBox(
           width: size.width / 1.35,
-          height: size.height / 1.4,
+          height: size.height / 1.5,
           child: Padding(
             padding: const EdgeInsets.all(20.0),
             child: Column(
               children: [
                 Container(
-                  alignment: Alignment.topRight,
-                  child: IconButton(
-                      alignment: Alignment.centerRight,
-                      onPressed: () => Navigator.pop(context),
-                      icon: Icon(
-                        Icons.clear,
-                        color: Colors.blueAccent,
-                      )),
-                ),
-                Container(
-                  margin: const EdgeInsets.all(10.0),
-                  padding: const EdgeInsets.all(3.0),
-                  height: size.height / 5,
-                  width: size.width / 1.6,
                   decoration: BoxDecoration(
-                    border: Border.all(color: Colors.blueAccent),
-                    image: DecorationImage(
-                        image: NetworkImage(widget.product.imagen),
-                        fit: BoxFit.cover),
+                    borderRadius: BorderRadius.circular(16),
+                    color: Color.fromRGBO(235, 235, 235, 1),
                   ),
-                ),
-                //SizedBox
-                Text(
-                  widget.product.nombre,
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.black,
-                    fontWeight: FontWeight.w500,
-                  ), //Textstyle
-                ),
+                  alignment: Alignment.topCenter,
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(
+                          height: size.height / 180,
+                        ),
+                        Text(
+                          "Nombre",
+                          style: TextStyle(
+                            fontSize: 15,
+                            color: Colors.black,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                        SizedBox(
+                          height: size.height / 300,
+                        ), //Texts
+                        Text(
+                          widget.product.nombre,
+                          style: TextStyle(
+                            fontSize: 17,
+                            color: Colors.black,
+                            fontWeight: FontWeight.w500,
+                          ), //Textstyle
+                        ),
+                        Container(
+                          margin: const EdgeInsets.all(10.0),
+                          padding: const EdgeInsets.all(3.0),
+                          height: size.height / 5.5,
+                          width: size.width / 2.2,
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.blueAccent),
+                            image: DecorationImage(
+                                image: NetworkImage(widget.product.imagen),
+                                fit: BoxFit.cover),
+                          ),
+                        ),
+
+                        Text(
+                          "Calificación promedio",
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.black,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                        SizedBox(
+                          height: size.height / 300,
+                        ),
+                        RatingBar.builder(
+                          initialRating: 3,
+                          minRating: 1,
+                          itemSize: 20,
+                          direction: Axis.horizontal,
+                          allowHalfRating: true,
+                          itemCount: 5,
+                          itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                          itemBuilder: (context, _) => Icon(
+                            Icons.star,
+                            color: Colors.amber,
+                          ),
+                          onRatingUpdate: (rating) {
+                            print(rating);
+                          },
+                        ),
+                        SizedBox(
+                          height: size.height / 40,
+                        ),
+                      ]),
+                ), //Siz
                 SizedBox(
-                  height: 15,
+                  height: size.height / 80,
                 ),
-                RatingBar.builder(
-                  initialRating: 3,
-                  minRating: 1,
-                  itemSize: 20,
-                  direction: Axis.horizontal,
-                  allowHalfRating: true,
-                  itemCount: 5,
-                  itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                  itemBuilder: (context, _) => Icon(
-                    Icons.star,
-                    color: Colors.amber,
-                  ),
-                  onRatingUpdate: (rating) {
-                    print(rating);
-                  },
-                ), //Text
-                SizedBox(
-                  height: 5,
-                ), //SizedBox
                 Text(
-                  widget.product.descripcion,
+                  "Descripción",
                   style: TextStyle(
                     fontSize: 15,
                     color: Colors.black,
+                    fontWeight: FontWeight.w400,
+                  ), //Textstyle
+                ),
+                SizedBox(
+                  height: size.height / 120,
+                ),
+                //SizedBox
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16),
+                    color: Colors.blue[100],
                   ),
-                  textAlign: TextAlign.center,
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 5, //Textstyle
+                  height: size.height / 15,
+                  width: size.width / 2,
+                  alignment: Alignment.center,
+                  child: Column(children: [
+                    SizedBox(
+                      height: size.height / 80,
+                    ),
+                    Text(
+                      widget.product.descripcion,
+                      style: TextStyle(
+                        fontSize: 15,
+                        color: Colors.black,
+                      ),
+                      textAlign: TextAlign.center,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 5, //Textstyle
+                    ),
+                  ]),
                 ),
                 SizedBox(
                   height: size.height / 80,
                 ),
-                SizedBox(
-                  height: size.height / 40,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Precio: ",
+                      style: TextStyle(
+                        fontSize: 15,
+                        color: Colors.black,
+                        fontWeight: FontWeight.w400,
+                      ), //Textstyle
+                    ),
+                    Text(
+                      '\$' + "${widget.product.precio} ",
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.black,
+                        fontWeight: FontWeight.w500,
+                      ), //Textstyle
+                    ),
+                  ],
                 ),
-                Text(
-                  '\$ ' + "${widget.product.precio}",
-                  textAlign: TextAlign.left,
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.black,
-                    fontWeight: FontWeight.w500,
-                  ), //Textstyle
-                ),
+
                 SizedBox(
-                  height: size.height / 50,
+                  height: size.height / 240,
                 ), //Text //SizedBox
-                SizedBox(
-                  width: size.width / 3,
-                  child: RaisedButton(
-                    // onPressed: (){} => controllerDB.insertItem('1', '1'),
-                    color: Colors.blue,
-                    child: Padding(
-                      padding: const EdgeInsets.all(2.0),
-                      child: Row(
-                        children: [
-                          Icon(Icons.add_shopping_cart_sharp),
-                          Text(
-                            'Agregar',
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ), //Row
-                    ), //Padding
-                  ), //RaisedButton
-                ) //SizedBox
+                Container(
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: new BorderRadius.circular(30.0)),
+                      primary: Colors.blue,
+                    ),
+                    child: Text(
+                      "Agregar",
+                      style: TextStyle(color: Colors.white, fontSize: 15),
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ),
               ],
             ), //Column
           ), //Padding
