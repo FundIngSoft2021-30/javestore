@@ -113,20 +113,23 @@ class _ventanaProducto extends State<ventanaProducto> {
                           height: size.height / 300,
                         ),
                         RatingBar.builder(
-                          initialRating: 3,
+                          initialRating: widget.product.calificacion.toDouble(),
                           minRating: 1,
                           itemSize: 20,
                           direction: Axis.horizontal,
                           allowHalfRating: true,
                           itemCount: 5,
+                          ignoreGestures: true,
                           itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
                           itemBuilder: (context, _) => Icon(
                             Icons.star,
                             color: Colors.amber,
                           ),
+                          /*
                           onRatingUpdate: (rating) {
                             print(rating);
                           },
+                          */
                         ),
                         SizedBox(
                           height: size.height / 80,

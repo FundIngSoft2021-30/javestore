@@ -8,7 +8,6 @@ import 'package:jave_store/Entidades/Producto.dart';
 import 'package:jave_store/Entidades/Usuario.dart';
 import 'package:jave_store/controller/Producto/resenasController.dart';
 import 'package:jave_store/Entidades/Resena.dart';
-
 import 'Producto/resenasController.dart';
 
 void main() async {
@@ -25,6 +24,10 @@ class ApiFB extends ChangeNotifier {
 
   Future<List<Resena>> getresenas(idProducto) async {
     return await resenas.getComentarios(idProducto);
+  }
+
+  void insertarResena(Resena resena) async {
+    await resenas.insertResena(resena);
   }
 
   Future<List<Categoria>> getCategories() async {

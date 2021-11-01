@@ -115,6 +115,7 @@ class _bodyState extends State<body> {
                   comentario: commentController.text,
                   idProducto: widget.Idproduct,
                   nombre: 'Juan');
+              api.insertarResena(res);
               filedata.add(res);
             });
             commentController.clear();

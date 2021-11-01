@@ -14,7 +14,7 @@ class Resena {
 
   @override
   String toString() {
-    return 'Resena{ avatarImagen: $avatarImagen, comentario: $comentario, idProducto: $idProducto, nombre: $nombre }';
+    return '{ avatarImagen: $avatarImagen, comentario: $comentario, idProducto: $idProducto, nombre: $nombre }';
   }
 
   factory Resena.fromJson(Map<String, dynamic> json) => Resena(

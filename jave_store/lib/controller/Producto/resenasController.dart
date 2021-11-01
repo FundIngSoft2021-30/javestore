@@ -34,4 +34,17 @@ class resenasController {
     print(c.length);
     return c;
   }
+
+  Future<bool> insertResena(Resena r) async {
+    await _firestore
+        .collection('Resena')
+        .add({
+          'avatarImagen': r.avatarImagen,
+          'comentario': r.comentario,
+          'idProducto': r.idProducto,
+          'nombre': r.nombre
+        })
+        .then((value) => print("Usuario agregado"))
+        .catchError((error) => print("Fallo inserción: $error"));
+  }
 }
