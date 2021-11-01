@@ -6,6 +6,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:jave_store/Entidades/Categoria.dart';
 import 'package:jave_store/Entidades/Producto.dart';
 import 'package:jave_store/Entidades/Usuario.dart';
+import 'package:jave_store/controller/Producto/resenasController.dart';
+import 'package:jave_store/Entidades/Resena.dart';
+
+import 'Producto/resenasController.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,6 +20,13 @@ void main() async {
 
 class ApiFB extends ChangeNotifier {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  var resenas = new resenasController(FirebaseFirestore.instance);
+
+  Future<List<Resena>> getresenas(idProducto) async {
+    return await resenas.getComentarios(idProducto);
+  }
+
   Future<List<Categoria>> getCategories() async {
     List<Categoria> c = [];
     final docs = await _firestore

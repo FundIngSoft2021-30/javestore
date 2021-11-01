@@ -136,7 +136,8 @@ class _ventanaProducto extends State<ventanaProducto> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => resenas()),
+                                  builder: (context) => resenas(
+                                      Idproduct: widget.product.nombre)),
                             );
                           },
                           child: Text("Ver reseñas"),

@@ -1,15 +1,34 @@
 import 'package:comment_box/comment/comment.dart';
 import 'package:flutter/material.dart';
+import 'package:jave_store/Entidades/Producto.dart';
+import 'package:jave_store/Entidades/Resena.dart';
+import 'package:jave_store/controller/apiFB.dart';
 
 class body extends StatefulWidget {
+  final String Idproduct;
+
+  const body({
+    Key? key,
+    required this.Idproduct,
+  }) : super(key: key);
+
   @override
   _bodyState createState() => _bodyState();
 }
 
 class _bodyState extends State<body> {
+  ApiFB api = ApiFB();
+
   final formKey = GlobalKey<FormState>();
   final TextEditingController commentController = TextEditingController();
-  List filedata = [
+  late List<Resena> filedata = [];
+
+  void getComentarios() async {
+    filedata = await api.getresenas(widget.Idproduct);
+    print(filedata.elementAt(0).comentario);
+  }
+
+  /*[
     {
       'name': 'Raul',
       'pic': 'https://picsum.photos/300/30',
@@ -18,7 +37,7 @@ class _bodyState extends State<body> {
     {
       'name': 'Joaquin',
       'pic': 'https://picsum.photos/300/30',
-      'message': 'cumplió todas mis expectativas'
+      'message': 'Cumplió todas mis expectativas'
     },
     {
       'name': 'Saul',
@@ -31,8 +50,8 @@ class _bodyState extends State<body> {
       'message': 'regular'
     },
   ];
-
-  Widget commentChild(data) {
+*/
+  Widget commentChild(List<Resena> data) {
     return ListView(
       children: [
         for (var i = 0; i < data.length; i++)
@@ -52,14 +71,15 @@ class _bodyState extends State<body> {
                       borderRadius: new BorderRadius.all(Radius.circular(50))),
                   child: CircleAvatar(
                       radius: 50,
-                      backgroundImage: NetworkImage(data[i]['pic'] + "$i")),
+                      backgroundImage:
+                          NetworkImage(data.elementAt(i).avatarImagen)),
                 ),
               ),
               title: Text(
-                data[i]['name'],
+                data.elementAt(i).nombre,
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
-              subtitle: Text(data[i]['message']),
+              subtitle: Text(data.elementAt(i).comentario),
             ),
           )
       ],
@@ -68,6 +88,7 @@ class _bodyState extends State<body> {
 
   @override
   Widget build(BuildContext context) {
+    getComentarios();
     return Container(
       child: CommentBox(
         userImage:
@@ -80,13 +101,21 @@ class _bodyState extends State<body> {
           if (formKey.currentState!.validate()) {
             print(commentController.text);
             setState(() {
+              /*
               var value = {
                 'name': 'Juan',
                 'pic':
                     'https://unsplash.com/photos/MTZTGvDsHFY/download?ixid=MnwxMjA3fDB8MXxhbGx8fHx8fHx8fHwxNjM1NjU3MjE2&force=true&w=640',
                 'message': commentController.text
               };
-              filedata.insert(0, value);
+              */
+              Resena res = new Resena(
+                  avatarImagen:
+                      'https://unsplash.com/photos/MTZTGvDsHFY/download?ixid=MnwxMjA3fDB8MXxhbGx8fHx8fHx8fHwxNjM1NjU3MjE2&force=true&w=640',
+                  comentario: commentController.text,
+                  idProducto: widget.Idproduct,
+                  nombre: 'Juan');
+              filedata.add(res);
             });
             commentController.clear();
             FocusScope.of(context).unfocus();
