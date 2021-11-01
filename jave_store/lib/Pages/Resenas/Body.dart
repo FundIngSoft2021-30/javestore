@@ -23,9 +23,9 @@ class _bodyState extends State<body> {
   final TextEditingController commentController = TextEditingController();
   late List<Resena> filedata = [];
 
-  void getComentarios() async {
+  Future<List<Resena>> getComentarios() async {
     filedata = await api.getresenas(widget.Idproduct);
-    print(filedata.elementAt(0).comentario);
+    return filedata;
   }
 
   /*[
@@ -51,7 +51,8 @@ class _bodyState extends State<body> {
     },
   ];
 */
-  Widget commentChild(List<Resena> data) {
+  Future<Widget> commentChild(List<Resena> data) async {
+    data = await getComentarios();
     return ListView(
       children: [
         for (var i = 0; i < data.length; i++)
@@ -88,12 +89,19 @@ class _bodyState extends State<body> {
 
   @override
   Widget build(BuildContext context) {
-    getComentarios();
     return Container(
       child: CommentBox(
         userImage:
             "https://unsplash.com/photos/MTZTGvDsHFY/download?ixid=MnwxMjA3fDB8MXxhbGx8fHx8fHx8fHwxNjM1NjU3MjE2&force=true&w=640",
-        child: commentChild(filedata),
+        child: FutureBuilder<Widget>(
+          future: commentChild(filedata),
+          builder: (context, AsyncSnapshot<Widget> snapshot) {
+            if (snapshot.hasError) print(snapshot.error);
+            return snapshot.hasData
+                ? Container(child: snapshot.data)
+                : new Center();
+          },
+        ),
         labelText: 'Escriba una reseña...',
         withBorder: false,
         errorText: 'Commentario no puede estar en blanco',
