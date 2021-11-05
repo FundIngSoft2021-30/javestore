@@ -4,10 +4,12 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:jave_store/Entidades/Categoria.dart';
+import 'package:jave_store/Entidades/Descuento.dart';
 import 'package:jave_store/Entidades/Producto.dart';
 import 'package:jave_store/Entidades/Usuario.dart';
 import 'package:jave_store/controller/Producto/resenasController.dart';
 import 'package:jave_store/Entidades/Resena.dart';
+import 'Producto/descuentosController.dart';
 import 'Producto/resenasController.dart';
 
 void main() async {
@@ -20,7 +22,9 @@ void main() async {
 class ApiFB extends ChangeNotifier {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  var resenas = new resenasController(FirebaseFirestore.instance);
+  final resenas = new resenasController(FirebaseFirestore.instance);
+
+  final descuentos = new descuentosController(FirebaseFirestore.instance);
 
   Future<List<Resena>> getresenas(idProducto) async {
     return await resenas.getComentarios(idProducto);
@@ -28,6 +32,10 @@ class ApiFB extends ChangeNotifier {
 
   void insertarResena(Resena resena) async {
     await resenas.insertResena(resena);
+  }
+
+  Future<List<Descuento>> getDescuentos() async {
+    return await descuentos.getPromociones();
   }
 
   Future<List<Categoria>> getCategories() async {

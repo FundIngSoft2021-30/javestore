@@ -28,29 +28,6 @@ class _bodyState extends State<body> {
     return filedata;
   }
 
-  /*[
-    {
-      'name': 'Raul',
-      'pic': 'https://picsum.photos/300/30',
-      'message': 'Buen producto'
-    },
-    {
-      'name': 'Joaquin',
-      'pic': 'https://picsum.photos/300/30',
-      'message': 'Cumplió todas mis expectativas'
-    },
-    {
-      'name': 'Saul',
-      'pic': 'https://picsum.photos/300/30',
-      'message': 'buen produto'
-    },
-    {
-      'name': 'Pablo',
-      'pic': 'https://picsum.photos/300/30',
-      'message': 'regular'
-    },
-  ];
-*/
   Future<Widget> commentChild(List<Resena> data) async {
     data = await getComentarios();
     return ListView(
@@ -104,19 +81,11 @@ class _bodyState extends State<body> {
         ),
         labelText: 'Escriba una reseña...',
         withBorder: false,
-        errorText: 'Commentario no puede estar en blanco',
+        errorText: 'Comentario no puede estar en blanco',
         sendButtonMethod: () {
           if (formKey.currentState!.validate()) {
             print(commentController.text);
             setState(() {
-              /*
-              var value = {
-                'name': 'Juan',
-                'pic':
-                    'https://unsplash.com/photos/MTZTGvDsHFY/download?ixid=MnwxMjA3fDB8MXxhbGx8fHx8fHx8fHwxNjM1NjU3MjE2&force=true&w=640',
-                'message': commentController.text
-              };
-              */
               Resena res = new Resena(
                   avatarImagen:
                       'https://unsplash.com/photos/MTZTGvDsHFY/download?ixid=MnwxMjA3fDB8MXxhbGx8fHx8fHx8fHwxNjM1NjU3MjE2&force=true&w=640',

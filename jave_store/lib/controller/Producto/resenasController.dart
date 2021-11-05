@@ -1,12 +1,6 @@
 // @dart=2.9
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:jave_store/Entidades/Categoria.dart';
-import 'package:jave_store/Entidades/Producto.dart';
 import 'package:jave_store/Entidades/Resena.dart';
-import 'package:jave_store/Entidades/Usuario.dart';
 
 class resenasController {
   FirebaseFirestore _firestore;
@@ -29,9 +23,7 @@ class resenasController {
           comentario: doc['comentario'],
           idProducto: doc['idProducto'],
           nombre: doc['nombre']));
-      print(c.elementAt(0).comentario);
     }
-    print(c.length);
     return c;
   }
 
