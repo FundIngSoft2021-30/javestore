@@ -18,7 +18,7 @@ void main() async {
 }
 
 class ApiFB extends ChangeNotifier {
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   var resenas = new resenasController(FirebaseFirestore.instance);
 
@@ -32,7 +32,7 @@ class ApiFB extends ChangeNotifier {
 
   Future<List<Categoria>> getCategories() async {
     List<Categoria> c = [];
-    final docs = await _firestore
+    final docs = await firestore
         .collection('Category')
         .get()
         .then((value) => value.docs);
@@ -43,7 +43,7 @@ class ApiFB extends ChangeNotifier {
   }
 
   Future<Usuario> getInfoUser(String id) async {
-    final u = await _firestore.collection('Users').doc(id).get();
+    final u = await firestore.collection('Users').doc(id).get();
     return Usuario.fromFirestore(u);
   }
 
@@ -55,7 +55,7 @@ class ApiFB extends ChangeNotifier {
 
   Future<List<Producto>> getProducts() async {
     List<Producto> p = [];
-    final QuerySnapshot result = await _firestore.collection('Producto').get();
+    final QuerySnapshot result = await firestore.collection('Producto').get();
     final List<DocumentSnapshot> documents = result.docs;
     for (var doc in documents) {
       p.add(Producto(
@@ -72,7 +72,7 @@ class ApiFB extends ChangeNotifier {
   }
 
   Future<Producto> get_product(String key) async {
-    var doc = await this._firestore.collection('Producto').doc(key).get();
+    var doc = await this.firestore.collection('Producto').doc(key).get();
     return (Producto(
         activo: doc['available'],
         nombre: doc.id,
@@ -88,7 +88,7 @@ class ApiFB extends ChangeNotifier {
     String categoria =
         await this.getCategories().then((value) => value[index].nombre);
     List<Producto> p = [];
-    final result = await _firestore.collection('Producto').get().then((value) =>
+    final result = await firestore.collection('Producto').get().then((value) =>
         value.docs
             .where((element) => element.data()['category'] == categoria)
             .toList());
@@ -107,7 +107,7 @@ class ApiFB extends ChangeNotifier {
   }
 
   Future<List<String>> getSuggestions() async {
-    final QuerySnapshot result = await _firestore.collection('Producto').get();
+    final QuerySnapshot result = await firestore.collection('Producto').get();
     final List<DocumentSnapshot> documents = result.docs;
     List<String> rt = [];
     for (var doc in documents) {
@@ -118,7 +118,7 @@ class ApiFB extends ChangeNotifier {
 
   Future<List<Producto>> get_cart(String id) async {
     List<Producto> rt = [];
-    var docs = await _firestore.collection('Cart').doc(id).get();
+    var docs = await firestore.collection('Cart').doc(id).get();
     String x = docs['productsID'].toString();
     RegExp regExp = new RegExp("\{(.*)\}");
     var tmp = regExp.allMatches(x).first.group(1).split(",");
