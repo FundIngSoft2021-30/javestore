@@ -35,7 +35,7 @@ class _AddProductState extends State<AddProduct> {
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Container(
-                padding: EdgeInsets.only(top: 50, left: 30, right: 30),
+                padding: EdgeInsets.only(top: 40, left: 30, right: 30),
                 child: Column(
                   children: [
                     Text(
@@ -62,6 +62,7 @@ class _AddProductState extends State<AddProduct> {
                     FutureBuilder<List<Categoria>>(
                       future: ApiFB().getCategories(),
                       builder: (context, snapshot) {
+                        if (!snapshot.hasData) return Text('');
                         List<DropdownMenuItem> data = [];
                         for (int i = 0; i < snapshot.data.length; i++) {
                           data.add(DropdownMenuItem(
@@ -71,7 +72,6 @@ class _AddProductState extends State<AddProduct> {
                         }
                         return DropdownButtonFormField(
                           onChanged: (val) {
-                            print(val);
                             setState(() => _currentCategory = val);
                           },
                           items: data,
