@@ -5,11 +5,11 @@ import 'package:jave_store/Entidades/Producto.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:http/http.dart' as http;
 import 'package:jave_store/Pages/Resenas/resenas.dart';
+import 'package:jave_store/controller/Cart/cartController.dart';
+import 'package:localstorage/localstorage.dart';
 
 class ventanaProducto extends StatefulWidget {
   final Producto product;
-  final url = "https://javestore.000webhostapp.com/jave/queryDB.php";
-
   const ventanaProducto({
     Key key,
     this.product,
@@ -20,6 +20,7 @@ class ventanaProducto extends StatefulWidget {
 }
 
 class _ventanaProducto extends State<ventanaProducto> {
+  final LocalStorage storage = new LocalStorage('localstorage_app');
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -194,6 +195,8 @@ class _ventanaProducto extends State<ventanaProducto> {
                       style: TextStyle(color: Colors.white, fontSize: 15),
                     ),
                     onPressed: () {
+                      CartController(cartID: storage.getItem('id'))
+                          .add_product(widget.product);
                       Navigator.of(context).pop();
                     },
                   ),

@@ -2,6 +2,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:jave_store/Entidades/Producto.dart';
+import 'package:jave_store/controller/Cart/cartController.dart';
+import 'package:localstorage/localstorage.dart';
 
 class CardProducto extends StatefulWidget {
   final Producto item;
@@ -11,11 +13,14 @@ class CardProducto extends StatefulWidget {
 }
 
 class _CardProductoState extends State<CardProducto> {
+  final LocalStorage storage = new LocalStorage('localstorage_app');
   Producto item;
   _CardProductoState({this.item});
-  void _update(String value) {
+  void _update(int value) {
+    CartController c = new CartController(cartID: storage.getItem('id'));
     setState(() {
-      // item.cantidad = value;
+      item.cantidad = value;
+      c.update_quantity(item.nombre, item.cantidad);
     });
   }
 
@@ -51,7 +56,7 @@ class _CardProductoState extends State<CardProducto> {
                   int i = item.cantidad;
                   if (i > 0) {
                     i--;
-                    _update(i.toString());
+                    _update(i);
                   }
                 },
                 icon: Icon(Icons.remove_circle),
@@ -61,7 +66,7 @@ class _CardProductoState extends State<CardProducto> {
                 onPressed: () {
                   int i = item.cantidad;
                   i++;
-                  _update(i.toString());
+                  _update(i);
                 },
                 icon: Icon(Icons.add_circle),
               ),
