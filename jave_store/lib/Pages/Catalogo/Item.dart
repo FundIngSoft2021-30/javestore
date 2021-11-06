@@ -32,14 +32,14 @@ class ItemCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(16),
             ),
             child: Hero(
-              tag: product.nombre,
+              tag: product.name,
               child: Container(
                 width: 100,
                 height: 80,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   image: DecorationImage(
-                      image: NetworkImage(product.imagen), fit: BoxFit.cover),
+                      image: NetworkImage(product.image), fit: BoxFit.cover),
                 ),
               ),
             ),
@@ -48,12 +48,12 @@ class ItemCard extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 20 / 4),
             child: Text(
               // products is out demo list
-              product.nombre,
+              product.name,
               style: TextStyle(color: Colors.black),
             ),
           ),
           Text(
-            "${product.precio}",
+            "${product.price}",
             style: TextStyle(
               fontWeight: FontWeight.bold,
             ),

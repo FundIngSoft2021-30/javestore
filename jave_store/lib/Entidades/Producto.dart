@@ -5,36 +5,47 @@ List<Producto> ProductoFromJson(String str) =>
     List<Producto>.from(json.decode(str).map((x) => Producto.fromJson(x)));
 
 class Producto {
-  String descripcion;
-  String categoria;
-  String nombre;
-  bool activo;
-  double precio;
-  int calificacion;
-  int cantidad;
-  String imagen;
+  String description;
+  String category;
+  String name;
+  bool available;
+  double price;
+  int rate;
+  int quantity;
+  String image;
 
   Producto({
-    this.imagen,
-    this.descripcion,
-    this.nombre,
-    this.activo,
-    this.precio,
-    this.categoria,
-    this.calificacion,
-    this.cantidad,
+    this.image,
+    this.description,
+    this.name,
+    this.available,
+    this.price,
+    this.category,
+    this.rate,
+    this.quantity,
   });
   @override
   String toString() {
-    return 'Producto{descripcion: $descripcion, nombre: $nombre, activo: $activo, precio: $precio, calificacion: $calificacion, cantidad: $cantidad}';
+    return 'Producto{description: $description, category: $category, name: $name, available: $available, price: $price, rate: $rate, quantity: $quantity, image: $image}';
   }
 
+  Map<String, dynamic> toJson() => {
+        'available': available,
+        'name': name,
+        'image': image,
+        'description': description,
+        'price': price,
+        'category': category,
+        'rate': rate,
+        'quantity': quantity,
+      };
   factory Producto.fromJson(Map<String, dynamic> json) => Producto(
-      cantidad: json["amount"],
-      nombre: json["name"],
-      descripcion: json["description"],
-      precio: json["price"],
-      calificacion: json["rate"],
-      imagen: json["image"],
-      activo: json["available"]);
+      quantity: json["quantity"],
+      category: json["category"],
+      name: json["name"],
+      description: json["description"],
+      price: json["price"],
+      rate: json["rate"],
+      image: json["image"],
+      available: json["available"]);
 }

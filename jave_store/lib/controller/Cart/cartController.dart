@@ -20,12 +20,11 @@ class CartController {
     var products = await this._api.get_cart(this.cartID);
     if (replaceTO > 0) {
       for (Producto p in products) {
-        if (p.nombre == id_product) {
-          p.cantidad = replaceTO;
-          List<String> names = [for (Producto p in products) p.nombre];
-          List<int> values = [for (Producto p in products) p.cantidad];
+        if (p.name == id_product) {
+          p.quantity = replaceTO;
+          List<String> names = [for (Producto p in products) p.name];
+          List<int> values = [for (Producto p in products) p.quantity];
           Map<String, int> map = Map.fromIterables(names, values);
-          print(map.toString());
           this
               ._api
               .firestore
@@ -42,10 +41,10 @@ class CartController {
 
   Future<void> remove_product(String id_product) async {
     var products = await this._api.get_cart(this.cartID);
-    List<String> names = [for (Producto p in products) p.nombre];
+    List<String> names = [for (Producto p in products) p.name];
     int index = names.indexOf(id_product);
     names.removeAt(index);
-    List<int> values = [for (Producto p in products) p.cantidad];
+    List<int> values = [for (Producto p in products) p.quantity];
     values.removeAt(index);
     Map<String, int> map = Map.fromIterables(names, values);
     print(map.toString());
@@ -59,12 +58,12 @@ class CartController {
 
   Future<void> add_product(Producto product) async {
     var products = await this._api.get_cart(this.cartID);
-    List<String> names = [for (Producto p in products) p.nombre];
-    List<int> values = [for (Producto p in products) p.cantidad];
-    if (names.contains(product.nombre))
-      update_quantity(product.nombre, product.cantidad + 1);
+    List<String> names = [for (Producto p in products) p.name];
+    List<int> values = [for (Producto p in products) p.quantity];
+    if (names.contains(product.name))
+      update_quantity(product.name, product.quantity + 1);
     else {
-      names.add(product.nombre);
+      names.add(product.name);
       values.add(1);
       Map<String, int> map = Map.fromIterables(names, values);
       this
@@ -78,7 +77,7 @@ class CartController {
 
   Future<String> get_cost() async {
     var products = await this._api.get_cart(this.cartID);
-    List<double> values = [for (Producto p in products) p.precio * p.cantidad];
+    List<double> values = [for (Producto p in products) p.price * p.quantity];
     double sum = 0;
     for (double p in values) {
       sum += p;

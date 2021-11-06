@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:jave_store/Entidades/Producto.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:http/http.dart' as http;
 import 'package:jave_store/Pages/Resenas/resenas.dart';
 import 'package:jave_store/controller/Cart/cartController.dart';
 import 'package:localstorage/localstorage.dart';
@@ -62,7 +61,7 @@ class _ventanaProducto extends State<ventanaProducto> {
                           height: size.height / 300,
                         ), //Texts
                         Text(
-                          widget.product.nombre,
+                          widget.product.name,
                           style: TextStyle(
                             fontSize: 17,
                             color: Colors.black,
@@ -77,7 +76,7 @@ class _ventanaProducto extends State<ventanaProducto> {
                           decoration: BoxDecoration(
                             border: Border.all(color: Colors.blueAccent),
                             image: DecorationImage(
-                                image: NetworkImage(widget.product.imagen),
+                                image: NetworkImage(widget.product.image),
                                 fit: BoxFit.cover),
                           ),
                         ),
@@ -90,7 +89,7 @@ class _ventanaProducto extends State<ventanaProducto> {
                           ), //Textstyle
                         ),
                         Text(
-                          widget.product.descripcion,
+                          widget.product.description,
                           style: TextStyle(
                             fontSize: 15,
                             color: Colors.black,
@@ -114,7 +113,7 @@ class _ventanaProducto extends State<ventanaProducto> {
                           height: size.height / 300,
                         ),
                         RatingBar.builder(
-                          initialRating: widget.product.calificacion.toDouble(),
+                          initialRating: widget.product.rate.toDouble(),
                           minRating: 1,
                           itemSize: 20,
                           direction: Axis.horizontal,
@@ -140,8 +139,8 @@ class _ventanaProducto extends State<ventanaProducto> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => resenas(
-                                      Idproduct: widget.product.nombre)),
+                                  builder: (context) =>
+                                      resenas(Idproduct: widget.product.name)),
                             );
                           },
                           child: Text("Ver reseñas"),
@@ -169,7 +168,7 @@ class _ventanaProducto extends State<ventanaProducto> {
                       ), //Textstyle
                     ),
                     Text(
-                      '\$' + "${widget.product.precio} ",
+                      '\$' + "${widget.product.price} ",
                       textAlign: TextAlign.left,
                       style: TextStyle(
                         fontSize: 20,
