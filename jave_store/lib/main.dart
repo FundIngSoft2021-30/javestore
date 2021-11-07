@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:jave_store/Pages/Login%20Screen/Login.dart';
 import 'package:jave_store/Pages/Widgets/AppBarBottom.dart';
+import 'package:jave_store/Pages/Administrador/screenAdmin.dart';
 import 'package:jave_store/controller/services/auth.dart';
 import 'package:provider/provider.dart';
 
@@ -34,9 +35,20 @@ class _AppState extends State<App> {
             case AuthStatus.Unauthenticated:
               return LoginScreen();
             case AuthStatus.Authenticated:
-              return AppBarBottom();
+              try {
+                RegExp regex = RegExp(r'[a-z]*@javeriana.edu.co');
+                String email = regex.firstMatch(auth.currentUser.toString())[0];
+                if (email.split('@')[0] == 'admin')
+                  return ScreenAdmin();
+                else
+                  return AppBarBottom();
+              } catch (e) {
+                return AppBarBottom();
+              }
+              break;
             default:
               return LoginScreen();
+              break;
           }
         }),
       ),

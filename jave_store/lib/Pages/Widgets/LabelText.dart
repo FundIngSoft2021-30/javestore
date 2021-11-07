@@ -14,13 +14,13 @@ class _LabelText extends State<LabelText> {
     return Center(
       child: Container(
         width: size.width / 1.8,
-        height: size.height / 10,
+        height: size.height / 12,
         child: TextFormField(
           cursorColor: Theme.of(context).cursorColor,
 //        initialValue: 'Input text',
           maxLength: 250,
           decoration: InputDecoration(
-            labelText: 'Comentarios',
+            labelText: 'Instrucciones adicionales',
             labelStyle: TextStyle(
               color: Colors.blue,
             ),

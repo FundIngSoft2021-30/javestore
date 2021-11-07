@@ -19,8 +19,8 @@ class _CardProductoState extends State<CardProducto> {
   void _update(int value) {
     CartController c = new CartController(cartID: storage.getItem('id'));
     setState(() {
-      item.cantidad = value;
-      c.update_quantity(item.nombre, item.cantidad);
+      item.quantity = value;
+      c.update_quantity(item.name, item.quantity);
     });
   }
 
@@ -39,7 +39,7 @@ class _CardProductoState extends State<CardProducto> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   image: DecorationImage(
-                      image: NetworkImage(item.imagen), fit: BoxFit.cover),
+                      image: NetworkImage(item.image), fit: BoxFit.cover),
                 ),
               ),
               SizedBox(
@@ -47,13 +47,13 @@ class _CardProductoState extends State<CardProducto> {
               ),
               Expanded(
                 child: Text(
-                  item.nombre,
+                  item.name,
                   style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                 ),
               ),
               IconButton(
                 onPressed: () {
-                  int i = item.cantidad;
+                  int i = item.quantity;
                   if (i > 0) {
                     i--;
                     _update(i);
@@ -61,10 +61,10 @@ class _CardProductoState extends State<CardProducto> {
                 },
                 icon: Icon(Icons.remove_circle),
               ),
-              Text('${item.cantidad}'),
+              Text('${item.quantity}'),
               IconButton(
                 onPressed: () {
-                  int i = item.cantidad;
+                  int i = item.quantity;
                   i++;
                   _update(i);
                 },

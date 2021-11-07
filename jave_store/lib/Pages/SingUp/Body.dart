@@ -26,35 +26,6 @@ class _BodyState extends State<Body> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
-    Future<bool> getData() async {
-      final url = "https://javestore.000webhostapp.com/jave/queryDB.php";
-      final response = await http.post(Uri.parse(url), body: {
-        "query": "select id from Cuenta where email='${email.text}';"
-      });
-      String c = jsonDecode(response.body).toString();
-      if (c.length > 2)
-        return true;
-      else
-        return false;
-    }
-
-    Future createAccount() async {
-      if (number.text.length == 10) {
-        Usuario u = Usuario();
-        u.nombre = nombre.text;
-        u.apellido = apellido.text;
-        u.email = email.text;
-        u.numero = int.parse(number.text);
-        final url = "https://javestore.000webhostapp.com/jave/crearCuenta.php";
-        final response = await http.post(Uri.parse(url), body: {
-          "name": u.nombre,
-          "surname": u.apellido,
-          "email": u.email,
-          "number": u.numero,
-        });
-      }
-    }
-
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -108,13 +79,7 @@ class _BodyState extends State<Body> {
                     TextFormField(
                       keyboardType: TextInputType.emailAddress,
                       style: TextStyle(color: Colors.black),
-                      onChanged: (value) async {
-                        bool flag = await getData();
-                        if (flag)
-                          this._email = false;
-                        else
-                          this._email = true;
-                      },
+                      onChanged: (value) async {},
                       decoration: InputDecoration(
                           suffixIcon: Icon(this._email
                               ? Icons.check_outlined
@@ -165,7 +130,6 @@ class _BodyState extends State<Body> {
                           child: FlatButton(
                             onLongPress: () => Alert(),
                             onPressed: () {
-                              createAccount();
                               showDialog(
                                   context: context,
                                   builder: (BuildContext context) {
