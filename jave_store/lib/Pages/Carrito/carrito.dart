@@ -97,7 +97,7 @@ class _CarritoState extends State<Carrito> {
                                                       fontWeight:
                                                           FontWeight.bold),
                                                   text:
-                                                      "Total: ${snapshot.data}",
+                                                      "Total: ${double.parse(snapshot.data).round()}",
                                                 ),
                                               ),
                                               Spacer(),
@@ -106,13 +106,15 @@ class _CarritoState extends State<Carrito> {
                                                   Navigator.push(
                                                       context,
                                                       MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              pago(
-                                                                productos:
-                                                                    productosPago,
-                                                                total: snapshot
-                                                                    .data,
-                                                              )));
+                                                          builder:
+                                                              (context) => pago(
+                                                                    productos:
+                                                                        productosPago,
+                                                                    total: double.parse(
+                                                                            snapshot.data)
+                                                                        .round()
+                                                                        .toString(),
+                                                                  )));
                                                 },
                                                 child: Container(
                                                   child: Stack(
