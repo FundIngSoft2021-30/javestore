@@ -39,6 +39,10 @@ class CartController {
     }
   }
 
+  String getCardId() {
+    return this.cartID;
+  }
+
   Future<void> remove_product(String id_product) async {
     var products = await this._api.get_cart(this.cartID);
     List<String> names = [for (Producto p in products) p.name];

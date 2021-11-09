@@ -114,6 +114,9 @@ class _CarritoState extends State<Carrito> {
                                                                             snapshot.data)
                                                                         .round()
                                                                         .toString(),
+                                                                    carritoId: storage
+                                                                        .getItem(
+                                                                            'id'),
                                                                   )));
                                                 },
                                                 child: Container(

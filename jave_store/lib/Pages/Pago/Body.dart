@@ -1,26 +1,78 @@
 //@dart=2.9
+import 'dart:async';
+import 'dart:ffi';
 import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:jave_store/Entidades/Pedido.dart';
 import 'package:jave_store/Entidades/Producto.dart';
 import 'package:jave_store/Pages/Perfil/Historial/HistorialScreen.dart';
-import 'package:jave_store/Pages/Widgets/ButtonLoad.dart';
-import 'package:jave_store/Pages/Widgets/ButtonOption.dart';
-import 'package:jave_store/Pages/Widgets/LabelText.dart';
-import 'package:jave_store/Pages/Widgets/Button.dart';
+import 'package:jave_store/controller/apiFB.dart';
+import 'package:toggle_switch/toggle_switch.dart';
 
 class body extends StatefulWidget {
   @override
   _BodyState createState() => _BodyState();
   String total;
   List<Producto> productos;
+  String carritoId;
 
-  body({this.productos, this.total});
+  body({
+    this.productos,
+    this.total,
+    this.carritoId,
+  });
 }
 
 class _BodyState extends State<body> {
-  String passCamp = "";
-  var _controller = TextEditingController();
+  ApiFB api = ApiFB();
+
+  String medioEntrega = 'A domicilio';
+  String instrucciones;
+
+  bool almacenarPedido() {
+    Pedido p = new Pedido();
+    if (instrucciones != null) if (instrucciones.isNotEmpty) {
+      p.carritoId = widget.carritoId;
+      p.fecha = DateTime.now();
+      p.instrucciones = instrucciones;
+      p.metodoEntrega = medioEntrega;
+      p.productos =
+          List.from(widget.productos.map((name) => name.name).toList());
+      p.total = double.parse(widget.total);
+      api.add_pedido(p);
+      return true;
+    } else
+      print('intrucciones vacias');
+    return false;
+  }
+
+  showAlertDialog(BuildContext context) {
+    // set up the button
+    Widget okButton = TextButton(
+//
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("El campo instrucciones esta vacío"),
+      content: Text("Escriba alguna instrucción para completar la compra"),
+      actions: [
+        okButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
 
   Future<ListView> listaItems(List<Producto> productos) async {
     widget.total = await widget.total;
@@ -62,28 +114,50 @@ class _BodyState extends State<body> {
     );
   }
 
+  int _state = 0;
+  bool estado = true;
+
+  Widget setUpButtonChild() {
+    if (_state == 0) {
+      return new Text(
+        "Confirmar Pedido",
+        style: const TextStyle(
+          color: Colors.blue,
+          fontSize: 16.0,
+        ),
+      );
+    } else if (_state == 1) {
+      return CircularProgressIndicator(
+        valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+      );
+    } else if (_state == 2) {
+      return Icon(Icons.check, color: Colors.blue);
+    }
+    return Text('s');
+  }
+
+  void animateButton() {
+    setState(() {
+      if (almacenarPedido())
+        _state = 1;
+      else
+        showAlertDialog(context);
+    });
+    if (_state == 1)
+      Timer(Duration(milliseconds: 3300), () {
+        setState(() {
+          _state = 2;
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => HistorialScreen()));
+        });
+      });
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
-    return
-        /*
-        Center(
-          child: Material(
-            elevation: 30.0,
-            color: Colors.white12,
-            borderRadius: BorderRadius.circular(18.0),
-            child: Container(
-              width: 320.0,
-              height: 90.0 * 3,
-              decoration: BoxDecoration(
-                  color: Colors.white12,
-                  borderRadius: BorderRadius.circular(18.0)),
-            ),
-          ),
-        ),
-        */
-        Column(
+    return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Container(
@@ -107,7 +181,21 @@ class _BodyState extends State<body> {
                       color: Colors.black,
                       fontWeight: FontWeight.bold)),
               SizedBox(height: size.height / 80),
-              ButtonOption(),
+              Center(
+                child: ToggleSwitch(
+                  minWidth: 125,
+                  initialLabelIndex: 0,
+                  totalSwitches: 2,
+                  labels: ['A domicilio', 'Recoger en la U'],
+                  onToggle: (index) {
+                    print('switched to: $index');
+                    if (index == 0)
+                      medioEntrega = 'A domicilio';
+                    else
+                      medioEntrega = 'Recoger en la U';
+                  },
+                ),
+              ),
               SizedBox(height: size.height / 40),
               Padding(
                 padding: const EdgeInsets.only(top: 4.0),
@@ -149,7 +237,30 @@ class _BodyState extends State<body> {
                 ),
               ),
               SizedBox(height: size.height / 20),
-              LabelText(),
+              Center(
+                child: Container(
+                  width: size.width / 1.8,
+                  height: size.height / 12,
+                  child: TextFormField(
+                    cursorColor: Theme.of(context).cursorColor,
+                    onChanged: (text) {
+                      print('texto' + text);
+                      instrucciones = text;
+                    },
+                    maxLength: 250,
+                    decoration: InputDecoration(
+                      labelText: 'Instrucciones adicionales',
+                      labelStyle: TextStyle(
+                        color: Colors.blue,
+                      ),
+                      suffixIcon: Icon(
+                        Icons.check_circle,
+                      ),
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
         ),
@@ -200,7 +311,23 @@ class _BodyState extends State<body> {
                     borderRadius: BorderRadius.circular(12.0),
                     border: Border.all(color: Colors.blue[700], width: 2.6),
                     color: Colors.white),
-                child: ButtonLoad()),
+                child: MaterialButton(
+                  child: setUpButtonChild(),
+                  onPressed: () {
+                    setState(() {
+                      if (_state == 0) {
+                        animateButton();
+                      }
+                      if (_state == 2) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => HistorialScreen()),
+                        );
+                      }
+                    });
+                  },
+                )),
           ),
         ),
       ],

@@ -8,8 +8,9 @@ import 'package:jave_store/Pages/Pago/Body.dart';
 class pago extends StatelessWidget {
   final String total;
   final List<Producto> productos;
+  final String carritoId;
 
-  pago({this.productos, this.total});
+  pago({this.productos, this.total, this.carritoId});
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +34,8 @@ class pago extends StatelessWidget {
             width: size.width,
             height: size.height,
             color: Colors.white,
-            child: body(total: total, productos: productos),
+            child:
+                body(total: total, productos: productos, carritoId: carritoId),
           )),
     );
   }
