@@ -2,6 +2,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:jave_store/Entidades/Descuento.dart';
 import 'package:jave_store/Entidades/Pedido.dart';
+import 'package:jave_store/controller/Cart/cartController.dart';
 
 class pedidoController {
   FirebaseFirestore _firestore;
@@ -23,6 +24,9 @@ class pedidoController {
         })
         .then((value) => print("Pedido agregado"))
         .catchError((error) => print("Fallo inserción: $error"));
+
+    CartController carrito = new CartController(cartID: pedido.carritoId);
+    await carrito.clear_cart();
     return true;
   }
 }

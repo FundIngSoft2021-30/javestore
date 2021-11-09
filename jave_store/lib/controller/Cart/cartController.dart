@@ -1,4 +1,5 @@
 // @dart=2.9
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:jave_store/Entidades/Producto.dart';
@@ -55,6 +56,14 @@ class CartController {
     this
         ._api
         .firestore
+        .collection('Cart')
+        .doc(this.cartID)
+        .update({'productsID': map});
+  }
+
+  Future<void> clear_cart() async {
+    Map<String, int> map = Map();
+    await _api.firestore
         .collection('Cart')
         .doc(this.cartID)
         .update({'productsID': map});
