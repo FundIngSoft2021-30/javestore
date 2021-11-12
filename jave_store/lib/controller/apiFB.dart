@@ -101,6 +101,21 @@ class ApiFB {
         image: doc['image']));
   }
 
+  Future<List<Map<String, String>>> get_frecuent_question() async {
+    var docs = await this
+        .firestore
+        .collection('Preguntas')
+        .get()
+        .then((value) => value.docs);
+    List<Map<String, String>> list = [];
+    for (var doc in docs) {
+      Map<String, String> rt = {};
+      rt[doc.id] = doc.data()['rta'];
+      list.add(rt);
+    }
+    return list;
+  }
+
   Future<List<Producto>> getProductsByCategory(int index) async {
     String categoria =
         await this.getCategories().then((value) => value[index].nombre);
