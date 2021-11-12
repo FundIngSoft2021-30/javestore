@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:jave_store/Pages/Administrador/add_product.dart';
 import 'package:jave_store/Pages/Catalogo/categorias.dart';
 import 'package:jave_store/Pages/Perfil/InformacionPerfil.dart';
-import 'package:jave_store/Pages/Perfil/perfil.dart';
 import 'package:jave_store/Pages/Promociones/Promociones.dart';
 
 void main() async {

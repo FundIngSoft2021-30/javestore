@@ -25,7 +25,7 @@ class pedidoController {
         .then((value) => print("Pedido agregado"))
         .catchError((error) => print("Fallo inserción: $error"));
 
-    CartController carrito = new CartController(cartID: pedido.carritoId);
+    CartController carrito = new CartController();
     await carrito.clear_cart();
     return true;
   }

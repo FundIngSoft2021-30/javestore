@@ -16,19 +16,10 @@ import 'package:jave_store/Entidades/Resena.dart';
 import 'Producto/descuentosController.dart';
 import 'Producto/resenasController.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  ApiFB api = ApiFB();
-}
-
-class ApiFB extends ChangeNotifier {
+class ApiFB {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
-
   final resenas = new resenasController(FirebaseFirestore.instance);
-
   final descuentos = new descuentosController(FirebaseFirestore.instance);
-
   final pedidos = new pedidoController(FirebaseFirestore.instance);
 
   Future<bool> add_product(Producto p) async {
@@ -146,14 +137,16 @@ class ApiFB extends ChangeNotifier {
     List<Producto> rt = [];
     var docs = await firestore.collection('Cart').doc(id).get();
     String x = docs['productsID'].toString();
-    RegExp regExp = new RegExp("\{(.*)\}");
-    var tmp = regExp.allMatches(x).first.group(1).split(",");
-    for (var i in tmp) {
-      var z = i.split(':');
-      Producto p = await this.get_product(z[0].trim());
-      p.quantity = int.parse(z[1].trim());
-      rt.add(p);
-    }
+    try {
+      RegExp regExp = new RegExp("\{(.*)\}");
+      var tmp = regExp.allMatches(x).first.group(1).split(",");
+      for (var i in tmp) {
+        var z = i.split(':');
+        Producto p = await this.get_product(z[0].trim());
+        p.quantity = int.parse(z[1].trim());
+        rt.add(p);
+      }
+    } catch (e) {}
     return rt;
   }
 }

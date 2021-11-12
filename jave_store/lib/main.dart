@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:jave_store/Pages/Login%20Screen/Login.dart';
 import 'package:jave_store/Pages/Widgets/AppBarBottom.dart';
 import 'package:jave_store/Pages/Administrador/screenAdmin.dart';
+import 'package:jave_store/controller/Cart/cartController.dart';
 import 'package:jave_store/controller/services/auth.dart';
 import 'package:provider/provider.dart';
 
@@ -26,32 +27,38 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => AuthService(FirebaseAuth.instance),
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: Consumer(builder: (context, AuthService auth, _) {
-          switch (auth.status) {
-            case AuthStatus.Unauthenticated:
-              return LoginScreen();
-            case AuthStatus.Authenticated:
-              try {
-                RegExp regex = RegExp(r'[a-z]*@javeriana.edu.co');
-                String email = regex.firstMatch(auth.currentUser.toString())[0];
-                if (email.split('@')[0] == 'admin')
-                  return ScreenAdmin();
-                else
+    return MultiProvider(
+      child: ChangeNotifierProvider(
+        create: (_) => AuthService(FirebaseAuth.instance),
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          home: Consumer(builder: (context, AuthService auth, _) {
+            switch (auth.status) {
+              case AuthStatus.Unauthenticated:
+                return LoginScreen();
+              case AuthStatus.Authenticated:
+                try {
+                  RegExp regex = RegExp(r'[a-z]*@javeriana.edu.co');
+                  String email =
+                      regex.firstMatch(auth.currentUser.toString())[0];
+                  if (email.split('@')[0] == 'admin')
+                    return ScreenAdmin();
+                  else
+                    return AppBarBottom();
+                } catch (e) {
                   return AppBarBottom();
-              } catch (e) {
-                return AppBarBottom();
-              }
-              break;
-            default:
-              return LoginScreen();
-              break;
-          }
-        }),
+                }
+                break;
+              default:
+                return LoginScreen();
+                break;
+            }
+          }),
+        ),
       ),
+      providers: [
+        ChangeNotifierProvider(create: (context) => CartController()),
+      ],
     );
   }
 }

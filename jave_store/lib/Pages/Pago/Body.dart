@@ -162,7 +162,7 @@ class _BodyState extends State<body> {
       children: <Widget>[
         Container(
           width: 330.0,
-          height: 140.0 * 3,
+          height: 145.0 * 3,
           decoration: BoxDecoration(
               color: Color.fromRGBO(235, 235, 235, 1),
               borderRadius: BorderRadius.circular(18.0)),
@@ -209,7 +209,7 @@ class _BodyState extends State<body> {
                 height: 82.0 * 1.5,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8.0),
-                    border: Border.all(color: Colors.grey[800], width: 2.0)),
+                    border: Border.all(color: Colors.grey[800], width: 1.0)),
                 child: ListView(children: [
                   FutureBuilder(
                     future: listaItems(widget.productos),
@@ -225,7 +225,7 @@ class _BodyState extends State<body> {
                   ),
                 ]),
               ),
-              SizedBox(height: size.height / 40),
+              SizedBox(height: size.height / 60),
               Padding(
                 padding: const EdgeInsets.only(top: 8.0),
                 child: Text(
@@ -236,7 +236,7 @@ class _BodyState extends State<body> {
                       fontSize: 20.0),
                 ),
               ),
-              SizedBox(height: size.height / 20),
+              SizedBox(height: size.height / 30),
               Center(
                 child: Container(
                   width: size.width / 1.8,

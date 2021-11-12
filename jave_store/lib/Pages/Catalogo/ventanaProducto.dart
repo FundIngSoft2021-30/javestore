@@ -35,7 +35,7 @@ class _ventanaProducto extends State<ventanaProducto> {
           width: size.width / 1.35,
           height: size.height / 1.5,
           child: Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: const EdgeInsets.all(10.0),
             child: Column(
               children: [
                 Container(
@@ -48,7 +48,7 @@ class _ventanaProducto extends State<ventanaProducto> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         SizedBox(
-                          height: size.height / 180,
+                          height: size.height / 200,
                         ),
                         Text(
                           "Nombre",
@@ -59,7 +59,7 @@ class _ventanaProducto extends State<ventanaProducto> {
                           ),
                         ),
                         SizedBox(
-                          height: size.height / 300,
+                          height: size.height / 400,
                         ), //Texts
                         Text(
                           widget.product.name,
@@ -70,8 +70,8 @@ class _ventanaProducto extends State<ventanaProducto> {
                           ), //Textstyle
                         ),
                         Container(
-                          margin: const EdgeInsets.all(10.0),
-                          padding: const EdgeInsets.all(3.0),
+                          margin: const EdgeInsets.all(5.0),
+                          padding: const EdgeInsets.all(2.0),
                           height: size.height / 5.5,
                           width: size.width / 2.2,
                           decoration: BoxDecoration(
@@ -111,7 +111,7 @@ class _ventanaProducto extends State<ventanaProducto> {
                           ),
                         ),
                         SizedBox(
-                          height: size.height / 300,
+                          height: size.height / 400,
                         ),
                         RatingBar.builder(
                           initialRating: widget.product.rate.toDouble(),
@@ -195,8 +195,7 @@ class _ventanaProducto extends State<ventanaProducto> {
                       style: TextStyle(color: Colors.white, fontSize: 15),
                     ),
                     onPressed: () {
-                      CartController(cartID: storage.getItem('id'))
-                          .add_product(widget.product);
+                      CartController().add_product(widget.product);
                       Navigator.of(context).pop();
                     },
                   ),

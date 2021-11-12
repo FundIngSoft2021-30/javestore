@@ -27,7 +27,7 @@ class _AddProductState extends State<AddProduct> {
         Center(
           child: Container(
             width: size.width * 0.9,
-            height: size.height * 0.8,
+            height: size.height * 0.9,
             color: Colors.transparent,
             child: Card(
               elevation: 10,
@@ -46,7 +46,7 @@ class _AddProductState extends State<AddProduct> {
                           fontWeight: FontWeight.bold),
                     ),
                     SizedBox(
-                      height: 40,
+                      height: size.height * 0.01,
                     ),
                     TextFormField(
                       keyboardType: TextInputType.name,
@@ -133,7 +133,7 @@ class _AddProductState extends State<AddProduct> {
                       },
                     ),
                     SizedBox(
-                      height: 35,
+                      height: size.height * 0.04,
                     ),
                     Container(
                       decoration: BoxDecoration(
