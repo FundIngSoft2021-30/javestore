@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-void main() => runApp(MyApp());
-
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -90,4 +88,12 @@ class MyApp extends StatelessWidget {
               ])),
         ));
   }
+}
+
+Widget Alert(String msm) {
+  return AlertDialog(
+    backgroundColor: Colors.blue.shade50,
+    title: Text("Respuesta"),
+    content: Text(msm),
+  );
 }
