@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(MaterialApp(
+      home: MyApp(),
+    ));
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return MaterialApp(
         title: 'Administrar Productos',
         home: Scaffold(
@@ -18,76 +20,85 @@ class MyApp extends StatelessWidget {
             ),
             title: new Center(
               child: new Text('Estado Solicitudes',
-                  textAlign: TextAlign.center, style: TextStyle(fontSize: 30)),
+                  textAlign: TextAlign.center, style: TextStyle(fontSize: 25)),
             ),
             backgroundColor: Color(0xFF004aac),
           ),
-          body: Padding(
-              padding: const EdgeInsets.all(17.0),
-              child: Column(children: <Widget>[
-                new Center(
-                    child: Image(
-                        image: AssetImage('images/page2.png'),
-                        height: 210,
-                        width: 233,
-                        alignment: Alignment.center)),
-                SizedBox(height: 14),
-                Text("Nombre producto",
-                    style:
-                        TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                Stack(
-                  children: [
+          body: SingleChildScrollView(
+              padding: const EdgeInsets.all(25.0),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    new Center(
+                        child: Image(
+                            image: AssetImage('images/page2.png'),
+                            height: 210,
+                            width: 233,
+                            alignment: Alignment.center)),
+                    SizedBox(height: 14),
+                    Text("Nombre producto",
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold)),
+                    SizedBox(height: 5),
                     Container(
-                      width: 306,
-                      height: 43,
-                      color: Color(0xFFe4e4e4),
-                      child: Padding(
-                          padding: const EdgeInsets.only(left: 10.0),
-                          child: TextField(
-                            decoration: InputDecoration(
-                                border: InputBorder.none,
-                                hintText: ' ingrese nombre del producto'),
-                          )),
-                    )
-                  ],
-                ),
-                Text("Descripcion",
-                    style:
-                        TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                Stack(
-                  children: [
+                      height: size.height * 0.1,
+                      color: Colors.grey[200],
+                      child: TextField(
+                        decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: 'Ingrese nombre del producto'),
+                      ),
+                    ),
+                    SizedBox(height: size.height * 0.01),
+                    Text(
+                      "Descripcion",
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(height: 5),
                     Container(
-                      width: 306,
-                      height: 85,
-                      color: Color(0xFFe4e4e4),
-                      child: Padding(
-                          padding: const EdgeInsets.only(left: 10.0),
-                          child: TextField(
-                            decoration: InputDecoration(
-                                border: InputBorder.none,
-                                hintText: 'ingrese descripcion del producto '),
-                          )),
-                    )
-                  ],
-                ),
-                SizedBox(height: 22),
-                MaterialButton(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(9.0)),
-                    child: Text('Enviar solicitud',
-                        style: TextStyle(fontSize: 40, color: Colors.white)),
-                    height: 59,
-                    minWidth: 312,
-                    color: Color(0xFF38b6ff),
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) => AlertDialog(
-                          title: Text('please funciona'),
-                        ),
-                      );
-                    })
-              ])),
+                      color: Colors.grey[200],
+                      height: size.height * 0.1,
+                      child: TextField(
+                        decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: 'Ingrese descripcion del producto '),
+                      ),
+                    ),
+                    SizedBox(height: size.height * 0.05),
+                    Container(
+                      padding: EdgeInsets.all(10),
+                      width: size.width * 0.8,
+                      height: size.height * 0.06,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.blue,
+                      ),
+                      child: InkWell(
+                          child: Text(
+                            "Guardar",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          onTap: () {
+                            showDialog(
+                              context: context,
+                              builder: (context) => Alert("It's working"),
+                            );
+                          }),
+                    ),
+                  ])),
         ));
+  }
+
+  Widget Alert(String msm) {
+    return AlertDialog(
+      backgroundColor: Colors.blue.shade50,
+      title: Text("Respuesta"),
+      content: Text(msm),
+    );
   }
 }
