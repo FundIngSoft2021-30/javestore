@@ -14,6 +14,7 @@ class body extends StatefulWidget {
   @override
   _BodyState createState() => _BodyState();
   String total;
+  String descuentos;
   List<Producto> productos;
   String carritoId;
 
@@ -74,10 +75,11 @@ class _BodyState extends State<body> {
     );
   }
 
+  Future<String> getDescuento(List<Producto> productos) async {
+    return api.descuentos.getDescuentos(widget.productos);
+  }
+
   Future<ListView> listaItems(List<Producto> productos) async {
-    widget.total = await widget.total;
-    widget.productos = await widget.productos;
-    print(widget.productos.length);
     return ListView.builder(
       physics: NeverScrollableScrollPhysics(),
       shrinkWrap: true,
@@ -225,7 +227,33 @@ class _BodyState extends State<body> {
                   ),
                 ]),
               ),
-              SizedBox(height: size.height / 40),
+              SizedBox(height: size.height / 100),
+              Padding(
+                padding: const EdgeInsets.only(top: 8.0),
+                child: FutureBuilder(
+                  future: getDescuento(widget.productos),
+                  builder: (context, snapshot) {
+                    print(snapshot);
+                    if (snapshot.hasError) print(snapshot.error);
+                    return snapshot.hasData
+                        ? Text('Descuentos: \$ ' + snapshot.data,
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.normal,
+                                fontSize: 18.0))
+                        : new Center(
+                            child: new CircularProgressIndicator(),
+                          );
+                  },
+                ), /*Text(
+                  'Descuentos: \$ ' + getDescuento(),
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.normal,
+                      fontSize: 18.0),
+                ),*/
+              ),
+              SizedBox(height: size.height / 160),
               Padding(
                 padding: const EdgeInsets.only(top: 8.0),
                 child: Text(
@@ -236,7 +264,7 @@ class _BodyState extends State<body> {
                       fontSize: 20.0),
                 ),
               ),
-              SizedBox(height: size.height / 20),
+              SizedBox(height: size.height / 40),
               Center(
                 child: Container(
                   width: size.width / 1.8,

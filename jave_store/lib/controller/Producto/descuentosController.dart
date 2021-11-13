@@ -1,6 +1,7 @@
 // @dart=2.9
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:jave_store/Entidades/Descuento.dart';
+import 'package:jave_store/Entidades/Producto.dart';
 
 class descuentosController {
   FirebaseFirestore _firestore;
@@ -34,5 +35,15 @@ class descuentosController {
     }
 
     return c;
+  }
+
+  Future<String> getDescuentos(List<Producto> productos) async {
+    double suma = 0;
+    List<Descuento> descuentos = await getPromociones();
+    productos.forEach((producto) => descuentos.forEach((descuento) {
+          if (descuento.productos.contains(producto))
+            suma += (descuento.porcentaje * producto.price) * producto.quantity;
+        }));
+    return suma.toString();
   }
 }
