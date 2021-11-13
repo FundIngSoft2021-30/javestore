@@ -19,7 +19,7 @@ class Preguntas extends StatelessWidget {
             },
           ),
           centerTitle: true,
-          title: Text('Pedido'),
+          title: Text('Preguntas frecuentes'),
           backgroundColor: Colors.blue,
         ),
         body: Container(

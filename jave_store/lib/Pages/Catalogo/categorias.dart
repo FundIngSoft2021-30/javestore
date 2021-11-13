@@ -14,7 +14,7 @@ class Categories extends StatefulWidget {
 
 class _CategoriesState extends State<Categories>
     with SingleTickerProviderStateMixin {
-  int _selectedIndex = 0;
+  int _selectedIndex = 2;
   TabController _tabController;
   ApiFB apiFB = new ApiFB();
   final _formKey = GlobalKey<FormState>();
@@ -29,6 +29,7 @@ class _CategoriesState extends State<Categories>
   @override
   void initState() {
     _tabController = new TabController(length: 4, vsync: this);
+    this._tabController.index = 2;
     super.initState();
   }
 
