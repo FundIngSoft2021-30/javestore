@@ -33,7 +33,7 @@ class _BodyState extends State<body> {
         child: CarouselSlider.builder(
       itemCount: imagenes.length,
       options: CarouselOptions(
-        height: 400.0,
+        height: 480.0,
         aspectRatio: 16 / 9,
         viewportFraction: 0.8,
         initialPage: 0,
