@@ -29,4 +29,19 @@ class pedidoController {
     await carrito.clear_cart();
     return true;
   }
+
+  Future<List<Pedido>> get_pedido(String id) async {
+    var docs =
+        await _firestore.collection('Pedido').get().then((value) => value.docs);
+
+    List<Pedido> p = [];
+    for (var doc in docs) {
+      Pedido temp = Pedido.fromJson(doc.data());
+      if (temp.carritoId == id) {
+        p.add(temp);
+      }
+    }
+
+    return p;
+  }
 }

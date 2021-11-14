@@ -2,6 +2,7 @@
 import 'dart:async';
 import 'dart:ffi';
 import 'dart:ui';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:jave_store/Entidades/Pedido.dart';
@@ -34,7 +35,7 @@ class _BodyState extends State<body> {
     Pedido p = new Pedido();
     if (instrucciones != null) if (instrucciones.isNotEmpty) {
       p.carritoId = widget.carritoId;
-      p.fecha = DateTime.now();
+      p.fecha = Timestamp.now();
       p.instrucciones = instrucciones;
       p.metodoEntrega = medioEntrega;
       p.productos =

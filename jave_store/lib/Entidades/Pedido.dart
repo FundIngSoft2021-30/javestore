@@ -1,12 +1,14 @@
 //@dart=2.9
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 List<Pedido> ResenaFromJson(String str) =>
     List<Pedido>.from(json.decode(str).map((x) => Pedido.fromJson(x)));
 
 class Pedido {
   String carritoId;
-  DateTime fecha;
+  Timestamp fecha;
   String instrucciones;
   String metodoEntrega;
   List<String> productos;
@@ -22,7 +24,7 @@ class Pedido {
 
   @override
   String toString() {
-    return '{'; // fechaFinal: $fechaFinal, fechaInicio: $fechaInicio, imagenPromocion: $imagenPromocion, nombre: $imagenPromocion }';
+    return '{ fecha: ${fecha}, Productos: ${productos}, Total: ${total} }';
   }
 
   factory Pedido.fromJson(Map<String, dynamic> json) => Pedido(
@@ -30,6 +32,6 @@ class Pedido {
       fecha: json["fecha"],
       instrucciones: json["instrucciones"],
       metodoEntrega: json["metodoEntrega"],
-      productos: json["productos"],
+      productos: List.castFrom(json["productos"]),
       total: json["total"]);
 }
