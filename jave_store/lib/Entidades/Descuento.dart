@@ -1,8 +1,6 @@
 //@dart=2.9
 import 'dart:convert';
 
-import 'dart:ffi';
-
 List<Descuento> ResenaFromJson(String str) =>
     List<Descuento>.from(json.decode(str).map((x) => Descuento.fromJson(x)));
 

@@ -2,11 +2,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:jave_store/Pages/Ayuda/screenAyuda.dart';
 import 'package:jave_store/Pages/Carrito/carrito.dart';
 import 'package:jave_store/Pages/Catalogo/categorias.dart';
-import 'package:jave_store/Pages/Pago/Pago.dart';
 import 'package:jave_store/Pages/Perfil/InformacionPerfil.dart';
-import 'package:jave_store/Pages/Perfil/perfil.dart';
 import 'package:jave_store/Pages/Promociones/Promociones.dart';
 
 void main() async {
@@ -21,14 +20,14 @@ class AppBarBottom extends StatefulWidget {
 }
 
 class _AppBarBottom extends State<AppBarBottom> {
-  List<bool> _show = [false, true, true, true, true];
-  List<String> _bar = ["", "Ofertas", "Carrito de compras", "Perfil", "Ayuda"];
+  List<bool> _show = [false, true, true, true, false];
+  List<String> _bar = ["", "Ofertas", "Carrito de compras", "Perfil", ""];
   List<Widget> _paginas = [
     Categories(),
     promociones(),
     Carrito(),
     InformacionPerfil(),
-    Perfil(),
+    screenAyuda()
   ];
   int _selectedIndex = 0;
   void _onItemTapped(int index) {
@@ -39,7 +38,6 @@ class _AppBarBottom extends State<AppBarBottom> {
 
   @override
   Widget build(BuildContext context) {
-    Color color = Colors.blue;
     return MaterialApp(
       home: Scaffold(
         appBar: _show[_selectedIndex]

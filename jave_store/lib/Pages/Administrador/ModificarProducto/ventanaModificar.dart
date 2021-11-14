@@ -1,29 +1,31 @@
-//@dart=2.9
+// @dart=2.9
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:jave_store/Entidades/Producto.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:jave_store/Pages/Administrador/ModificarProducto/modificar.dart';
 import 'package:jave_store/Pages/Resenas/resenas.dart';
 import 'package:jave_store/controller/Cart/cartController.dart';
+import 'package:jave_store/controller/apiFB.dart';
 import 'package:localstorage/localstorage.dart';
 
-class ventanaProducto extends StatefulWidget {
+class ventanaModificar extends StatefulWidget {
   final Producto product;
-  const ventanaProducto({
+  const ventanaModificar({
     Key key,
     this.product,
   }) : super(key: key);
 
   @override
-  _ventanaProducto createState() => _ventanaProducto();
+  _ventanaModificar createState() => _ventanaModificar();
 }
 
-class _ventanaProducto extends State<ventanaProducto> {
+class _ventanaModificar extends State<ventanaModificar> {
   final LocalStorage storage = new LocalStorage('localstorage_app');
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-
     return Center(
       /** Card Widget **/
       child: Card(
@@ -33,7 +35,7 @@ class _ventanaProducto extends State<ventanaProducto> {
         elevation: 0,
         child: SizedBox(
           width: size.width / 1.35,
-          height: size.height / 1.61,
+          height: size.height / 1.5,
           child: Padding(
             padding: const EdgeInsets.all(10.0),
             child: Column(
@@ -126,11 +128,9 @@ class _ventanaProducto extends State<ventanaProducto> {
                             Icons.star,
                             color: Colors.amber,
                           ),
-                          /*
                           onRatingUpdate: (rating) {
                             print(rating);
                           },
-                          */
                         ),
                         SizedBox(
                           height: size.height / 80,
@@ -183,23 +183,49 @@ class _ventanaProducto extends State<ventanaProducto> {
                 SizedBox(
                   height: size.height / 240,
                 ), //Text //SizedBox
-                Container(
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(30.0)),
-                      primary: Colors.blue,
-                    ),
-                    child: Text(
-                      "Agregar",
-                      style: TextStyle(color: Colors.white, fontSize: 15),
-                    ),
-                    onPressed: () {
-                      CartController().add_product(widget.product);
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                ),
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(30.0)),
+                          primary: Colors.green,
+                        ),
+                        child: Text(
+                          "Modificar",
+                          style: TextStyle(color: Colors.white, fontSize: 15),
+                        ),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    Modificar(product: widget.product)),
+                          );
+                        },
+                      ),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(30.0)),
+                          primary: Colors.red,
+                        ),
+                        child: Text(
+                          "Eliminar",
+                          style: TextStyle(color: Colors.white, fontSize: 15),
+                        ),
+                        onPressed: () async {
+                          /*
+                          await ApiFB()
+                              .productos
+                              .delete_product(widget.product.name);
+                              */
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ]),
               ],
             ), //Column
           ), //Padding

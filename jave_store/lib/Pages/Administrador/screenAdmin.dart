@@ -5,8 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:jave_store/Pages/Administrador/add_product.dart';
 import 'package:jave_store/Pages/Catalogo/categorias.dart';
 import 'package:jave_store/Pages/Perfil/InformacionPerfil.dart';
-import 'package:jave_store/Pages/Perfil/perfil.dart';
 import 'package:jave_store/Pages/Promociones/Promociones.dart';
+
+import 'ModificarProducto/editar.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,11 +21,18 @@ class ScreenAdmin extends StatefulWidget {
 }
 
 class _ScreenAdmin extends State<ScreenAdmin> {
-  List<bool> _show = [false, false, true, true];
-  List<String> _bar = ["", "", "Ofertas", 'Perfil'];
+  List<bool> _show = [false, false, false, false, false];
+  List<String> _bar = [
+    "",
+    "",
+    "Editar",
+    "Ofertas",
+    'Perfil',
+  ];
   List<Widget> _paginas = [
-    Categories(),
+    editar(),
     AddProduct(),
+    editar(),
     promociones(),
     InformacionPerfil()
   ];
@@ -60,6 +68,10 @@ class _ScreenAdmin extends State<ScreenAdmin> {
             BottomNavigationBarItem(
               label: 'Add',
               icon: Icon(Icons.add_circle),
+            ),
+            BottomNavigationBarItem(
+              label: 'Editar',
+              icon: Icon(Icons.mode_edit),
             ),
             BottomNavigationBarItem(
               label: 'Ofertas',

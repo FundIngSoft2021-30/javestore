@@ -11,25 +11,18 @@ import 'package:jave_store/Entidades/Pedido.dart';
 import 'package:jave_store/Entidades/Producto.dart';
 import 'package:jave_store/Entidades/Usuario.dart';
 import 'package:jave_store/controller/Pedido/pedidoController.dart';
+import 'package:jave_store/controller/Producto/productosController.dart';
 import 'package:jave_store/controller/Producto/resenasController.dart';
 import 'package:jave_store/Entidades/Resena.dart';
 import 'Producto/descuentosController.dart';
 import 'Producto/resenasController.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  ApiFB api = ApiFB();
-}
-
-class ApiFB extends ChangeNotifier {
+class ApiFB {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
-
   final resenas = new resenasController(FirebaseFirestore.instance);
-
   final descuentos = new descuentosController(FirebaseFirestore.instance);
-
   final pedidos = new pedidoController(FirebaseFirestore.instance);
+  final productos = new productosController(FirebaseFirestore.instance);
 
   Future<bool> add_product(Producto p) async {
     return await firestore
@@ -110,6 +103,21 @@ class ApiFB extends ChangeNotifier {
         image: doc['image']));
   }
 
+  Future<List<Map<String, String>>> get_frecuent_question() async {
+    var docs = await this
+        .firestore
+        .collection('Preguntas')
+        .get()
+        .then((value) => value.docs);
+    List<Map<String, String>> list = [];
+    for (var doc in docs) {
+      Map<String, String> rt = {};
+      rt[doc.id] = doc.data()['rta'];
+      list.add(rt);
+    }
+    return list;
+  }
+
   Future<List<Producto>> getProductsByCategory(int index) async {
     String categoria =
         await this.getCategories().then((value) => value[index].nombre);
@@ -146,14 +154,16 @@ class ApiFB extends ChangeNotifier {
     List<Producto> rt = [];
     var docs = await firestore.collection('Cart').doc(id).get();
     String x = docs['productsID'].toString();
-    RegExp regExp = new RegExp("\{(.*)\}");
-    var tmp = regExp.allMatches(x).first.group(1).split(",");
-    for (var i in tmp) {
-      var z = i.split(':');
-      Producto p = await this.get_product(z[0].trim());
-      p.quantity = int.parse(z[1].trim());
-      rt.add(p);
-    }
+    try {
+      RegExp regExp = new RegExp("\{(.*)\}");
+      var tmp = regExp.allMatches(x).first.group(1).split(",");
+      for (var i in tmp) {
+        var z = i.split(':');
+        Producto p = await this.get_product(z[0].trim());
+        p.quantity = int.parse(z[1].trim());
+        rt.add(p);
+      }
+    } catch (e) {}
     return rt;
   }
 }

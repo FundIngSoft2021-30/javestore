@@ -36,7 +36,7 @@
         "jave_store/.gitignore": true,
         "jave_store/.metadata": true,
         "jave_store/.packages": true,
-        "jave_store/pubspec.yaml": true,
+        "jave_store/pubspec.yaml": false,
         "jave_store/README.md": true,
         "**/jave_store.vpp": true,
         "**/README.md": true,

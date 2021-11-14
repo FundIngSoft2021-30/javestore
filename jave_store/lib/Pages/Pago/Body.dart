@@ -1,7 +1,7 @@
 //@dart=2.9
 import 'dart:async';
-import 'dart:ffi';
 import 'dart:ui';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:jave_store/Entidades/Pedido.dart';
@@ -14,7 +14,6 @@ class body extends StatefulWidget {
   @override
   _BodyState createState() => _BodyState();
   String total;
-  String descuentos;
   List<Producto> productos;
   String carritoId;
 
@@ -35,7 +34,7 @@ class _BodyState extends State<body> {
     Pedido p = new Pedido();
     if (instrucciones != null) if (instrucciones.isNotEmpty) {
       p.carritoId = widget.carritoId;
-      p.fecha = DateTime.now();
+      p.fecha = Timestamp.now();
       p.instrucciones = instrucciones;
       p.metodoEntrega = medioEntrega;
       p.productos =
@@ -75,11 +74,10 @@ class _BodyState extends State<body> {
     );
   }
 
-  Future<String> getDescuento(List<Producto> productos) async {
-    return api.descuentos.getDescuentos(widget.productos);
-  }
-
   Future<ListView> listaItems(List<Producto> productos) async {
+    widget.total = await widget.total;
+    widget.productos = await widget.productos;
+    print(widget.productos.length);
     return ListView.builder(
       physics: NeverScrollableScrollPhysics(),
       shrinkWrap: true,
@@ -164,7 +162,7 @@ class _BodyState extends State<body> {
       children: <Widget>[
         Container(
           width: 330.0,
-          height: 140.0 * 3,
+          height: 145.0 * 3,
           decoration: BoxDecoration(
               color: Color.fromRGBO(235, 235, 235, 1),
               borderRadius: BorderRadius.circular(18.0)),
@@ -211,7 +209,7 @@ class _BodyState extends State<body> {
                 height: 82.0 * 1.5,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8.0),
-                    border: Border.all(color: Colors.grey[800], width: 2.0)),
+                    border: Border.all(color: Colors.grey[800], width: 1.0)),
                 child: ListView(children: [
                   FutureBuilder(
                     future: listaItems(widget.productos),
@@ -227,33 +225,7 @@ class _BodyState extends State<body> {
                   ),
                 ]),
               ),
-              SizedBox(height: size.height / 100),
-              Padding(
-                padding: const EdgeInsets.only(top: 8.0),
-                child: FutureBuilder(
-                  future: getDescuento(widget.productos),
-                  builder: (context, snapshot) {
-                    print(snapshot);
-                    if (snapshot.hasError) print(snapshot.error);
-                    return snapshot.hasData
-                        ? Text('Descuentos: \$ ' + snapshot.data,
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.normal,
-                                fontSize: 18.0))
-                        : new Center(
-                            child: new CircularProgressIndicator(),
-                          );
-                  },
-                ), /*Text(
-                  'Descuentos: \$ ' + getDescuento(),
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.normal,
-                      fontSize: 18.0),
-                ),*/
-              ),
-              SizedBox(height: size.height / 160),
+              SizedBox(height: size.height / 60),
               Padding(
                 padding: const EdgeInsets.only(top: 8.0),
                 child: Text(
@@ -264,7 +236,7 @@ class _BodyState extends State<body> {
                       fontSize: 20.0),
                 ),
               ),
-              SizedBox(height: size.height / 40),
+              SizedBox(height: size.height / 30),
               Center(
                 child: Container(
                   width: size.width / 1.8,

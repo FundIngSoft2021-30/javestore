@@ -17,7 +17,7 @@ class _CardProductoState extends State<CardProducto> {
   Producto item;
   _CardProductoState({this.item});
   void _update(int value) {
-    CartController c = new CartController(cartID: storage.getItem('id'));
+    CartController c = new CartController();
     setState(() {
       item.quantity = value;
       c.update_quantity(item.name, item.quantity);

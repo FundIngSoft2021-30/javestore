@@ -7,6 +7,7 @@ import 'package:jave_store/Pages/Pago/Pago.dart';
 import 'package:jave_store/controller/Cart/cartController.dart';
 import 'package:jave_store/controller/apiFB.dart';
 import 'package:localstorage/localstorage.dart';
+import 'package:provider/provider.dart';
 
 class Carrito extends StatefulWidget {
   @override
@@ -16,9 +17,9 @@ class Carrito extends StatefulWidget {
 class _CarritoState extends State<Carrito> {
   final LocalStorage storage = new LocalStorage('localstorage_app');
   final ApiFB api = ApiFB();
-
   @override
   Widget build(BuildContext context) {
+    final cartC = Provider.of<CartController>(context);
     return Container(
       color: Colors.white,
       child: FutureBuilder<List<Producto>>(
@@ -56,8 +57,7 @@ class _CarritoState extends State<Carrito> {
                       ),
                     ),
                     FutureBuilder(
-                        future: CartController(cartID: storage.getItem('id'))
-                            .get_cost(),
+                        future: cartC.get_cost(),
                         builder: (context, AsyncSnapshot<String> snapshot) {
                           return snapshot.hasData
                               ? Align(
@@ -151,6 +151,6 @@ class _CarritoState extends State<Carrito> {
   }
 
   void dismissedItem(BuildContext context, int index, Producto item) async {
-    CartController(cartID: storage.getItem('id')).remove_product(item.name);
+    CartController().remove_product(item.name);
   }
 }

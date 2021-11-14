@@ -1,12 +1,14 @@
 //@dart=2.9
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 List<Pedido> ResenaFromJson(String str) =>
     List<Pedido>.from(json.decode(str).map((x) => Pedido.fromJson(x)));
 
 class Pedido {
   String carritoId;
-  DateTime fecha;
+  Timestamp fecha;
   String instrucciones;
   String metodoEntrega;
   List<String> productos;

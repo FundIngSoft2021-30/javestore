@@ -1,10 +1,7 @@
 //@dart=2.9
-import 'dart:ffi';
-import 'dart:ui';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:jave_store/Pages/Catalogo/categorias.dart';
 import 'package:jave_store/Pages/Widgets/AppBarBottom.dart';
 import 'package:jave_store/controller/apiFB.dart';
 
@@ -33,7 +30,7 @@ class _BodyState extends State<body> {
         child: CarouselSlider.builder(
       itemCount: imagenes.length,
       options: CarouselOptions(
-        height: 400.0,
+        height: 480.0,
         aspectRatio: 16 / 9,
         viewportFraction: 0.8,
         initialPage: 0,

@@ -46,6 +46,7 @@ dependencies:
   provider: ^6.0.1
   image_picker: ^0.8.4+3
   permission_handler: ^8.2.5
+  url_launcher: ^6.0.12
 
 
 dev_dependencies:
@@ -76,6 +77,8 @@ flutter:
     - images/illustration-3.png
     - images/pag.png
     - images/page2.png
+    - images/lineadeatencion.png
+    - images/question.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

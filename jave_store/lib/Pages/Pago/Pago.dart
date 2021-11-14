@@ -2,7 +2,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:jave_store/Entidades/Producto.dart';
-import 'package:jave_store/Pages/Carrito/carrito.dart';
 import 'package:jave_store/Pages/Pago/Body.dart';
 
 class pago extends StatelessWidget {
