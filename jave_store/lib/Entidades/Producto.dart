@@ -31,7 +31,6 @@ class Producto {
 
   Map<String, dynamic> toJson() => {
         'available': available,
-        'name': name,
         'image': image,
         'description': description,
         'price': price,

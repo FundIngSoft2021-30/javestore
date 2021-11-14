@@ -60,7 +60,7 @@ class _AddProductState extends State<AddProduct> {
                               labelStyle:
                                   TextStyle(fontWeight: FontWeight.bold)),
                           onSaved: (value) {
-                            nombre.text = value;
+                            nombre.text = value.trim();
                           },
                         ),
                         FutureBuilder<List<Categoria>>(
@@ -95,7 +95,7 @@ class _AddProductState extends State<AddProduct> {
                                   TextStyle(fontWeight: FontWeight.bold)),
                           controller: description,
                           onSaved: (value) {
-                            description.text = value;
+                            description.text = value.trim();
                           },
                         ),
                         TextFormField(
@@ -108,7 +108,7 @@ class _AddProductState extends State<AddProduct> {
                                   TextStyle(fontWeight: FontWeight.bold)),
                           controller: price,
                           onSaved: (value) {
-                            price.text = value;
+                            price.text = value.trim();
                           },
                         ),
                         TextFormField(
@@ -122,7 +122,7 @@ class _AddProductState extends State<AddProduct> {
                             ),
                           ),
                           onSaved: (value) {
-                            quantity.text = value;
+                            quantity.text = value.trim();
                           },
                         ),
                         TextFormField(
@@ -136,7 +136,7 @@ class _AddProductState extends State<AddProduct> {
                             ),
                           ),
                           onSaved: (value) {
-                            url.text = value;
+                            url.text = value.trim();
                           },
                         ),
                         SizedBox(
@@ -174,7 +174,7 @@ class _AddProductState extends State<AddProduct> {
                                 price.text = '';
                                 quantity.text = '';
                                 url.text = '';
-                                _currentCategory = '';
+                                setState(() => _currentCategory = '');
                               } else {
                                 showDialog(
                                     context: context,

@@ -1,35 +1,72 @@
 //@dart=2.9
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:jave_store/Entidades/Pedido.dart';
-import 'package:jave_store/controller/Cart/cartController.dart';
-import 'package:jave_store/controller/Pedido/pedidoController.dart';
+import 'package:jave_store/Entidades/Producto.dart';
 import 'package:jave_store/controller/apiFB.dart';
-import 'package:intl/intl.dart';
 
 class VerPedido extends StatelessWidget {
-  List<String> productos;
-  ApiFB ap = new ApiFB();
-  VerPedido({this.productos});
+  final List<String> productos;
+  final String date;
+  final double cost;
+  final ApiFB ap = new ApiFB();
+  VerPedido({this.productos, this.cost, this.date});
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("herrera mrk"),
-        centerTitle: true,
+    Size size = MediaQuery.of(context).size;
+    return Dialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20.0),
       ),
-      body: Container(
-        child: ListView.builder(
-          itemCount: productos.length,
-          itemBuilder: (BuildContext context, int index) {
-            return ListTile(
-              leading: Image(
-                image: NetworkImage(
-                    ('https://depor.com/resizer/IqLYwICHcmvlXT8-S7L888u81R8=/980x0/smart/filters:format(jpeg):quality(75)/arc-anglerfish-arc2-prod-elcomercio.s3.amazonaws.com/public/JHRUKSIYBZBQNIDBNTCDQPP6JQ.jpg')),
+      child: Container(
+        padding: EdgeInsets.all(10),
+        width: size.width * 0.8,
+        height: size.height * 0.5,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Center(
+              child: Text(
+                "Pedido",
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-              title: Text('${productos[index]}'),
-            );
-          },
+            ),
+            Container(
+              height: size.height * 0.4,
+              width: size.width * 0.8,
+              child: ListView.builder(
+                itemCount: productos.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return FutureBuilder<Producto>(
+                    future: ap.get_product(productos[index]),
+                    builder: (context, p) {
+                      if (p.hasData) {
+                        return ListTile(
+                          leading: CircleAvatar(
+                            backgroundImage: NetworkImage(p.data.image),
+                          ),
+                          title: Text(productos[index]),
+                          subtitle: Text(p.data.price.toString()),
+                        );
+                      } else {
+                        return ListTile(
+                          title: Text(productos[index]),
+                          subtitle: Text("Cargando..."),
+                        );
+                      }
+                    },
+                  );
+                },
+              ),
+            ),
+            Text('  Total: ${this.cost}',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                )),
+          ],
         ),
       ),
     );

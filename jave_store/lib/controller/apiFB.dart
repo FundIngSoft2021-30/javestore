@@ -1,8 +1,5 @@
 // @dart=2.9
-import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:jave_store/Entidades/Categoria.dart';
@@ -154,11 +151,12 @@ class ApiFB {
     List<Producto> rt = [];
     var docs = await firestore.collection('Cart').doc(id).get();
     String x = docs['productsID'].toString();
+    var z;
     try {
       RegExp regExp = new RegExp("\{(.*)\}");
       var tmp = regExp.allMatches(x).first.group(1).split(",");
       for (var i in tmp) {
-        var z = i.split(':');
+        z = i.split(':');
         Producto p = await this.get_product(z[0].trim());
         p.quantity = int.parse(z[1].trim());
         rt.add(p);
