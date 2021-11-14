@@ -19,14 +19,14 @@ class productosController {
     return true;
   }
 
-  Future<bool> modify_product(Producto p) async {
+  Future<bool> modify_product(Producto p, String name) async {
     await this
         ._firestore
         .collection('Producto')
         .doc(p.name)
         .update({
           'available': p.available,
-          'name': p.name,
+          'name': name,
           'image': p.image,
           'description': p.description,
           'price': p.price,

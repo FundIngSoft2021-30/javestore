@@ -33,7 +33,7 @@ class _ventanaProducto extends State<ventanaProducto> {
         elevation: 0,
         child: SizedBox(
           width: size.width / 1.35,
-          height: size.height / 1.61,
+          height: size.height / 1.5,
           child: Padding(
             padding: const EdgeInsets.all(10.0),
             child: Column(

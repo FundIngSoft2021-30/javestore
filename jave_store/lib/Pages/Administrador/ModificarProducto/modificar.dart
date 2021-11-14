@@ -94,6 +94,7 @@ class ModificarState extends State<Modificar> {
                 TextFormField(
                   decoration: InputDecoration(labelText: 'Nombre producto'),
                   maxLength: 50,
+                  readOnly: true,
                   initialValue: widget.product.name,
                   validator: (String value) {
                     if (value.isEmpty) {
@@ -201,23 +202,22 @@ class ModificarState extends State<Modificar> {
                     style: TextStyle(color: Colors.white, fontSize: 16),
                   ),
                   onPressed: () async {
+                    String nombre = "-";
                     if (_formKey.currentState.validate()) {
                       await _formKey.currentState.save();
 
                       bool modificado = false;
-                      bool repetido = false;
 
                       if (_nombre != widget.product.name) {
                         modificado = true;
+                        /*
                         repetido = await ApiFB().productos.check_name(_nombre);
                         if (!repetido)
-                          widget.product.name = _nombre;
+                          nombre = _nombre;
                         else
-                          showAlertDialog(
-                              context,
-                              "El producto no puede tener un nombre existente",
-                              "Nombre repetido");
-                        modificado = false;
+                          showAlertDialog(context, "Nombre repetido",
+                              "El nombre ingresado ya pertenece a un producto");
+                              */
                       }
                       if (_categoria != widget.product.category) {
                         modificado = true;
@@ -239,8 +239,10 @@ class ModificarState extends State<Modificar> {
                         modificado = true;
                         widget.product.quantity = int.parse(_cantidad);
                       }
-                      if (modificado && !repetido) {
-                        await ApiFB().productos.modify_product(widget.product);
+                      if (modificado) {
+                        await ApiFB()
+                            .productos
+                            .modify_product(widget.product, nombre);
                         Navigator.of(context).pop();
                       } else
                         showAlertDialog(
