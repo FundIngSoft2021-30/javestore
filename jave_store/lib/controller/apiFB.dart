@@ -11,6 +11,7 @@ import 'package:jave_store/Entidades/Pedido.dart';
 import 'package:jave_store/Entidades/Producto.dart';
 import 'package:jave_store/Entidades/Usuario.dart';
 import 'package:jave_store/controller/Pedido/pedidoController.dart';
+import 'package:jave_store/controller/Producto/productosController.dart';
 import 'package:jave_store/controller/Producto/resenasController.dart';
 import 'package:jave_store/Entidades/Resena.dart';
 import 'Producto/descuentosController.dart';
@@ -21,6 +22,7 @@ class ApiFB {
   final resenas = new resenasController(FirebaseFirestore.instance);
   final descuentos = new descuentosController(FirebaseFirestore.instance);
   final pedidos = new pedidoController(FirebaseFirestore.instance);
+  final productos = new productosController(FirebaseFirestore.instance);
 
   Future<bool> add_product(Producto p) async {
     return await firestore
