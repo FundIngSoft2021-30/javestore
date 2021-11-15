@@ -20,7 +20,7 @@ class VerPedido extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.all(10),
         width: size.width * 0.8,
-        height: size.height * 0.5,
+        height: size.height * 0.7,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -34,7 +34,7 @@ class VerPedido extends StatelessWidget {
               ),
             ),
             Container(
-              height: size.height * 0.4,
+              height: size.height * 0.6,
               width: size.width * 0.8,
               child: ListView.builder(
                 itemCount: productos.length,
@@ -60,6 +60,9 @@ class VerPedido extends StatelessWidget {
                   );
                 },
               ),
+            ),
+            SizedBox(
+              height: size.height * 0.01,
             ),
             Text('  Total: ${this.cost}',
                 style: TextStyle(

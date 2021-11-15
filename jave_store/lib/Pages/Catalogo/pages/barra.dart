@@ -16,14 +16,14 @@ class SearchBox extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(50),
         border: Border.all(
-          color:  Color(0xFFB5BFD0).withOpacity(0.32),
+          color: Color(0xFFB5BFD0).withOpacity(0.32),
         ),
       ),
       child: TextField(
         onChanged: onChanged,
         decoration: InputDecoration(
           border: InputBorder.none,
-          icon:Icon(Icons.search),
+          icon: Icon(Icons.search),
           hintText: "Search Here",
           hintStyle: TextStyle(color: Color(0xFFB5BFD0)),
         ),

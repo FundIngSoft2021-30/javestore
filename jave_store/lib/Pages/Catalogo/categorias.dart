@@ -62,16 +62,14 @@ class _CategoriesState extends State<Categories>
                       this._controller.text = val;
 
                       Producto p = await apiFB.get_product(val);
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  ventanaProducto(product: p)));
+                      showDialog(
+                          context: context,
+                          builder: (context) => ventanaProducto(product: p));
                     },
                     itemBuilder: (context, String item) => ListTile(
                       title: Text(item),
                     ),
-                    getImmediateSuggestions: false,
+                    getImmediateSuggestions: true,
                     hideSuggestionsOnKeyboardHide: true,
                     hideOnEmpty: false,
                     noItemsFoundBuilder: (context) => Padding(
