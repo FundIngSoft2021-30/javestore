@@ -24,7 +24,7 @@ class Pedido {
 
   @override
   String toString() {
-    return '{'; // fechaFinal: $fechaFinal, fechaInicio: $fechaInicio, imagenPromocion: $imagenPromocion, nombre: $imagenPromocion }';
+    return '{ fecha: ${fecha}, Productos: ${productos}, Total: ${total} }';
   }
 
   factory Pedido.fromJson(Map<String, dynamic> json) => Pedido(
@@ -32,6 +32,6 @@ class Pedido {
       fecha: json["fecha"],
       instrucciones: json["instrucciones"],
       metodoEntrega: json["metodoEntrega"],
-      productos: json["productos"],
+      productos: List.castFrom(json["productos"]),
       total: json["total"]);
 }

@@ -71,7 +71,7 @@ class CartController with ChangeNotifier {
     List<String> names = [for (Producto p in products) p.name];
     List<int> values = [for (Producto p in products) p.quantity];
     if (names.contains(product.name)) {
-      update_quantity(product.name, product.quantity + 1);
+      update_quantity(product.name, values[names.indexOf(product.name)] + 1);
     } else {
       names.add(product.name);
       values.add(1);
@@ -92,6 +92,7 @@ class CartController with ChangeNotifier {
     for (double p in values) {
       sum += p;
     }
+
     notifyListeners();
     return await sum.toString();
   }
