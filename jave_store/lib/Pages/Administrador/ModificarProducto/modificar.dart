@@ -231,11 +231,11 @@ class ModificarState extends State<Modificar> {
                         modificado = true;
                         widget.product.image = _urlImagen;
                       }
-                      if (_precio != widget.product.price) {
+                      if (double.parse(_precio) != widget.product.price) {
                         modificado = true;
                         widget.product.price = double.parse(_precio);
                       }
-                      if (_cantidad != widget.product.quantity) {
+                      if (int.parse(_cantidad) != widget.product.quantity) {
                         modificado = true;
                         widget.product.quantity = int.parse(_cantidad);
                       }
