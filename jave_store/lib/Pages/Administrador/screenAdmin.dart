@@ -2,10 +2,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:jave_store/Pages/Administrador/Reportes/report.dart';
 import 'package:jave_store/Pages/Administrador/add_product.dart';
-import 'package:jave_store/Pages/Catalogo/categorias.dart';
 import 'package:jave_store/Pages/Perfil/InformacionPerfil.dart';
-import 'package:jave_store/Pages/Promociones/Promociones.dart';
 
 import 'ModificarProducto/editar.dart';
 
@@ -26,14 +25,14 @@ class _ScreenAdmin extends State<ScreenAdmin> {
     "",
     "",
     "Editar",
-    "Ofertas",
+    "Reportes",
     'Perfil',
   ];
   List<Widget> _paginas = [
     editar(),
     AddProduct(),
     editar(),
-    promociones(),
+    Reportes(),
     InformacionPerfil()
   ];
   int _selectedIndex = 0;
@@ -74,8 +73,8 @@ class _ScreenAdmin extends State<ScreenAdmin> {
               icon: Icon(Icons.mode_edit),
             ),
             BottomNavigationBarItem(
-              label: 'Ofertas',
-              icon: Icon(Icons.account_balance_wallet_outlined),
+              label: 'Reportes',
+              icon: Icon(Icons.report),
             ),
             BottomNavigationBarItem(
               label: 'Perfil',

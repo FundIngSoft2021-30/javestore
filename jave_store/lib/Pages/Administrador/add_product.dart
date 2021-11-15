@@ -45,11 +45,11 @@ class _AddProductState extends State<AddProduct> {
                           "Anadir producto",
                           style: TextStyle(
                               color: Colors.blue,
-                              fontSize: 30,
+                              fontSize: 25,
                               fontWeight: FontWeight.bold),
                         ),
                         SizedBox(
-                          height: size.height * 0.01,
+                          height: size.height * 0.02,
                         ),
                         TextFormField(
                           keyboardType: TextInputType.name,
@@ -82,7 +82,7 @@ class _AddProductState extends State<AddProduct> {
                               hint: Text("Categoria",
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 15)),
+                                      fontSize: 16)),
                               style: TextStyle(color: Colors.black),
                             );
                           },
