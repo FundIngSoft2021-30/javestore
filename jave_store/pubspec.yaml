@@ -27,7 +27,6 @@ dependencies:
   carousel_slider: ^4.0.0
   flutter_rating_bar: ^4.0.0
   http: ^0.13.3
-  mysql1: ^0.17.1
   flutter:
     sdk: flutter
 
@@ -50,8 +49,12 @@ dependencies:
 
 
 dev_dependencies:
+  integration_test:
+    sdk: flutter
   flutter_test:
     sdk: flutter
+  mockito:
+  test:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

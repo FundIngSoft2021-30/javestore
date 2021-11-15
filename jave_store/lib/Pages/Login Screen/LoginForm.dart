@@ -25,6 +25,7 @@ class _LoginFormState extends State<LoginForm> {
     final authService = Provider.of<AuthService>(context);
     Size size = MediaQuery.of(context).size;
     return SingleChildScrollView(
+      key: Key('LoginForm'),
       child: Column(
         children: [
           SizedBox(
@@ -38,6 +39,7 @@ class _LoginFormState extends State<LoginForm> {
                 children: <Widget>[
                   TextFormField(
                     controller: user,
+                    key: Key('email'),
                     keyboardType: TextInputType.emailAddress,
                     //onSaved: (input) => loginRequestModel.email = input,
                     validator: (input) => !input.contains('@') ? "" : null,
@@ -60,6 +62,7 @@ class _LoginFormState extends State<LoginForm> {
                   SizedBox(height: 20),
                   new TextFormField(
                     controller: pass,
+                    key: Key('password'),
                     style: TextStyle(color: Theme.of(context).accentColor),
                     keyboardType: TextInputType.text,
                     //onSaved: (input) => loginRequestModel.password = input,
@@ -96,6 +99,7 @@ class _LoginFormState extends State<LoginForm> {
                   ),
                   SizedBox(height: size.height / 15),
                   FlatButton(
+                    key: Key('Start'),
                     padding: EdgeInsets.symmetric(vertical: 12, horizontal: 50),
                     onPressed: () async {
                       await authService.signIn(user.text, pass.text);

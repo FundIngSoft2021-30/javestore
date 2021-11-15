@@ -138,6 +138,7 @@ class _CategoriesState extends State<Categories>
         child: Center(
           child: Text(
             name,
+            key: Key('Start'),
             style: TextStyle(
               color: Colors.black,
               fontWeight: FontWeight.bold,

@@ -41,6 +41,7 @@ class _AppBarBottom extends State<AppBarBottom> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      key: Key('Inicio'),
       home: Scaffold(
         appBar: _show[_selectedIndex]
             ? AppBar(title: Center(child: Text(_bar[_selectedIndex])))
