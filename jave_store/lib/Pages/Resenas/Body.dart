@@ -39,7 +39,7 @@ class _bodyState extends State<body> {
               leading: GestureDetector(
                 onTap: () async {
                   // Display the image in large form.
-                  print("Comentario selecctionado");
+                  print("Comentario seleccionado");
                 },
                 child: Container(
                   height: 50.0,

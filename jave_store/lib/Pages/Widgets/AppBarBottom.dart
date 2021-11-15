@@ -21,6 +21,7 @@ class AppBarBottom extends StatefulWidget {
 
 class _AppBarBottom extends State<AppBarBottom> {
   List<bool> _show = [false, true, true, true, false];
+
   List<String> _bar = ["", "Ofertas", "Carrito de compras", "Perfil", ""];
   List<Widget> _paginas = [
     Categories(),
@@ -30,6 +31,7 @@ class _AppBarBottom extends State<AppBarBottom> {
     screenAyuda()
   ];
   int _selectedIndex = 0;
+
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;

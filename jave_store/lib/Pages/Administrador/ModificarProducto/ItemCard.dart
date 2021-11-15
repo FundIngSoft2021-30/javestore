@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:jave_store/Entidades/Producto.dart';
 import 'package:jave_store/Pages/Administrador/ModificarProducto/ventanaModificar.dart';
+import 'package:jave_store/controller/apiFB.dart';
 
 class ItemCard extends StatelessWidget {
   final Producto product;
@@ -54,12 +55,31 @@ class ItemCard extends StatelessWidget {
               style: TextStyle(color: Colors.black),
             ),
           ),
-          Text(
-            "${product.price}",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
-          )
+          FutureBuilder<String>(
+              future: ApiFB().descuentos.getDescuentosProducto(
+                  product), // a previously-obtained Future<String> or null
+              builder: (context, snapshot) {
+                if (snapshot.hasError) print(snapshot.error);
+                return snapshot.hasData
+                    ? Column(children: [
+                        Row(children: [
+                          Text(
+                              "\$${(product.price - double.parse(snapshot.data)).round()}  ",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.blueAccent[700])),
+                          Text("\$${product.price}",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  decoration: TextDecoration.lineThrough,
+                                  fontSize: 12)),
+                        ])
+                      ])
+                    : Text("\$${product.price}",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.blueAccent[700]));
+              }),
         ],
       ),
     );

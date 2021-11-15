@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:jave_store/Entidades/Categoria.dart';
 import 'package:jave_store/Entidades/Producto.dart';
+import 'package:jave_store/Pages/Administrador/screenAdmin.dart';
 import 'package:jave_store/controller/apiFB.dart';
 
 class Modificar extends StatefulWidget {
@@ -243,7 +244,11 @@ class ModificarState extends State<Modificar> {
                         await ApiFB()
                             .productos
                             .modify_product(widget.product, nombre);
-                        Navigator.of(context).pop();
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ScreenAdmin()),
+                        );
                       } else
                         showAlertDialog(
                             context,

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:jave_store/Entidades/Producto.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:jave_store/Pages/Administrador/ModificarProducto/modificar.dart';
+import 'package:jave_store/Pages/Administrador/screenAdmin.dart';
 import 'package:jave_store/Pages/Resenas/resenas.dart';
 import 'package:jave_store/controller/Cart/cartController.dart';
 import 'package:jave_store/controller/apiFB.dart';
@@ -167,29 +168,94 @@ class _ventanaModificar extends State<ventanaModificar> {
                               height: size.height / 60,
                             ),
 
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "Precio: ",
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w400,
-                                  ), //Textstyle
-                                ),
-                                Text(
-                                  '\$' + "${snapshot.data.price} ",
-                                  textAlign: TextAlign.left,
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w500,
-                                  ), //Textstyle
-                                ),
-                              ],
-                            ),
+                            FutureBuilder<String>(
+                                future: ApiFB()
+                                    .descuentos
+                                    .getDescuentosProducto(widget
+                                        .product), // a previously-obtained Future<String> or null
+                                builder: (context, snapshot) {
+                                  if (snapshot.hasError) print(snapshot.error);
+                                  return snapshot.hasData
+                                      ? Column(children: [
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                "Sin descuento: ",
+                                                style: TextStyle(
+                                                  fontSize: 15,
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.w400,
+                                                ), //Textstyle
+                                              ),
+                                              Text(
+                                                '\$' +
+                                                    "${widget.product.price} ",
+                                                textAlign: TextAlign.left,
+                                                style: TextStyle(
+                                                    fontSize: 18,
+                                                    color: Colors.black,
+                                                    fontWeight: FontWeight.w300,
+                                                    decoration: TextDecoration
+                                                        .lineThrough), //Textstyle
+                                              ),
+                                            ],
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                "Precio actual: ",
+                                                style: TextStyle(
+                                                  fontSize: 18,
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.w500,
+                                                ), //Textstyle
+                                              ),
+                                              Text(
+                                                "\$${double.parse(snapshot.data)}",
+                                                textAlign: TextAlign.left,
+                                                style: TextStyle(
+                                                  fontSize: 18,
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.w500,
+                                                ), //Textstyle
+                                              ),
+                                            ],
+                                          )
+                                        ])
+                                      : Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              "Precio: ",
+                                              style: TextStyle(
+                                                fontSize: 15,
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.w500,
+                                              ), //Textstyle
+                                            ),
+                                            Text(
+                                              '\$' + "${widget.product.price} ",
+                                              textAlign: TextAlign.left,
+                                              style: TextStyle(
+                                                fontSize: 18,
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.w500,
+                                              ), //Textstyle
+                                            ),
+                                          ],
+                                        );
+                                }),
 
                             SizedBox(
                               height: size.height / 240,
@@ -238,7 +304,12 @@ class _ventanaModificar extends State<ventanaModificar> {
                               .productos
                               .delete_product(snapshot.data.name);
                               */
-                                      Navigator.of(context).pop();
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                ScreenAdmin()),
+                                      );
                                     },
                                   ),
                                 ]),

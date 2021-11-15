@@ -1,15 +1,17 @@
 //@dart=2.9
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 List<Descuento> ResenaFromJson(String str) =>
     List<Descuento>.from(json.decode(str).map((x) => Descuento.fromJson(x)));
 
 class Descuento {
-  DateTime fechaFinal;
-  DateTime fechaInicio;
+  Timestamp fechaFinal;
+  Timestamp fechaInicio;
   String imagenPromocion;
   double porcentaje;
-  List<String> productos;
+  List<dynamic> productos;
 
   Descuento(
       {this.fechaFinal,

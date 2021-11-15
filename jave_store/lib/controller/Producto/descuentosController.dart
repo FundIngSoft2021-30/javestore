@@ -39,11 +39,34 @@ class descuentosController {
 
   Future<String> getDescuentos(List<Producto> productos) async {
     double suma = 0;
+    String resultado;
+    //print(productos.length);
+    for (var product in productos) {
+      String temp = await getDescuentosProducto(product);
+
+      if (temp != null) {
+        suma = suma + double.parse(temp).round() * product.quantity;
+        resultado = suma.toString();
+      }
+    }
+
+    return resultado;
+  }
+
+  Future<String> getDescuentosProducto(Producto p) async {
+    double suma = 0;
+    String resultado;
+
     List<Descuento> descuentos = await getPromociones();
-    productos.forEach((producto) => descuentos.forEach((descuento) {
-          if (descuento.productos.contains(producto))
-            suma += (descuento.porcentaje * producto.price) * producto.quantity;
-        }));
-    return suma.toString();
+
+    descuentos.forEach((descuento) {
+      if (descuento.productos.contains(p.name)) if (suma <
+          descuento.porcentaje * p.price) {
+        suma = descuento.porcentaje * p.price;
+        resultado = suma.toString();
+      }
+    });
+
+    return resultado;
   }
 }

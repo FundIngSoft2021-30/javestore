@@ -228,13 +228,107 @@ class _BodyState extends State<body> {
               SizedBox(height: size.height / 60),
               Padding(
                 padding: const EdgeInsets.only(top: 8.0),
-                child: Text(
-                  'Total: \$ ' + widget.total,
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20.0),
-                ),
+                child: FutureBuilder(
+                    future: ApiFB().descuentos.getDescuentos(widget
+                        .productos), // a previously-obtained Future<String> or null
+                    builder: (context, snapshot) {
+                      if (snapshot.hasError) print(snapshot.error);
+                      return snapshot.hasData
+                          ? Column(children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "Subtotal:        ",
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w400,
+                                    ), //Textstyle
+                                  ),
+                                  Text(
+                                    "${widget.total} ",
+                                    textAlign: TextAlign.left,
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        color: Colors.green,
+                                        fontWeight:
+                                            FontWeight.w300), //Textstyle
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "Descuento:     ",
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w400,
+                                    ), //Textstyle
+                                  ),
+                                  Text(
+                                    "- ${double.parse(snapshot.data).round()}",
+                                    textAlign: TextAlign.left,
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        color: Colors.red,
+                                        fontWeight:
+                                            FontWeight.w300), //Textstyle
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "Total:        ",
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w500,
+                                    ), //Textstyle
+                                  ),
+                                  Text(
+                                    "\$${(double.parse(widget.total) - double.parse(snapshot.data)).round()}",
+                                    textAlign: TextAlign.left,
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w500,
+                                    ), //Textstyle
+                                  ),
+                                ],
+                              )
+                            ])
+                          : Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "Total: ",
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w500,
+                                  ), //Textstyle
+                                ),
+                                Text(
+                                  '\$' + "${widget.total} ",
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w500,
+                                  ), //Textstyle
+                                ),
+                              ],
+                            );
+                    }),
               ),
               SizedBox(height: size.height / 30),
               Center(

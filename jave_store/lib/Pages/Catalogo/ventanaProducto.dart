@@ -5,6 +5,7 @@ import 'package:jave_store/Entidades/Producto.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:jave_store/Pages/Resenas/resenas.dart';
 import 'package:jave_store/controller/Cart/cartController.dart';
+import 'package:jave_store/controller/apiFB.dart';
 import 'package:localstorage/localstorage.dart';
 
 class ventanaProducto extends StatefulWidget {
@@ -24,6 +25,34 @@ class _ventanaProducto extends State<ventanaProducto> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
+    Future<Widget> descuento() async {
+      String desc =
+          await ApiFB().descuentos.getDescuentosProducto(widget.product);
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            "Descuento: ",
+            style: TextStyle(
+              fontSize: 15,
+              color: Colors.black,
+              fontWeight: FontWeight.w400,
+            ), //Textstyle
+          ),
+          Text(
+            desc,
+            textAlign: TextAlign.left,
+            style: TextStyle(
+              fontSize: 20,
+              color: Colors.red,
+              fontWeight: FontWeight.w500,
+            ), //Textstyle
+          ),
+        ],
+      );
+    }
+
     return Center(
       /** Card Widget **/
       child: Card(
@@ -33,7 +62,7 @@ class _ventanaProducto extends State<ventanaProducto> {
         elevation: 0,
         child: SizedBox(
           width: size.width / 1.35,
-          height: size.height / 1.5,
+          height: size.height / 1.45,
           child: Padding(
             padding: const EdgeInsets.all(10.0),
             child: Column(
@@ -156,34 +185,94 @@ class _ventanaProducto extends State<ventanaProducto> {
                   height: size.height / 60,
                 ),
 
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Precio: ",
-                      style: TextStyle(
-                        fontSize: 15,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w400,
-                      ), //Textstyle
-                    ),
-                    Text(
-                      '\$' + "${widget.product.price} ",
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w500,
-                      ), //Textstyle
-                    ),
-                  ],
-                ),
+                FutureBuilder<String>(
+                    future: ApiFB().descuentos.getDescuentosProducto(widget
+                        .product), // a previously-obtained Future<String> or null
+                    builder: (context, snapshot) {
+                      if (snapshot.hasError) print(snapshot.error);
+                      return snapshot.hasData
+                          ? Column(children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "Sin descuento: ",
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w400,
+                                    ), //Textstyle
+                                  ),
+                                  Text(
+                                    '\$' + "${widget.product.price} ",
+                                    textAlign: TextAlign.left,
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.w300,
+                                        decoration: TextDecoration
+                                            .lineThrough), //Textstyle
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "Precio actual: ",
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w500,
+                                    ), //Textstyle
+                                  ),
+                                  Text(
+                                    '\$' +
+                                        (widget.product.price -
+                                                double.parse(snapshot.data))
+                                            .toString(),
+                                    textAlign: TextAlign.left,
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w500,
+                                    ), //Textstyle
+                                  ),
+                                ],
+                              )
+                            ])
+                          : Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "Precio: ",
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w500,
+                                  ), //Textstyle
+                                ),
+                                Text(
+                                  '\$' + "${widget.product.price} ",
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w500,
+                                  ), //Textstyle
+                                ),
+                              ],
+                            );
+                    }),
 
                 SizedBox(
                   height: size.height / 240,
                 ), //Text //SizedBox
                 Container(
+                  alignment: Alignment.bottomCenter,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
