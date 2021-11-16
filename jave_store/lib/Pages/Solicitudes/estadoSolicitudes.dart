@@ -25,36 +25,40 @@ class MyApp extends StatelessWidget {
             ),
             backgroundColor: Color(0xFF004aac),
           ),
-          body: SingleChildScrollView(
-              padding: const EdgeInsets.all(25.0),
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
+          body: Row(
+              //padding: const EdgeInsets.all(25.0),
+              //child: Column(
+                  //crossAxisAlignment: CrossAxisAlignment.stretch,
+               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+               mainAxisSize: MainAxisSize.max,   
                   children: <Widget>[
-                       Image(
+                    Container(
+                       child: Image(
                             image: AssetImage('images/page2.png'),
                             height: 80,
                             width: 80,
                             alignment: Alignment.bottomLeft),
-                    SizedBox(height: 14),
-                    Text("Nombre producto........ Mochila",
-                    textAlign: TextAlign.left, 
+                    //SizedBox(height: 14),
+                    ),
+                     Text("Nombre producto:  ",
                         style: TextStyle(
                           fontSize: 18, fontWeight: FontWeight.bold)
                             ),
-                    Text('Codigo producto......... 0013',
-                    textAlign: TextAlign.left, 
-                        style: TextStyle(
+                    Text('Mochila')
+                    /*Codigo producto:0013',
+                          style: TextStyle(
                           fontSize: 18, fontWeight: FontWeight.bold)
-                            ),
-                    SizedBox(height: size.height * 0.01),
+                    ),
+                    Text('Estado'),*/
+                     /* SizedBox(height: size.height * 0.01),
                     Text("Estado",
                       style:
                           TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
                     Icon(Icons.beenhere),
                     SizedBox(height: size.height * 0.05),
-                  
-                  ])),
+                  */
+                  ]),
         ));
   }
 
