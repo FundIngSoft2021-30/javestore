@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(MaterialApp(
@@ -9,7 +10,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return MaterialApp(
-        title: 'Administrar Productos',
+        title: 'Estado Solicitudes',
         home: Scaffold(
           appBar: AppBar(
             leading: IconButton(
@@ -27,69 +28,32 @@ class MyApp extends StatelessWidget {
           body: SingleChildScrollView(
               padding: const EdgeInsets.all(25.0),
               child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
-                    new Center(
-                        child: Image(
+                       Image(
                             image: AssetImage('images/page2.png'),
-                            height: 210,
-                            width: 233,
-                            alignment: Alignment.center)),
+                            height: 80,
+                            width: 80,
+                            alignment: Alignment.bottomLeft),
                     SizedBox(height: 14),
-                    Text("Nombre producto",
+                    Text("Nombre producto........ Mochila",
+                    textAlign: TextAlign.left, 
                         style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold)),
-                    SizedBox(height: 5),
-                    Container(
-                      height: size.height * 0.1,
-                      color: Colors.grey[200],
-                      child: TextField(
-                        decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: 'Ingrese nombre del producto'),
-                      ),
-                    ),
+                          fontSize: 18, fontWeight: FontWeight.bold)
+                            ),
+                    Text('Codigo producto......... 0013',
+                    textAlign: TextAlign.left, 
+                        style: TextStyle(
+                          fontSize: 18, fontWeight: FontWeight.bold)
+                            ),
                     SizedBox(height: size.height * 0.01),
-                    Text(
-                      "Descripcion",
+                    Text("Estado",
                       style:
                           TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
-                    SizedBox(height: 5),
-                    Container(
-                      color: Colors.grey[200],
-                      height: size.height * 0.1,
-                      child: TextField(
-                        decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: 'Ingrese descripcion del producto '),
-                      ),
-                    ),
+                    Icon(Icons.beenhere),
                     SizedBox(height: size.height * 0.05),
-                    Container(
-                      padding: EdgeInsets.all(10),
-                      width: size.width * 0.8,
-                      height: size.height * 0.06,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.blue,
-                      ),
-                      child: InkWell(
-                          child: Text(
-                            "Guardar",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          onTap: () {
-                            showDialog(
-                              context: context,
-                              builder: (context) => Alert("It's working"),
-                            );
-                          }),
-                    ),
+                  
                   ])),
         ));
   }
