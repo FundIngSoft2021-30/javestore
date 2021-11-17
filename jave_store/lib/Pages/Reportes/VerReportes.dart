@@ -1,11 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+
+
 void main() => runApp(MaterialApp(
       home: MyAp_p(),
     ));
 
 class MyAp_p extends StatelessWidget {
+
+DateTime selectedDate = DateTime.now();  
+final firstDate = DateTime(2020,1);
+final lastDate = DateTime(2025,12);
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -26,8 +33,21 @@ class MyAp_p extends StatelessWidget {
             backgroundColor: Color(0xFF004aac),
           ),
           body: 
-          
-          DataTable(
+          Column(
+            children: [
+              SizedBox(height: 10),
+              Text(
+                '$selectedDate'.split(' ')[0],
+                style: TextStyle(fontSize: 24),
+              ),
+              Divider(),
+              SizedBox(height: 10),
+              ElevatedButton(
+                onPressed: () => _openDatePicker (context), 
+                child: Text('Seleccionar Fecha'),
+              ),
+              Divider(),
+               DataTable(
             columnSpacing: 44,
             columns: const <DataColumn> [
             DataColumn(label: Text('Nombre', textAlign: TextAlign.center)),
@@ -65,17 +85,47 @@ class MyAp_p extends StatelessWidget {
 
           ],         
          )
-      
-      ));
-  }
 
-  /*Widget Alert(String msm) {
-    return AlertDialog(
-      backgroundColor: Colors.blue.shade50,
-      title: Text("Respuesta"),
-      content: Text(msm),
-    );
-  }*/
+
+            ],
+            
+           
+
+
+
+          ),
+
+       
+      
+      )
+      
+      
+      
+      
+      );
+      
+
+  }
+_openDatePicker(BuildContext context)async{
+
+final DateTime? date = await showDatePicker(
+  context: context,
+  initialDate: selectedDate, 
+  firstDate: firstDate,
+   lastDate: lastDate, 
+   );
+   if  (date!= null){
+
+     setState((){
+
+       selectedDate = date;
+     });
+   }
+
+}
+
+  void setState(Null Function() param0) {}
+
 }
 
 
