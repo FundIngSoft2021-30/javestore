@@ -26,39 +26,72 @@ class MyApp extends StatelessWidget {
             backgroundColor: Color(0xFF004aac),
           ),
           body: ListView(
-              //padding: const EdgeInsets.all(25.0),
-              //child: Column(
-                  //crossAxisAlignment: CrossAxisAlignment.stretch,
-             //  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-               //mainAxisSize: MainAxisSize.max,   
-                  children: <Widget>[
+            
+                children: <Widget>[
                    
                     Image(
                             image: AssetImage('images/page2.png'),
                             height: 80,
                             width: 80,
-                            alignment: Alignment.bottomLeft),
-                    //SizedBox(height: 14),
-                    
+                            alignment: Alignment.center
+                            ),
+                  
                      Text("Nombre producto:  ",
+                     textAlign : TextAlign.center,
                         style: TextStyle(
                           fontSize: 18, fontWeight: FontWeight.bold)
                             ),
-                    Text('Mochila'),
-                    Text ('Codigo producto:0013',
+                    Text('Mochila', 
+                     textAlign : TextAlign.center),
+                    Text ('Codigo producto',
+                     textAlign : TextAlign.center,
                           style: TextStyle(
                           fontSize: 18, fontWeight: FontWeight.bold)
                     ),
-                    Text('Estado'),
+                    Text('0013', 
+                     textAlign : TextAlign.center),
                      SizedBox(height: size.height * 0.01),
                     Text("Estado",
+                     textAlign : TextAlign.center,
                       style:
                           TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
                     Icon(Icons.beenhere),
                     SizedBox(height: size.height * 0.05),
+                    Image(
+                            image: AssetImage('images/pag.png'),
+                            height: 80,
+                            width: 80,
+                            alignment: Alignment.center
+                            ),
                   
+                     Text("Nombre producto:  ",
+                     textAlign : TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 18, fontWeight: FontWeight.bold)
+                            ),
+                    Text('Libro', 
+                     textAlign : TextAlign.center),
+                    Text ('Codigo producto',
+                     textAlign : TextAlign.center,
+                          style: TextStyle(
+                          fontSize: 18, fontWeight: FontWeight.bold)
+                    ),
+                    Text('0014', 
+                     textAlign : TextAlign.center),
+                     SizedBox(height: size.height * 0.01),
+                    Text("Estado",
+                     textAlign : TextAlign.center,
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                    Icon(Icons.cancel),
+                    SizedBox(height: size.height * 0.05),
+
+
+
                   ]),
+
         ));
   }
 
