@@ -27,37 +27,40 @@ class MyAp_p extends StatelessWidget {
           ),
           body: 
           
-          DataTable(columns: const <DataColumn> [
-            DataColumn(label: Text('Nombre', textAlign: TextAlign.left)),
-            DataColumn(label: Text('Cod Produc.',textAlign: TextAlign.left)),
-            DataColumn(label: Text ('Cod Cliente', textAlign: TextAlign.left)),
-            DataColumn(label: Text('Precio', textAlign: TextAlign.left))
+          DataTable(
+            columnSpacing: 44,
+            columns: const <DataColumn> [
+            DataColumn(label: Text('Nombre', textAlign: TextAlign.center)),
+            DataColumn(label: Text('Codigo\nProduco',textAlign: TextAlign.center)),
+            DataColumn(label: Text ('Codigo\nCliente', textAlign: TextAlign.center)),
+            DataColumn(label: Text('Precio', textAlign: TextAlign.center))
 
           ],
-          rows: const<DataRow>[
-            DataRow(cells: <DataCell> [
-              DataCell(Text('Lapices',textAlign: TextAlign.left)),
-              DataCell(Text('0014',textAlign: TextAlign.left)),
-              DataCell(Text('003',textAlign: TextAlign.left)),
-              DataCell(Text('100.000',textAlign: TextAlign.left))
+          rows: [
+            DataRow(cells: [
+              DataCell(Text('Lapices',textAlign: TextAlign.center)),
+              DataCell(Text('0014',textAlign: TextAlign.center)),
+              DataCell(Text('003',textAlign: TextAlign.center)),
+              DataCell(Text('100.000',textAlign: TextAlign.center)),
+ 
             ]),
              DataRow(cells: <DataCell> [
-              DataCell(Text('Cuadernos',textAlign: TextAlign.left)),
-              DataCell(Text('0015',textAlign: TextAlign.left)),
-              DataCell(Text('123',textAlign: TextAlign.left)),
-              DataCell(Text('200.000',textAlign: TextAlign.left))
+              DataCell(Text('Cuadernos',textAlign: TextAlign.center)),
+              DataCell(Text('0015',textAlign: TextAlign.center)),
+              DataCell(Text('123',textAlign: TextAlign.center)),
+              DataCell(Text('200.000',textAlign: TextAlign.center))
             ]),
             DataRow(cells: <DataCell>[
-              DataCell(Text('Uniformes',textAlign: TextAlign.left)),
-              DataCell(Text('0013',textAlign: TextAlign.left)),
-              DataCell(Text('4243',textAlign: TextAlign.left)),
-              DataCell(Text('200.000',textAlign: TextAlign.left))
+              DataCell(Text('Uniformes',textAlign: TextAlign.center)),
+              DataCell(Text('0013',textAlign: TextAlign.center)),
+              DataCell(Text('4243',textAlign: TextAlign.center)),
+              DataCell(Text('200.000',textAlign: TextAlign.center))
             ]),
             DataRow(cells: <DataCell>[
-              DataCell(Text('Libros',textAlign: TextAlign.left)),
-              DataCell(Text('0016',textAlign: TextAlign.left)),
-              DataCell(Text('5000',textAlign: TextAlign.left)),
-              DataCell(Text('300.000',textAlign: TextAlign.left))
+              DataCell(Text('Libros',textAlign: TextAlign.center)),
+              DataCell(Text('0016',textAlign: TextAlign.center)),
+              DataCell(Text('5000',textAlign: TextAlign.center)),
+              DataCell(Text('300.000',textAlign: TextAlign.center))
             ]),
 
           ],         
