@@ -299,16 +299,39 @@ class _ventanaModificar extends State<ventanaModificar> {
                                           color: Colors.white, fontSize: 15),
                                     ),
                                     onPressed: () async {
-                                      /*
-                          await ApiFB()
-                              .productos
-                              .delete_product(snapshot.data.name);
-                              */
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                ScreenAdmin()),
+                                      showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            title: Text("Eliminar producto"),
+                                            content: Text(
+                                                "¿Esta seguro que desea eliminar el producto?"),
+                                            actions: [
+                                              FlatButton(
+                                                child: Text("Cancelar"),
+                                                onPressed: () {
+                                                  Navigator.of(context).pop();
+                                                },
+                                              ),
+                                              FlatButton(
+                                                child: Text("Aceptar"),
+                                                onPressed: () async {
+                                                  await ApiFB()
+                                                      .productos
+                                                      .delete_product(
+                                                          snapshot.data.name);
+
+                                                  Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            ScreenAdmin()),
+                                                  );
+                                                },
+                                              ),
+                                            ],
+                                          );
+                                        },
                                       );
                                     },
                                   ),

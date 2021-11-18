@@ -1,7 +1,7 @@
 import 'package:comment_box/comment/comment.dart';
 import 'package:flutter/material.dart';
-import 'package:jave_store/Entidades/Producto.dart';
 import 'package:jave_store/Entidades/Resena.dart';
+import 'package:jave_store/controller/Cart/cartController.dart';
 import 'package:jave_store/controller/apiFB.dart';
 
 class body extends StatefulWidget {
@@ -82,16 +82,19 @@ class _bodyState extends State<body> {
         labelText: 'Escriba una reseña...',
         withBorder: false,
         errorText: 'Comentario no puede estar en blanco',
-        sendButtonMethod: () {
+        sendButtonMethod: () async {
+          String name = await ApiFB()
+              .getInfoUser(CartController().cartID)
+              .then((value) => value.nombre);
+
           if (formKey.currentState!.validate()) {
-            print(commentController.text);
             setState(() {
               Resena res = new Resena(
                   avatarImagen:
                       'https://unsplash.com/photos/MTZTGvDsHFY/download?ixid=MnwxMjA3fDB8MXxhbGx8fHx8fHx8fHwxNjM1NjU3MjE2&force=true&w=640',
                   comentario: commentController.text,
                   idProducto: widget.Idproduct,
-                  nombre: 'Juan');
+                  nombre: name);
               api.insertarResena(res);
               filedata.add(res);
             });

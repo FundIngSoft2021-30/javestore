@@ -24,9 +24,16 @@ class Usuario with ChangeNotifier {
     this.url,
   });
 
+  Map<String, dynamic> toJson() {
+    return {
+      'name': nombre,
+      'number': numero,
+    };
+  }
+
   @override
   String toString() {
-    return 'Usuario{nombre: $nombre, url: $url, email: $email, apellido: $apellido, direccion: $direccion, numero: $numero}';
+    return 'Usuario{name: $nombre, url: $url, email: $email, apellido: $apellido, direccion: $direccion, number: $numero}';
   }
 
   factory Usuario.fromFirestore(DocumentSnapshot json) {

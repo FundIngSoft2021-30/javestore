@@ -20,18 +20,16 @@ class ScreenAdmin extends StatefulWidget {
 }
 
 class _ScreenAdmin extends State<ScreenAdmin> {
-  List<bool> _show = [false, false, false, false, false];
+  List<bool> _show = [false, false, false, true];
   List<String> _bar = [
     "",
     "",
-    "Editar",
     "Reportes",
     'Perfil',
   ];
   List<Widget> _paginas = [
     editar(),
     AddProduct(),
-    editar(),
     Reportes(),
     InformacionPerfil()
   ];
@@ -58,19 +56,15 @@ class _ScreenAdmin extends State<ScreenAdmin> {
           unselectedItemColor: Color(0xFF442B2D).withOpacity(.50),
           items: [
             BottomNavigationBarItem(
-              label: 'Inicio',
+              label: 'Editar',
               icon: Icon(
-                Icons.home,
+                Icons.edit,
               ),
               tooltip: "Volver a Inicio",
             ),
             BottomNavigationBarItem(
               label: 'Add',
               icon: Icon(Icons.add_circle),
-            ),
-            BottomNavigationBarItem(
-              label: 'Editar',
-              icon: Icon(Icons.mode_edit),
             ),
             BottomNavigationBarItem(
               label: 'Reportes',
