@@ -18,7 +18,6 @@ void main() {
     final emailField = find.byKey(Key('email'));
     final passwordField = find.byKey(Key('password'));
     final signInButton = find.byKey(Key('Start'));
-
     await tester.tap(emailField);
     await tester.enterText(emailField, "test@gmail.com");
     await tester.pumpAndSettle(const Duration(seconds: 1));

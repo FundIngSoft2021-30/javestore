@@ -157,274 +157,273 @@ class _BodyState extends State<body> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Container(
-          width: 330.0,
-          height: 145.0 * 3,
-          decoration: BoxDecoration(
-              color: Color.fromRGBO(235, 235, 235, 1),
-              borderRadius: BorderRadius.circular(18.0)),
-          child: Column(
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(top: 8.0),
-                child: Container(
-                  width: 10.0,
-                  height: 50.0 / 3.5,
+    return Container(
+      padding: EdgeInsets.only(top: 30.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          Container(
+            width: size.width * 0.9,
+            height: size.height * 0.6,
+            decoration: BoxDecoration(
+                color: Color.fromRGBO(235, 235, 235, 1),
+                borderRadius: BorderRadius.circular(18.0)),
+            child: Column(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: Container(
+                    width: 10.0,
+                    height: 50.0 / 3.5,
+                  ),
                 ),
-              ),
-              Text('Medio de Entrega',
-                  style: TextStyle(
-                      fontSize: 22.0,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold)),
-              SizedBox(height: size.height / 80),
-              Center(
-                child: ToggleSwitch(
-                  minWidth: 125,
-                  initialLabelIndex: 0,
-                  totalSwitches: 2,
-                  labels: ['A domicilio', 'Recoger en la U'],
-                  onToggle: (index) {
-                    print('switched to: $index');
-                    if (index == 0)
-                      medioEntrega = 'A domicilio';
-                    else
-                      medioEntrega = 'Recoger en la U';
-                  },
-                ),
-              ),
-              SizedBox(height: size.height / 40),
-              Padding(
-                padding: const EdgeInsets.only(top: 4.0),
-                child: Text('Resumen',
-                    style: TextStyle(fontSize: 15.0),
-                    textAlign: TextAlign.left),
-              ),
-              SizedBox(height: size.height / 60),
-              Container(
-                width: 300.0,
-                height: 82.0 * 1.5,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8.0),
-                    border: Border.all(color: Colors.grey[800], width: 1.0)),
-                child: ListView(children: [
-                  FutureBuilder(
-                    future: listaItems(widget.productos),
-                    builder: (context, snapshot) {
-                      print(snapshot);
-                      if (snapshot.hasError) print(snapshot.error);
-                      return snapshot.hasData
-                          ? Column(children: [snapshot.data])
-                          : new Center(
-                              child: new CircularProgressIndicator(),
-                            );
+                Text('Medio de Entrega',
+                    style: TextStyle(
+                        fontSize: size.width * 0.05,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold)),
+                SizedBox(height: size.height / 80),
+                Center(
+                  child: ToggleSwitch(
+                    minWidth: size.width * 0.4,
+                    initialLabelIndex: 0,
+                    totalSwitches: 2,
+                    labels: ['A domicilio', 'Recoger en la U'],
+                    onToggle: (index) {
+                      print('switched to: $index');
+                      if (index == 0)
+                        medioEntrega = 'A domicilio';
+                      else
+                        medioEntrega = 'Recoger en la U';
                     },
                   ),
-                ]),
-              ),
-              SizedBox(height: size.height / 60),
-              Padding(
-                padding: const EdgeInsets.only(top: 8.0),
-                child: FutureBuilder(
-                    future: ApiFB().descuentos.getDescuentos(widget
-                        .productos), // a previously-obtained Future<String> or null
-                    builder: (context, snapshot) {
-                      if (snapshot.hasError) print(snapshot.error);
-                      return snapshot.hasData
-                          ? Column(children: [
-                              Row(
+                ),
+                SizedBox(height: size.height / 40),
+                Padding(
+                  padding: const EdgeInsets.only(top: 2.0),
+                  child: Text('Resumen',
+                      style: TextStyle(fontSize: 15.0),
+                      textAlign: TextAlign.left),
+                ),
+                SizedBox(height: size.height / 60),
+                Container(
+                  width: size.width * 0.8,
+                  height: size.height * 0.15,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8.0),
+                      border: Border.all(color: Colors.grey[800], width: 1.0)),
+                  child: ListView(children: [
+                    FutureBuilder(
+                      future: listaItems(widget.productos),
+                      builder: (context, snapshot) {
+                        print(snapshot);
+                        if (snapshot.hasError) print(snapshot.error);
+                        return snapshot.hasData
+                            ? Column(children: [snapshot.data])
+                            : new Center(
+                                child: new CircularProgressIndicator(),
+                              );
+                      },
+                    ),
+                  ]),
+                ),
+                SizedBox(height: size.height / 60),
+                Padding(
+                  padding: const EdgeInsets.only(top: 1.0),
+                  child: FutureBuilder(
+                      future: ApiFB().descuentos.getDescuentos(widget
+                          .productos), // a previously-obtained Future<String> or null
+                      builder: (context, snapshot) {
+                        if (snapshot.hasError) print(snapshot.error);
+                        return snapshot.hasData
+                            ? Column(children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "Subtotal:        ",
+                                      style: TextStyle(
+                                        fontSize: size.width * 0.035,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.w400,
+                                      ), //Textstyle
+                                    ),
+                                    Text(
+                                      "${widget.total} ",
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                          fontSize: size.width * 0.035,
+                                          color: Colors.green,
+                                          fontWeight:
+                                              FontWeight.w300), //Textstyle
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "Descuento:     ",
+                                      style: TextStyle(
+                                        fontSize: size.width * 0.035,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.w400,
+                                      ), //Textstyle
+                                    ),
+                                    Text(
+                                      "- ${double.parse(snapshot.data).round()}",
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                          fontSize: size.width * 0.035,
+                                          color: Colors.red,
+                                          fontWeight:
+                                              FontWeight.w300), //Textstyle
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "Total:        ",
+                                      style: TextStyle(
+                                        fontSize: size.width * 0.035,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.w500,
+                                      ), //Textstyle
+                                    ),
+                                    Text(
+                                      "\$${(double.parse(widget.total) - double.parse(snapshot.data)).round()}",
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                        fontSize: size.width * 0.035,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.w500,
+                                      ), //Textstyle
+                                    ),
+                                  ],
+                                )
+                              ])
+                            : Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Text(
-                                    "Subtotal:        ",
+                                    "Total: ",
                                     style: TextStyle(
                                       fontSize: 15,
                                       color: Colors.black,
-                                      fontWeight: FontWeight.w400,
+                                      fontWeight: FontWeight.w500,
                                     ), //Textstyle
                                   ),
                                   Text(
-                                    "${widget.total} ",
+                                    '\$' + "${widget.total} ",
                                     textAlign: TextAlign.left,
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        color: Colors.green,
-                                        fontWeight:
-                                            FontWeight.w300), //Textstyle
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "Descuento:     ",
-                                    style: TextStyle(
-                                      fontSize: 15,
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.w400,
-                                    ), //Textstyle
-                                  ),
-                                  Text(
-                                    "- ${double.parse(snapshot.data).round()}",
-                                    textAlign: TextAlign.left,
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        color: Colors.red,
-                                        fontWeight:
-                                            FontWeight.w300), //Textstyle
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "Total:        ",
                                     style: TextStyle(
                                       fontSize: 18,
                                       color: Colors.black,
                                       fontWeight: FontWeight.w500,
                                     ), //Textstyle
                                   ),
-                                  Text(
-                                    "\$${(double.parse(widget.total) - double.parse(snapshot.data)).round()}",
-                                    textAlign: TextAlign.left,
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.w500,
-                                    ), //Textstyle
-                                  ),
                                 ],
-                              )
-                            ])
-                          : Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "Total: ",
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w500,
-                                  ), //Textstyle
-                                ),
-                                Text(
-                                  '\$' + "${widget.total} ",
-                                  textAlign: TextAlign.left,
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w500,
-                                  ), //Textstyle
-                                ),
-                              ],
-                            );
-                    }),
-              ),
-              SizedBox(height: size.height / 30),
-              Center(
-                child: Container(
-                  width: size.width / 1.8,
-                  height: size.height / 12,
-                  child: TextFormField(
-                    cursorColor: Theme.of(context).cursorColor,
-                    onChanged: (text) {
-                      print('texto' + text);
-                      instrucciones = text;
-                    },
-                    maxLength: 250,
-                    decoration: InputDecoration(
-                      labelText: 'Instrucciones adicionales',
-                      labelStyle: TextStyle(
-                        color: Colors.blue,
+                              );
+                      }),
+                ),
+                SizedBox(height: size.height / 30),
+                Center(
+                  child: Container(
+                    width: size.width / 1.5,
+                    height: size.height / 8,
+                    child: TextFormField(
+                      cursorColor: Theme.of(context).cursorColor,
+                      onChanged: (text) {
+                        print('texto' + text);
+                        instrucciones = text;
+                      },
+                      maxLength: 250,
+                      decoration: InputDecoration(
+                        labelText: 'Instrucciones adicionales',
+                        labelStyle: TextStyle(
+                          color: Colors.blue,
+                        ),
+                        suffixIcon: Icon(
+                          Icons.check_circle,
+                        ),
+                        border: OutlineInputBorder(),
                       ),
-                      suffixIcon: Icon(
-                        Icons.check_circle,
-                      ),
-                      border: OutlineInputBorder(),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(top: 10.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              Column(
-                children: <Widget>[
-                  Container(
-                    width: 40.0,
-                    height: 40.0,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(40.0),
-                        color: Colors.blue[700]),
-                    child: Center(
-                      child: Icon(
-                        Icons.credit_card,
-                        color: Colors.white,
-                        size: 20.0,
+          Padding(
+            padding: const EdgeInsets.only(top: 5.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                Column(
+                  children: <Widget>[
+                    Container(
+                      width: size.width * 0.1,
+                      height: size.height * 0.05,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30.0),
+                          color: Colors.blue[700]),
+                      child: Center(
+                        child: Icon(
+                          Icons.credit_card,
+                          color: Colors.white,
+                          size: 20.0,
+                        ),
                       ),
                     ),
-                  ),
-                  Text(
-                    'PayU',
-                    style: TextStyle(color: Colors.blue[700], fontSize: 12.0),
-                  )
-                ],
-              )
-            ],
+                  ],
+                )
+              ],
+            ),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(top: 10.0),
-          child: InkWell(
-            splashColor: Colors.red,
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => HistorialScreen()),
-              );
-            },
-            child: Container(
-                width: 270.0,
-                height: 50.0,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12.0),
-                    border: Border.all(color: Colors.blue[700], width: 2.6),
-                    color: Colors.white),
-                child: MaterialButton(
-                  child: setUpButtonChild(),
-                  onPressed: () {
-                    setState(() {
-                      if (_state == 0) {
-                        animateButton();
-                      }
-                      if (_state == 2) {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => HistorialScreen()),
-                        );
-                      }
-                    });
-                  },
-                )),
+          Padding(
+            padding: const EdgeInsets.only(top: 10.0),
+            child: InkWell(
+              splashColor: Colors.red,
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => HistorialScreen()),
+                );
+              },
+              child: Container(
+                  width: size.width / 1.5,
+                  height: size.height / 15,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12.0),
+                      border: Border.all(color: Colors.blue[700], width: 2.6),
+                      color: Colors.white),
+                  child: MaterialButton(
+                    child: setUpButtonChild(),
+                    onPressed: () {
+                      setState(() {
+                        if (_state == 0) {
+                          animateButton();
+                        }
+                        if (_state == 2) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => HistorialScreen()),
+                          );
+                        }
+                      });
+                    },
+                  )),
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

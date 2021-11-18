@@ -172,16 +172,36 @@ class _ReportesState extends State<Reportes> {
             child: FutureBuilder<List<Producto>>(
               future: productos,
               builder: (context, s) => s.hasData
-                  ? ListView.builder(
-                      itemCount: s.data.length,
-                      itemBuilder: (context, index) {
-                        return ListTile(
-                          title: Text('${s.data[index].name}'),
-                          leading: CircleAvatar(
-                            backgroundImage: NetworkImage(s.data[index].image),
+                  ? SingleChildScrollView(
+                      child: DataTable(
+                        columns: [
+                          DataColumn(
+                            label: Text('Producto'),
                           ),
-                        );
-                      })
+                          DataColumn(
+                            label: Text('Categoria'),
+                          ),
+                          DataColumn(
+                            label: Text('Price'),
+                          ),
+                        ],
+                        rows: s.data
+                            .map((p) => DataRow(
+                                  cells: [
+                                    DataCell(
+                                      Text(p.name),
+                                    ),
+                                    DataCell(
+                                      Text(p.category.toString()),
+                                    ),
+                                    DataCell(
+                                      Text(p.price.toString()),
+                                    ),
+                                  ],
+                                ))
+                            .toList(),
+                      ),
+                    )
                   : Container(),
             ),
           ),
