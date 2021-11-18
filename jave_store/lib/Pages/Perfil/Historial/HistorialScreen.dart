@@ -31,8 +31,6 @@ class HistorialScreen extends StatelessWidget {
                         future:
                             ap.get_product(snapshot.data[index].productos[0]),
                         builder: (context, AsyncSnapshot<Producto> snap) {
-                          if (snap.hasError) print(snap.error);
-
                           return snap.hasData
                               ? Card(
                                   child: ListTile(
