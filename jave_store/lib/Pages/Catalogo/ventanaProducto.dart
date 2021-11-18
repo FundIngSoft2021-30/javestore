@@ -166,6 +166,7 @@ class _ventanaProducto extends State<ventanaProducto> {
                           height: size.height / 80,
                         ),
                         OutlinedButton(
+                          key: Key('verResenas'),
                           onPressed: () {
                             Navigator.push(
                               context,
@@ -273,6 +274,7 @@ class _ventanaProducto extends State<ventanaProducto> {
                   height: size.height / 240,
                 ), //Text //SizedBox
                 Container(
+                  key: Key('agregarProducto'),
                   alignment: Alignment.bottomCenter,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(

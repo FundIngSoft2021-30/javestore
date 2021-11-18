@@ -33,6 +33,8 @@ class HistorialScreen extends StatelessWidget {
                         builder: (context, AsyncSnapshot<Producto> snap) {
                           return snap.hasData
                               ? Card(
+                                  key: Key(
+                                      snapshot.data[index].total.toString()),
                                   child: ListTile(
                                     onTap: () {
                                       showDialog(

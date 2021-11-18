@@ -16,11 +16,13 @@ class body extends StatefulWidget {
   String total;
   List<Producto> productos;
   String carritoId;
+  String temTotal;
 
   body({
     this.productos,
     this.total,
     this.carritoId,
+    this.temTotal,
   });
 }
 
@@ -39,7 +41,7 @@ class _BodyState extends State<body> {
       p.metodoEntrega = medioEntrega;
       p.productos =
           List.from(widget.productos.map((name) => name.name).toList());
-      p.total = double.parse(widget.total);
+      p.total = double.parse(widget.temTotal);
       api.add_pedido(p);
       return true;
     } else
@@ -79,6 +81,7 @@ class _BodyState extends State<body> {
     widget.productos = await widget.productos;
     print(widget.productos.length);
     return ListView.builder(
+      key: Key('listaPago'),
       physics: NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       itemCount: productos.length,
@@ -185,6 +188,7 @@ class _BodyState extends State<body> {
                 SizedBox(height: size.height / 80),
                 Center(
                   child: ToggleSwitch(
+                    key: Key('toggleEntrega'),
                     minWidth: size.width * 0.4,
                     initialLabelIndex: 0,
                     totalSwitches: 2,
@@ -234,7 +238,13 @@ class _BodyState extends State<body> {
                       future: ApiFB().descuentos.getDescuentos(widget
                           .productos), // a previously-obtained Future<String> or null
                       builder: (context, snapshot) {
-                        if (snapshot.hasError) print(snapshot.error);
+                        if (snapshot.hasError)
+                          print(snapshot.error);
+                        else
+                          widget.temTotal = ((double.parse(widget.total) -
+                                      double.parse(snapshot.data))
+                                  .round())
+                              .toString();
                         return snapshot.hasData
                             ? Column(children: [
                                 Row(
@@ -338,6 +348,7 @@ class _BodyState extends State<body> {
                     width: size.width / 1.5,
                     height: size.height / 8,
                     child: TextFormField(
+                      key: Key('instrucciones'),
                       cursorColor: Theme.of(context).cursorColor,
                       onChanged: (text) {
                         print('texto' + text);
@@ -404,6 +415,7 @@ class _BodyState extends State<body> {
                       border: Border.all(color: Colors.blue[700], width: 2.6),
                       color: Colors.white),
                   child: MaterialButton(
+                    key: Key('confirmarPedido'),
                     child: setUpButtonChild(),
                     onPressed: () {
                       setState(() {

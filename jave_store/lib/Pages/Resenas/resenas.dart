@@ -24,6 +24,7 @@ class _resenasState extends State<resenas> {
       home: Scaffold(
         appBar: AppBar(
           leading: IconButton(
+            key: Key('back_resena'),
             icon: Icon(Icons.arrow_back),
             onPressed: () {
               Navigator.pop(context);

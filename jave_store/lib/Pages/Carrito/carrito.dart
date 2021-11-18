@@ -102,6 +102,7 @@ class _CarritoState extends State<Carrito> {
                                               ),
                                               Spacer(),
                                               TextButton(
+                                                key: Key('irPago'),
                                                 onPressed: () {
                                                   Navigator.push(
                                                       context,
