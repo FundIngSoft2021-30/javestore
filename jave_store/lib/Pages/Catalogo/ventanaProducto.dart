@@ -55,6 +55,7 @@ class _ventanaProducto extends State<ventanaProducto> {
 
     return Center(
       /** Card Widget **/
+      key: Key('productoDetallado'),
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),

@@ -48,6 +48,7 @@ class _AppBarBottom extends State<AppBarBottom> {
             : null,
         body: _paginas[_selectedIndex],
         bottomNavigationBar: BottomNavigationBar(
+          key: Key('Carrito'),
           type: BottomNavigationBarType.fixed,
           backgroundColor: Colors.yellow,
           selectedItemColor: Colors.blue,
@@ -55,26 +56,26 @@ class _AppBarBottom extends State<AppBarBottom> {
           items: [
             BottomNavigationBarItem(
               label: 'Inicio',
-              icon: Icon(
-                Icons.home,
-              ),
+              icon: Icon(Icons.home, key: Key('Inicio-bottom')),
               tooltip: "Volver a Inicio",
             ),
             BottomNavigationBarItem(
               label: 'Ofertas',
-              icon: Icon(Icons.account_balance_wallet_outlined),
+              icon: Icon(Icons.account_balance_wallet_outlined,
+                  key: Key('Ofertas-bottom')),
             ),
             BottomNavigationBarItem(
               label: 'Carrito',
-              icon: Icon(Icons.shopping_cart_outlined),
+              icon: Icon(Icons.shopping_cart_outlined,
+                  key: Key('Carrito-bottom')),
             ),
             BottomNavigationBarItem(
               label: 'Perfil',
-              icon: Icon(Icons.person_outline),
+              icon: Icon(Icons.person_outline, key: Key('Perfil-bottom')),
             ),
             BottomNavigationBarItem(
               label: 'Ayuda',
-              icon: Icon(Icons.help_outline_sharp),
+              icon: Icon(Icons.help_outline_sharp, key: Key('Ayuda-bottom')),
             ),
           ],
           currentIndex: _selectedIndex,

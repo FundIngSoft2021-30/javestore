@@ -22,6 +22,7 @@ class ItemCard extends StatelessWidget {
               builder: (context) => ventanaProducto(product: product));
         },
         child: Column(
+            key: Key(product.name),
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Container(
