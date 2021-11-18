@@ -1,8 +1,7 @@
 //@dart=2.9
-
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:jave_store/Pages/Login%20Screen/Login.dart';
+import 'package:jave_store/main.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -47,7 +46,7 @@ class _HomePageState extends State<HomePage> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => LoginScreen()),
+                  MaterialPageRoute(builder: (context) => App()),
                 );
               },
             ),

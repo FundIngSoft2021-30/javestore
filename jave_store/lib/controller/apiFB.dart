@@ -30,6 +30,24 @@ class ApiFB {
         .catchError((error) => false);
   }
 
+  Future<bool> create_cart(String id) {
+    return firestore
+        .collection("Cart")
+        .doc(id)
+        .set({"productsID": Map<String, int>()})
+        .then((value) => true)
+        .catchError((error) => false);
+  }
+
+  Future<bool> create_user(String key, Usuario u) async {
+    return await firestore
+        .collection("Users")
+        .doc(key)
+        .set(u.toJson())
+        .then((value) => true)
+        .catchError((error) => false);
+  }
+
   Future<bool> add_pedido(Pedido pedido) async {
     return await pedidos.insertPedido(pedido);
   }

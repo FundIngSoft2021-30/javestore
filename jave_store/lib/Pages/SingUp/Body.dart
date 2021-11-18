@@ -1,12 +1,11 @@
 //@dart=2.9
 // ignore_for_file: deprecated_member_use
-
-import 'dart:convert';
-
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:jave_store/Entidades/Usuario.dart';
+import 'package:jave_store/controller/apiFB.dart';
 
 class Body extends StatefulWidget {
   @override
@@ -81,9 +80,6 @@ class _BodyState extends State<Body> {
                       style: TextStyle(color: Colors.black),
                       onChanged: (value) async {},
                       decoration: InputDecoration(
-                          suffixIcon: Icon(this._email
-                              ? Icons.check_outlined
-                              : Icons.cancel_outlined),
                           labelText: "Email",
                           labelStyle: TextStyle(fontWeight: FontWeight.bold)),
                       controller: email,
@@ -128,13 +124,36 @@ class _BodyState extends State<Body> {
                         child: Container(
                           color: Colors.blue,
                           child: FlatButton(
-                            onLongPress: () => Alert(),
-                            onPressed: () {
-                              showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return Alert();
-                                  });
+                            onPressed: () async {
+                              await FirebaseAuth.instance
+                                  .createUserWithEmailAndPassword(
+                                      email: email.text, password: pass.text)
+                                  .then(
+                                (value) async {
+                                  Usuario u = Usuario(
+                                    nombre: nombre.text,
+                                    numero: int.parse(number.text),
+                                  );
+                                  if (await ApiFB()
+                                      .create_user(value.user.uid, u)) {
+                                    ApiFB().create_cart(value.user.uid);
+                                    showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return Alert(
+                                              'Creado', 'Usuario creado');
+                                        });
+                                  }
+                                },
+                              ).catchError(
+                                (error) {
+                                  showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return Alert('Error', error.message);
+                                      });
+                                },
+                              );
                             },
                             child: Text(
                               "Crear cuenta",
@@ -157,11 +176,11 @@ class _BodyState extends State<Body> {
     );
   }
 
-  Widget Alert() {
+  Widget Alert(String title, String content) {
     return AlertDialog(
       backgroundColor: Colors.blue.shade50,
-      title: Text("Cuenta creada"),
-      content: Text("La cuenta ha sido creada con éxito"),
+      title: Text(title),
+      content: Text(content),
     );
   }
 }
